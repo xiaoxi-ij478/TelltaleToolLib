@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -10,26 +10,26 @@
 
 #define N 16
 
-void beo(Blowfish*, unsigned long* xl, unsigned long* xr);
-void bdo(Blowfish*, unsigned long* xl, unsigned long* xr);
-short io(Blowfish*, unsigned char key[], int keybytes);
-void eo(Blowfish* c, unsigned long* data, int blocks);
-void _do(Blowfish* c, unsigned long* data, int blocks);
-void ko(Blowfish* c, unsigned char* key, int len);
-void ben(Blowfish*, unsigned long* xl, unsigned long* xr);
-void bdn(Blowfish*, unsigned long* xl, unsigned long* xr);
-short in(Blowfish*, unsigned char key[], int keybytes);
-void en(Blowfish* c, unsigned long* data, int blocks);
-void dn(Blowfish* c, unsigned long* data, int blocks);
-void kn(Blowfish* c, unsigned char* key, int len);
+void beo(Blowfish*, uint32_t* xl, uint32_t* xr);
+void bdo(Blowfish*, uint32_t* xl, uint32_t* xr);
+uint16_t io(Blowfish*, uint8_t key[], int keybytes);
+void eo(Blowfish* c, uint32_t* data, int blocks);
+void _do(Blowfish* c, uint32_t* data, int blocks);
+void ko(Blowfish* c, uint8_t* key, int len);
+void ben(Blowfish*, uint32_t* xl, uint32_t* xr);
+void bdn(Blowfish*, uint32_t* xl, uint32_t* xr);
+uint16_t in(Blowfish*, uint8_t key[], int keybytes);
+void en(Blowfish* c, uint32_t* data, int blocks);
+void dn(Blowfish* c, uint32_t* data, int blocks);
+void kn(Blowfish* c, uint8_t* key, int len);
 
-unsigned long bf(Blowfish* bc, unsigned long x)
+uint32_t bf(Blowfish* bc, uint32_t x)
 {
-	unsigned long a;
-	unsigned long b;
-	unsigned long c;
-	unsigned long d;
-	unsigned long y;
+	uint32_t a;
+	uint32_t b;
+	uint32_t c;
+	uint32_t d;
+	uint32_t y;
 
 	d = x & 0x00FF;
 	x >>= 8;
@@ -45,22 +45,22 @@ unsigned long bf(Blowfish* bc, unsigned long x)
 	return y;
 }
 
-void TelltaleToolLib_BlowfishEncrypt(unsigned char* data, unsigned int size, bool n, unsigned char* k) {
+void TelltaleToolLib_BlowfishEncrypt(uint8_t* data, unsigned int size, bool n, uint8_t* k) {
 	Blowfish cipher;
 	Blowfish* c = &cipher;
 	if (n) {
 		kn(c, k, strlen((char*)k));
-		en(c, (unsigned long*)data, size / 8);
+		en(c, (uint32_t*)data, size / 8);
 	}
 	else {
 		ko(c, k, strlen((char*)k));
-		eo(c, (unsigned long*)data, size / 8);
+		eo(c, (uint32_t*)data, size / 8);
 	}
 }
 
 const char* TelltaleToolLib_GetRawBlowfishKey(const char* gameID) {
 	for (int i = 0; i < KEY_COUNT; i++) {
-		if (!_stricmp(sBlowfishKeys[i].game_id, gameID))
+		if (!strcasecmp(sBlowfishKeys[i].game_id, gameID))
 			return sBlowfishKeys[i].game_key;
 	}
 	return NULL;
@@ -68,31 +68,31 @@ const char* TelltaleToolLib_GetRawBlowfishKey(const char* gameID) {
 
 bool TelltaleToolLib_DoesGameUseModifiedEncryption(const char* gameID) {
 	for (int i = 0; i < KEY_COUNT; i++) {
-		if (!_stricmp(sBlowfishKeys[i].game_id, gameID))
+		if (!strcasecmp(sBlowfishKeys[i].game_id, gameID))
 			return sBlowfishKeys[i].isNewEncryption;
 	}
 	return false;
 }
 
-void TelltaleToolLib_BlowfishDecrypt(unsigned char* data, unsigned int size, bool n, unsigned char* k) {
+void TelltaleToolLib_BlowfishDecrypt(uint8_t* data, unsigned int size, bool n, uint8_t* k) {
 	Blowfish cipher;
 	Blowfish* c = &cipher;
 	if (n) {
 		kn(c, k, strlen((char*)k));
-		dn(c, (unsigned long*)data, size / 8);
+		dn(c, (uint32_t*)data, size / 8);
 	}
 	else {
 		ko(c, k, strlen((char*)k));
-		_do(c, (unsigned long*)data, size / 8);
+		_do(c, (uint32_t*)data, size / 8);
 	}
 }
 
-void beo(Blowfish* bc, unsigned long* xl, unsigned long* xr)
+void beo(Blowfish* bc, uint32_t* xl, uint32_t* xr)
 {
-	unsigned long  Xl;
-	unsigned long  Xr;
-	unsigned long  temp;
-	short          i;
+	uint32_t  Xl;
+	uint32_t  Xr;
+	uint32_t  temp;
+	uint16_t          i;
 
 	Xl = *xl;
 	Xr = *xr;
@@ -118,12 +118,12 @@ void beo(Blowfish* bc, unsigned long* xl, unsigned long* xr)
 	*xr = Xr;
 }
 
-void bdo(Blowfish* bc, unsigned long* xl, unsigned long* xr)
+void bdo(Blowfish* bc, uint32_t* xl, uint32_t* xr)
 {
-	unsigned long  Xl;
-	unsigned long  Xr;
-	unsigned long  temp;
-	short          i;
+	uint32_t  Xl;
+	uint32_t  Xr;
+	uint32_t  temp;
+	uint16_t          i;
 
 	Xl = *xl;
 	Xr = *xr;
@@ -151,14 +151,14 @@ void bdo(Blowfish* bc, unsigned long* xl, unsigned long* xr)
 	*xr = Xr;
 }
 
-short io(Blowfish* bc, unsigned char key[], int keybytes)
+uint16_t io(Blowfish* bc, uint8_t key[], int keybytes)
 {
-	short          i;
-	short          j;
-	short          k;
-	unsigned long  data;
-	unsigned long  datal;
-	unsigned long  datar;
+	uint16_t          i;
+	uint16_t          j;
+	uint16_t          k;
+	uint32_t  data;
+	uint32_t  datal;
+	uint32_t  datar;
 
 	/* initialise p & s-boxes without file read */
 	for (i = 0; i < N + 2; i++)
@@ -214,14 +214,14 @@ short io(Blowfish* bc, unsigned char key[], int keybytes)
 	return 0;
 }
 
-void ko(Blowfish* c, unsigned char* k, int len)
+void ko(Blowfish* c, uint8_t* k, int len)
 {
 	io(c, k, len);
 }
 
-void eo(Blowfish* c, unsigned long* data, int blocks)
+void eo(Blowfish* c, uint32_t* data, int blocks)
 {
-	unsigned long* d;
+	uint32_t* d;
 	int i;
 
 	d = data;
@@ -232,9 +232,9 @@ void eo(Blowfish* c, unsigned long* data, int blocks)
 	}
 }
 
-void _do(Blowfish* c, unsigned long* data, int blocks)
+void _do(Blowfish* c, uint32_t* data, int blocks)
 {
-	unsigned long* d;
+	uint32_t* d;
 	int i;
 
 	d = data;
@@ -247,19 +247,19 @@ void _do(Blowfish* c, unsigned long* data, int blocks)
 
 // modified functions for version 7
 
-unsigned long bs(unsigned long num) {
+uint32_t bs(uint32_t num) {
 	return(((num & 0xff000000) >> 24) |
 		((num & 0x00ff0000) >> 8) |
 		((num & 0x0000ff00) << 8) |
 		((num & 0x000000ff) << 24));
 }
 
-void ben(Blowfish* bc, unsigned long* xl, unsigned long* xr)
+void ben(Blowfish* bc, uint32_t* xl, uint32_t* xr)
 {
-	unsigned long  Xl;
-	unsigned long  Xr;
-	unsigned long  temp;
-	short          i;
+	uint32_t  Xl;
+	uint32_t  Xr;
+	uint32_t  temp;
+	uint16_t          i;
 
 	Xl = *xl;
 	Xr = *xr;
@@ -292,12 +292,12 @@ void ben(Blowfish* bc, unsigned long* xl, unsigned long* xr)
 	*xr = Xr;
 }
 
-void bdn(Blowfish* bc, unsigned long* xl, unsigned long* xr)
+void bdn(Blowfish* bc, uint32_t* xl, uint32_t* xr)
 {
-	unsigned long  Xl;
-	unsigned long  Xr;
-	unsigned long  temp;
-	short          i;
+	uint32_t  Xl;
+	uint32_t  Xr;
+	uint32_t  temp;
+	uint16_t          i;
 
 	Xl = *xl;
 	Xr = *xr;
@@ -331,14 +331,14 @@ void bdn(Blowfish* bc, unsigned long* xl, unsigned long* xr)
 	*xr = Xr;
 }
 
-short in(Blowfish* bc, unsigned char key[], int keybytes)
+uint16_t in(Blowfish* bc, uint8_t key[], int keybytes)
 {
-	short          i;
-	short          j;
-	short          k;
-	unsigned long  data;
-	unsigned long  datal;
-	unsigned long  datar;
+	uint16_t          i;
+	uint16_t          j;
+	uint16_t          k;
+	uint32_t  data;
+	uint32_t  datal;
+	uint32_t  datar;
 
 	/* initialise p & s-boxes without file read */
 	for (i = 0; i < N + 2; i++)
@@ -395,14 +395,14 @@ short in(Blowfish* bc, unsigned char key[], int keybytes)
 	return 0;
 }
 
-void kn(Blowfish* c, unsigned char* k, int len)
+void kn(Blowfish* c, uint8_t* k, int len)
 {
 	in(c, k, len);
 }
 
-void en(Blowfish* c, unsigned long* data, int blocks)
+void en(Blowfish* c, uint32_t* data, int blocks)
 {
-	unsigned long* d;
+	uint32_t* d;
 	int i;
 
 	d = data;
@@ -413,9 +413,9 @@ void en(Blowfish* c, unsigned long* data, int blocks)
 	}
 }
 
-void dn(Blowfish* c, unsigned long* data, int blocks)
+void dn(Blowfish* c, uint32_t* data, int blocks)
 {
-	unsigned long* d;
+	uint32_t* d;
 	int i;
 
 	d = data;
@@ -472,8 +472,8 @@ void Blowfish::Gen_Subkeys(const char* Passwd) {
 		len++;
 	}
 	if (len) {
-		short j = 0, i = 0,k = 0, N = 16;
-		unsigned long data,datal,datar;//32bits
+		uint16_t j = 0, i = 0,k = 0, N = 16;
+		uint32_t data,datal,datar;//32bits
 
 		for (i = 0; i < N + 2; ++i) {
 			data = 0x00000000;

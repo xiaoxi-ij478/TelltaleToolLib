@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 #include "../LibraryConfig.h"
@@ -106,7 +106,7 @@ u8* T3EffectParameterGroup::UpdateParameterBufferData(RenderFrameUpdateList& upd
         else if (params[paramIndex].storage == eEffectParameterStorage_UniformBuffer) {
             u8** paramData = (u8**)_GetParameterStorageInternal(paramIndex);
             return updateList.UpdateParameterBuffer(std::shared_ptr<T3EffectParameterBuffer>((T3EffectParameterBuffer*)paramData[0], &_no_delete<T3EffectParameterBuffer>)
-            , (u32)paramData[1],size, type);
+            , (u64)paramData[1],size, type);
         }
         else return 0;
     }
@@ -130,7 +130,7 @@ void* T3EffectParameterGroup::SetUniformBufferData(T3EffectParameterType param, 
         else {
            // params[p].storage = eEffectParameterStorage_UniformBuffer;
             //StreamParameterData in updatelist
-            MessageBoxA(0,"RenderFrameUpdateList::StreamParameterData is not implemented. Please use bindable render API.", "Unsupported operation", MB_ICONERROR);
+            puts("RenderFrameUpdateList::StreamParameterData is not implemented. Please use bindable render API.");
         }
 	}
 }
@@ -245,7 +245,7 @@ const T3Texture::LockContext T3Texture::Lock(u32 mip, u32 face){
     }
     if(!ctx.mpTextureData){
         TelltaleToolLib_RaiseError("Invalid mip or face passed into T3Texture::Lock which could not be found", ERR);
-        __debugbreak();
+        abort();
         return ctx;
     }
     return ctx;

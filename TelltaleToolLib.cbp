@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="TelltaleToolLib" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/TelltaleToolLib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/TelltaleToolLib" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-w" />
+			<Add option="-std=c++17" />
+			<Add option="-DBUILDING_INSPECTOR" />
+			<Add option="-DNOMINMAX" />
+		</Compiler>
+		<Linker>
+			<Add option="-mwindows" />
+		</Linker>
+		<Unit filename="ToolLibrary/Base64.h" />
+		<Unit filename="ToolLibrary/Blowfish.cpp" />
+		<Unit filename="ToolLibrary/Blowfish.h" />
+		<Unit filename="ToolLibrary/Compression.cpp" />
+		<Unit filename="ToolLibrary/Compression.h" />
+		<Unit filename="ToolLibrary/DataStream/DataStream.cpp" />
+		<Unit filename="ToolLibrary/DataStream/DataStream.h" />
+		<Unit filename="ToolLibrary/FMOD/FSB5.cpp" />
+		<Unit filename="ToolLibrary/FMOD/FSB5.h" />
+		<Unit filename="ToolLibrary/FMOD/VorbisHeaders.cpp" />
+		<Unit filename="ToolLibrary/HashDB/HashDB.cpp" />
+		<Unit filename="ToolLibrary/HashDB/HashDB.h" />
+		<Unit filename="ToolLibrary/HashManager.h" />
+		<Unit filename="ToolLibrary/LargeConst.cpp" />
+		<Unit filename="ToolLibrary/LargeConst.h" />
+		<Unit filename="ToolLibrary/LegacyTypes/D3DMeshLegacy.h" />
+		<Unit filename="ToolLibrary/LibraryConfig.h" />
+		<Unit filename="ToolLibrary/LinkedList.h" />
+		<Unit filename="ToolLibrary/Lua/StringBuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/StringBuffer.h" />
+		<Unit filename="ToolLibrary/Lua/common.h" />
+		<Unit filename="ToolLibrary/Lua/decompile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/decompile.h" />
+		<Unit filename="ToolLibrary/Lua/disassemble.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/disassemble.h" />
+		<Unit filename="ToolLibrary/Lua/expression.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/expression.h" />
+		<Unit filename="ToolLibrary/Lua/guess.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lapi.h" />
+		<Unit filename="ToolLibrary/Lua/lauxlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lauxlib.h" />
+		<Unit filename="ToolLibrary/Lua/lbaselib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lbitlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lcode.h" />
+		<Unit filename="ToolLibrary/Lua/lcorolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lctype.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lctype.h" />
+		<Unit filename="ToolLibrary/Lua/ldblib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/ldebug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/ldebug.h" />
+		<Unit filename="ToolLibrary/Lua/ldo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/ldo.h" />
+		<Unit filename="ToolLibrary/Lua/ldump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lfunc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lfunc.h" />
+		<Unit filename="ToolLibrary/Lua/lgc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lgc.h" />
+		<Unit filename="ToolLibrary/Lua/linit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/liolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/llex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/llex.h" />
+		<Unit filename="ToolLibrary/Lua/llimits.h" />
+		<Unit filename="ToolLibrary/Lua/lmathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lmem.h" />
+		<Unit filename="ToolLibrary/Lua/loadlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lobject.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lobject.h" />
+		<Unit filename="ToolLibrary/Lua/lopcodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lopcodes.h" />
+		<Unit filename="ToolLibrary/Lua/loslib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lparser.h" />
+		<Unit filename="ToolLibrary/Lua/lstate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lstate.h" />
+		<Unit filename="ToolLibrary/Lua/lstring.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lstring.h" />
+		<Unit filename="ToolLibrary/Lua/lstrlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/ltable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/ltable.h" />
+		<Unit filename="ToolLibrary/Lua/ltablib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/ltm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/ltm.h" />
+		<Unit filename="ToolLibrary/Lua/lua-compat.h" />
+		<Unit filename="ToolLibrary/Lua/lua.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lua.h" />
+		<Unit filename="ToolLibrary/Lua/lua.hpp" />
+		<Unit filename="ToolLibrary/Lua/luac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/luaconf.h" />
+		<Unit filename="ToolLibrary/Lua/luadec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lualib.h" />
+		<Unit filename="ToolLibrary/Lua/lundump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lundump.h" />
+		<Unit filename="ToolLibrary/Lua/lvm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lvm.h" />
+		<Unit filename="ToolLibrary/Lua/lzio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/lzio.h" />
+		<Unit filename="ToolLibrary/Lua/macro-array.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/macro-array.h" />
+		<Unit filename="ToolLibrary/Lua/proto.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/proto.h" />
+		<Unit filename="ToolLibrary/Lua/srcversion.h" />
+		<Unit filename="ToolLibrary/Lua/statement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/statement.h" />
+		<Unit filename="ToolLibrary/Lua/structs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Lua/structs.h" />
+		<Unit filename="ToolLibrary/Meta.cpp" />
+		<Unit filename="ToolLibrary/Meta.hpp" />
+		<Unit filename="ToolLibrary/MetaInitHelpers.h" />
+		<Unit filename="ToolLibrary/MetaInitialize.h" />
+		<Unit filename="ToolLibrary/MetaStream_JSON.cpp" />
+		<Unit filename="ToolLibrary/MetaStream_JSON.hpp" />
+		<Unit filename="ToolLibrary/Symbols.h" />
+		<Unit filename="ToolLibrary/T3/Camera.h" />
+		<Unit filename="ToolLibrary/T3/LinearHeap.h" />
+		<Unit filename="ToolLibrary/T3/Render.cpp" />
+		<Unit filename="ToolLibrary/T3/Render.hpp" />
+		<Unit filename="ToolLibrary/T3/RenderScene.h" />
+		<Unit filename="ToolLibrary/T3/ScenePasses.cpp" />
+		<Unit filename="ToolLibrary/T3/T3Effect.h" />
+		<Unit filename="ToolLibrary/T3/T3EffectCache.cpp" />
+		<Unit filename="ToolLibrary/T3/T3EffectCache.h" />
+		<Unit filename="ToolLibrary/T3/T3EffectCacheVersionDB.cpp" />
+		<Unit filename="ToolLibrary/T3/T3EffectParameters.h" />
+		<Unit filename="ToolLibrary/T3/T3EffectUser.h" />
+		<Unit filename="ToolLibrary/T3/T3RenderTargets.h" />
+		<Unit filename="ToolLibrary/TTArchive2.cpp" />
+		<Unit filename="ToolLibrary/TTArchive2.hpp" />
+		<Unit filename="ToolLibrary/TelltaleToolLibrary.cpp" />
+		<Unit filename="ToolLibrary/TelltaleToolLibrary.h" />
+		<Unit filename="ToolLibrary/Types/ActorAgentMapper.h" />
+		<Unit filename="ToolLibrary/Types/AgentMap.h" />
+		<Unit filename="ToolLibrary/Types/AnimOrChore.h" />
+		<Unit filename="ToolLibrary/Types/AnimatedValueInterface.h" />
+		<Unit filename="ToolLibrary/Types/Animation.h" />
+		<Unit filename="ToolLibrary/Types/AssetCollection.h" />
+		<Unit filename="ToolLibrary/Types/BlendGraph.h" />
+		<Unit filename="ToolLibrary/Types/Chore.h" />
+		<Unit filename="ToolLibrary/Types/Container.h" />
+		<Unit filename="ToolLibrary/Types/D3DMesh.h" />
+		<Unit filename="ToolLibrary/Types/DCArray.h" />
+		<Unit filename="ToolLibrary/Types/Deque.h" />
+		<Unit filename="ToolLibrary/Types/Dialog.h" />
+		<Unit filename="ToolLibrary/Types/DlgSystemSettings.h" />
+		<Unit filename="ToolLibrary/Types/EnlightenData.h" />
+		<Unit filename="ToolLibrary/Types/EventStorage.cpp" />
+		<Unit filename="ToolLibrary/Types/EventStorage.h" />
+		<Unit filename="ToolLibrary/Types/Font.h" />
+		<Unit filename="ToolLibrary/Types/HandleObjectInfo.h" />
+		<Unit filename="ToolLibrary/Types/InputMapper.h" />
+		<Unit filename="ToolLibrary/Types/KeyframedValue.h" />
+		<Unit filename="ToolLibrary/Types/LanguageDB.h" />
+		<Unit filename="ToolLibrary/Types/LanguageDatabase.h" />
+		<Unit filename="ToolLibrary/Types/LanguageLookupMap.h" />
+		<Unit filename="ToolLibrary/Types/LanguageRegister.h" />
+		<Unit filename="ToolLibrary/Types/LightProbeData.h" />
+		<Unit filename="ToolLibrary/Types/List.h" />
+		<Unit filename="ToolLibrary/Types/LocalizationRegistry.h" />
+		<Unit filename="ToolLibrary/Types/LocomotionDB.h" />
+		<Unit filename="ToolLibrary/Types/Map.h" />
+		<Unit filename="ToolLibrary/Types/Note.h" />
+		<Unit filename="ToolLibrary/Types/ObjectSpaceIntrinsics.h" />
+		<Unit filename="ToolLibrary/Types/ParticleProperties.h" />
+		<Unit filename="ToolLibrary/Types/ParticleSprite.h" />
+		<Unit filename="ToolLibrary/Types/PhonemeTable.h" />
+		<Unit filename="ToolLibrary/Types/PreloadPackage.h" />
+		<Unit filename="ToolLibrary/Types/Procedural.h" />
+		<Unit filename="ToolLibrary/Types/PropertySet.h" />
+		<Unit filename="ToolLibrary/Types/Rect.h" />
+		<Unit filename="ToolLibrary/Types/ResourceBundle.h" />
+		<Unit filename="ToolLibrary/Types/Rules.h" />
+		<Unit filename="ToolLibrary/Types/SArray.h" />
+		<Unit filename="ToolLibrary/Types/Scene.h" />
+		<Unit filename="ToolLibrary/Types/Set.h" />
+		<Unit filename="ToolLibrary/Types/Skeleton.h" />
+		<Unit filename="ToolLibrary/Types/SoundAmbience.h" />
+		<Unit filename="ToolLibrary/Types/SoundBusSystem.h" />
+		<Unit filename="ToolLibrary/Types/SoundData.h" />
+		<Unit filename="ToolLibrary/Types/SoundEventBankMap.h" />
+		<Unit filename="ToolLibrary/Types/SoundFootsteps.h" />
+		<Unit filename="ToolLibrary/Types/SoundReverbDefinition.h" />
+		<Unit filename="ToolLibrary/Types/StyleGuide.h" />
+		<Unit filename="ToolLibrary/Types/T3OverlayData.h" />
+		<Unit filename="ToolLibrary/Types/T3Texture.cpp" />
+		<Unit filename="ToolLibrary/Types/T3Texture.h" />
+		<Unit filename="ToolLibrary/Types/TRange.h" />
+		<Unit filename="ToolLibrary/Types/TRect.h" />
+		<Unit filename="ToolLibrary/Types/ToolProps.h" />
+		<Unit filename="ToolLibrary/Types/TransitionMap.h" />
+		<Unit filename="ToolLibrary/Types/TypeIncludes.h" />
+		<Unit filename="ToolLibrary/Types/UtilityTypes.h" />
+		<Unit filename="ToolLibrary/Types/WalkBoxes.h" />
+		<Unit filename="ToolLibrary/VersDB.h" />
+		<Unit filename="ToolLibrary/Zlib/adler32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/compress.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/crc32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/crc32.h" />
+		<Unit filename="ToolLibrary/Zlib/deflate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/deflate.h" />
+		<Unit filename="ToolLibrary/Zlib/infback.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/inffast.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/inffast.h" />
+		<Unit filename="ToolLibrary/Zlib/inffixed.h" />
+		<Unit filename="ToolLibrary/Zlib/inflate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/inflate.h" />
+		<Unit filename="ToolLibrary/Zlib/inftrees.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/inftrees.h" />
+		<Unit filename="ToolLibrary/Zlib/trees.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/trees.h" />
+		<Unit filename="ToolLibrary/Zlib/uncompr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/zconf.h" />
+		<Unit filename="ToolLibrary/Zlib/zlib.h" />
+		<Unit filename="ToolLibrary/Zlib/zutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ToolLibrary/Zlib/zutil.h" />
+		<Unit filename="ToolLibrary/_DeprecatedCmdLine.cpp" />
+		<Unit filename="ToolLibrary/rapidjson/LookaheadParse.h" />
+		<Unit filename="ToolLibrary/rapidjson/allocators.h" />
+		<Unit filename="ToolLibrary/rapidjson/cursorstreamwrapper.h" />
+		<Unit filename="ToolLibrary/rapidjson/document.h" />
+		<Unit filename="ToolLibrary/rapidjson/encodedstream.h" />
+		<Unit filename="ToolLibrary/rapidjson/encodings.h" />
+		<Unit filename="ToolLibrary/rapidjson/error/en.h" />
+		<Unit filename="ToolLibrary/rapidjson/error/error.h" />
+		<Unit filename="ToolLibrary/rapidjson/filereadstream.h" />
+		<Unit filename="ToolLibrary/rapidjson/filewritestream.h" />
+		<Unit filename="ToolLibrary/rapidjson/fwd.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/biginteger.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/clzll.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/diyfp.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/dtoa.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/ieee754.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/itoa.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/meta.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/pow10.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/regex.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/stack.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/strfunc.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/strtod.h" />
+		<Unit filename="ToolLibrary/rapidjson/internal/swap.h" />
+		<Unit filename="ToolLibrary/rapidjson/istreamwrapper.h" />
+		<Unit filename="ToolLibrary/rapidjson/memorybuffer.h" />
+		<Unit filename="ToolLibrary/rapidjson/memorystream.h" />
+		<Unit filename="ToolLibrary/rapidjson/msinttypes/inttypes.h" />
+		<Unit filename="ToolLibrary/rapidjson/msinttypes/stdint.h" />
+		<Unit filename="ToolLibrary/rapidjson/ostreamwrapper.h" />
+		<Unit filename="ToolLibrary/rapidjson/pointer.h" />
+		<Unit filename="ToolLibrary/rapidjson/prettywriter.h" />
+		<Unit filename="ToolLibrary/rapidjson/rapidjson.h" />
+		<Unit filename="ToolLibrary/rapidjson/reader.h" />
+		<Unit filename="ToolLibrary/rapidjson/schema.h" />
+		<Unit filename="ToolLibrary/rapidjson/stream.h" />
+		<Unit filename="ToolLibrary/rapidjson/stringbuffer.h" />
+		<Unit filename="ToolLibrary/rapidjson/uri.h" />
+		<Unit filename="ToolLibrary/rapidjson/writer.h" />
+		<Unit filename="ogg/bitwise.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ogg/config_types.h" />
+		<Unit filename="ogg/crctable.h" />
+		<Unit filename="ogg/framing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ogg/ogg.h" />
+		<Unit filename="ogg/os_types.h" />
+		<Unit filename="vorbis/analysis.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/backends.h" />
+		<Unit filename="vorbis/bitrate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/bitrate.h" />
+		<Unit filename="vorbis/block.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/books/coupled/res_books_51.h" />
+		<Unit filename="vorbis/books/coupled/res_books_stereo.h" />
+		<Unit filename="vorbis/books/floor/floor_books.h" />
+		<Unit filename="vorbis/books/uncoupled/res_books_uncoupled.h" />
+		<Unit filename="vorbis/codebook.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/codebook.h" />
+		<Unit filename="vorbis/codec.h" />
+		<Unit filename="vorbis/codec_internal.h" />
+		<Unit filename="vorbis/envelope.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/envelope.h" />
+		<Unit filename="vorbis/floor0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/floor1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/highlevel.h" />
+		<Unit filename="vorbis/info.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/lookup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/lookup.h" />
+		<Unit filename="vorbis/lookup_data.h" />
+		<Unit filename="vorbis/lpc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/lpc.h" />
+		<Unit filename="vorbis/lsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/lsp.h" />
+		<Unit filename="vorbis/mapping0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/masking.h" />
+		<Unit filename="vorbis/mdct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/mdct.h" />
+		<Unit filename="vorbis/misc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/misc.h" />
+		<Unit filename="vorbis/modes/floor_all.h" />
+		<Unit filename="vorbis/modes/psych_11.h" />
+		<Unit filename="vorbis/modes/psych_16.h" />
+		<Unit filename="vorbis/modes/psych_44.h" />
+		<Unit filename="vorbis/modes/psych_8.h" />
+		<Unit filename="vorbis/modes/residue_16.h" />
+		<Unit filename="vorbis/modes/residue_44.h" />
+		<Unit filename="vorbis/modes/residue_44p51.h" />
+		<Unit filename="vorbis/modes/residue_44u.h" />
+		<Unit filename="vorbis/modes/residue_8.h" />
+		<Unit filename="vorbis/modes/setup_11.h" />
+		<Unit filename="vorbis/modes/setup_16.h" />
+		<Unit filename="vorbis/modes/setup_22.h" />
+		<Unit filename="vorbis/modes/setup_32.h" />
+		<Unit filename="vorbis/modes/setup_44.h" />
+		<Unit filename="vorbis/modes/setup_44p51.h" />
+		<Unit filename="vorbis/modes/setup_44u.h" />
+		<Unit filename="vorbis/modes/setup_8.h" />
+		<Unit filename="vorbis/modes/setup_X.h" />
+		<Unit filename="vorbis/os.h" />
+		<Unit filename="vorbis/psy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/psy.h" />
+		<Unit filename="vorbis/registry.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/registry.h" />
+		<Unit filename="vorbis/res0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/scales.h" />
+		<Unit filename="vorbis/sharedbook.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/smallft.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/smallft.h" />
+		<Unit filename="vorbis/synthesis.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/vorbisenc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/vorbisenc.h" />
+		<Unit filename="vorbis/vorbisfile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/vorbisfile.h" />
+		<Unit filename="vorbis/window.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vorbis/window.h" />
+		<Extensions>
+			<lib_finder>
+				<lib name="zlib" />
+			</lib_finder>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

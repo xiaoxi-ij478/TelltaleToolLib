@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -19,7 +19,7 @@ public:
 	//no need for serialize main
 
 	static MetaOpResult MetaOperation_SerializeAsync(void* pObj,
-		MetaClassDescription* pDesc, MetaMemberDescription* mCtx, void* pUserData) {
+		[[maybe_unused]] MetaClassDescription* pDesc, [[maybe_unused]] MetaMemberDescription* mCtx, void* pUserData) {
 		Set<T>* array = static_cast<Set<T>*>(pObj);
 		MetaClassDescription* vtype = ::GetMetaClassDescription(typeid(T).name());
 		if (!array || !vtype)return eMetaOp_Fail;
@@ -65,7 +65,7 @@ public:
 
 	INLINE virtual bool IsResizable() { return true; }
 
-	virtual bool AllocateElements(int total) {
+	virtual bool AllocateElements([[maybe_unused]] int total) {
 		return false;
 	}
 
@@ -83,20 +83,20 @@ public:
 		}
 	}
 
-	virtual void AddElement(int at_index, const void* pKeyData, void* pValueToAdd) {
+	virtual void AddElement([[maybe_unused]] int at_index,[[maybe_unused]]  const void* pKeyData, void* pValueToAdd) {
 		this->insert(*(T*)pValueToAdd);
 	}
 
 	//DO NOT USE THIS IN SETS!
-	virtual void SetElement(int at_index, const void* pKeyData, void* pValue) {}
+	virtual void SetElement([[maybe_unused]] int at_index, [[maybe_unused]] const void* pKeyData, [[maybe_unused]] void* pValue) {}
 
 	//DO NOT USE THIS IN SETS!
-	virtual String* GetElementName(String* result, int index) {
+	virtual String* GetElementName([[maybe_unused]] String* result, [[maybe_unused]] int index) {
 		return NULL;
 	}
 
 	//DO NOT USE THIS IN SETS!
-	virtual void* GetElement(int at_index) {
+	virtual void* GetElement([[maybe_unused]] int at_index) {
 		return NULL;
 	}
 

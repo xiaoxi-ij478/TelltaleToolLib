@@ -6,7 +6,6 @@
 #include "StringBuffer.h"
 #include "structs.h"
 
-typedef enum StatementType_ StatementType;
 enum StatementType_ {
 	SIMPLE_STMT,
 	BREAK_STMT,
@@ -22,6 +21,7 @@ enum StatementType_ {
 	IF_ELSE_STMT,
 	JMP_DEST_STMT // virtual statement, mark for JMP destination, some of the statements will be printed as label in 5.2
 };
+typedef enum StatementType_ StatementType;
 
 extern const char* const stmttype[];
 

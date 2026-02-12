@@ -50,7 +50,7 @@ struct T3EffectParameterUniformBufferOffsets
 struct T3EffectParameterBufferEntry
 {
 	T3EffectParameterBuffer* mpBuffer;
-	unsigned __int64 mOffset;
+	uint64_t mOffset;
 };
 
 struct T3EffectParameterBufferDataEntry
@@ -135,10 +135,10 @@ public:
 struct RenderFrameUpdateList;
 
 /**
-* 
+*
  A shader parameter group. This is a logical grouping of shader input parameters and data. This struct is layed out in memory as the variables
  in it below followed by a header buffer which describes all the parameter types and offsets. Then is the main buffer data.
- 
+
  A parameter group is created using one of the static Create(XXX) member functions.
 
  You can then dynamically at runtime use the functions in this struct to set parameters, whether they be uniform/generic buffers, render targets, etc.
@@ -161,23 +161,23 @@ struct T3EffectParameterGroup
 	u16 mParameterCount;
 
 	/**
-	* 
+	*
 	 * Add uniform buffers to this parameter group.
-	 * 
+	 *
 	 * Arguments 'buffers' and 'offsets' are a list of up to 30 (see parameter type enum) uniform buffer parameters.
 	 * index into those those argument lists with eEffectParameter_UniformBufferXXX.
 	 * Consecutive from 0, any non zero offsets are set if the parameter exists in this parameter group.
-	 * 
+	 *
 	 * Offsets argument is not touched. But pointers is. You leave it initially empty and this will be set with the pointers
 	 * relative to the pCachedBufferData argument - with the offset at its index added.
-	 * 
+	 *
 	 * pAssignedBuffer is the actual GPU buffer to assign to each uniform buffer parameter type you specify through indices in the offsets argument.
-	 * 
+	 *
 	 * This structs parameter data is modified, and baseOffset is added onto each of the offsets you specify and stored in this.
 	 * This would be offset pCachedBufferData is from the start of the buffer data.
-	 * 
+	 *
 	 * pCachedBufferData can be NULL.
-	 * 
+	 *
 	 */
 	inline void AddUniformBuffer(T3EffectParameterBuffer* pAssignedBuffer, void* pCachedBufferData,
 		T3EffectParameterUniformBufferPointers& buffers, const T3EffectParameterUniformBufferOffsets& offsets, const u32 baseOffset) {
@@ -241,7 +241,7 @@ struct T3EffectParameterGroup
 					params[i].storage = eEffectParameterStorage_Texture;
 					u64* paramData = (u64*)((u8*)this + ((u32)params[i].off << 2));
 					paramData[1] = (u64)textureParam.mpTexture;
-					paramData[0] = *((u64*)(&textureParam.mView));		
+					paramData[0] = *((u64*)(&textureParam.mView));
 				}else if(textureParam.mStorage < eEffectParameterStorage_Count){
 					params[i].storage = textureParam.mStorage;
 					u64* paramData = (u64*)((u8*)this + ((u32)params[i].off << 2));
@@ -405,7 +405,7 @@ inline void PushParameterStack(LinearHeap& heap, T3EffectParameterGroupStack* se
 
 namespace T3EffectParameterUtil {
 
-	//Returns 
+	//Returns
 	inline u32 AllocateUniformBuffer(u32 baseOffset, BitSet<enum T3EffectParameterType, 150, 0>& paramTypes, T3EffectParameterUniformBufferOffsets& offsets){
 		u32 result = (baseOffset + 63) & 0xFFFFFFC0u;//to ensure alignment
 		for(int i = 0; i < eEffectParameter_UniformBufferCount; i++){
@@ -451,7 +451,7 @@ namespace T3EffectParameterUtil {
 		T3EffectParameterUniformBufferOffsets& offsets, T3GFXUniformBufferUsage usage)
 	{
 		T3EffectParameterBuffer* v4;
-		T3GFXUniformBufferUsage v5; 
+		T3GFXUniformBufferUsage v5;
 		u32 result;
 		v4 = buffer;
 		v5 = usage;
@@ -636,7 +636,7 @@ namespace T3EffectParameterUtil {
 		BitSet<enum T3EffectParameterType, 150, 0> paramsToSet = paramTypes;
 		BindParameterStack(boundState, stats, paramsToSet, paramStack, targetList);
 		BindParameterStack(boundState, stats, paramsToSet, pBaseParameters, targetList);
-		
+
 		//Now bind defaults
 		for(int i = 0; i < 150; i++){
 			if(paramsToSet[(T3EffectParameterType)i]){
@@ -1504,7 +1504,7 @@ struct T3EffectGaussianParams
 	float mSigmaSquared;
 };
 
-struct __declspec(align(16)) T3EffectObjectParams
+struct alignas(16) T3EffectObjectParams
 {
 	Matrix4 mInvWorldMatrix;
 	Matrix4 mPrevWorldMatrix;
@@ -2012,7 +2012,7 @@ namespace T3EffectBrushUtil {
 			ramp /= div;
 		}
 		pBuffer->mBrushFarRamp = ramp;
-		pBuffer->mBrushInvFar = 1.0f / max(params.mBrushFar / fr, 0.000001f);
+		pBuffer->mBrushInvFar = 1.0f / std::max(params.mBrushFar / fr, 0.000001f);
 		float h = 2.0f * tanf(params.mHFOV * 0.5f);
 		float v = 2.0f * tanf(params.mVFOV * 0.5f);
 		pBuffer->mBrushFilterMax = Vector2(320.f / params.mTargetWidth, 320.f / params.mTargetHeight);

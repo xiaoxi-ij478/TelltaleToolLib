@@ -101,7 +101,7 @@ enum T3MeshEndianType {
 struct T3MeshTexCoordTransform {
 
 	Vector2 mScale, mOffset;
-	
+
 	inline T3MeshTexCoordTransform() {
 		mScale.x = 1.0f;
 		mScale.y = 1.0f;
@@ -174,7 +174,7 @@ enum T3MaterialQualityType {
 	eMaterialQuality_Count = 3
 };
 
-enum PlatformType {
+enum PlatformType:unsigned {
 	ePlatform_None = 0x0,
 	ePlatform_All = 0x1,
 	ePlatform_PC = 0x2,
@@ -2005,7 +2005,7 @@ enum T3PostEffectType
 	ePostEffect_Count = 0x41,
 };
 
-enum T3RenderHiStencilMode
+enum T3RenderHiStencilMode:unsigned
 {
 	eRenderHiStencilMode_None = 0x0,
 	eRenderHiStencilMode_Write = 0x1,
@@ -2285,7 +2285,7 @@ enum T3SamplerStateValue : unsigned int {
 	eSamplerState_WrapU_Value = 0x0,// see TextureWrapMode.
 	eSamplerState_WrapV_Value = 0x1,// see TextureWrapMode.
 	eSamplerState_Filtered_Value = 0x2,//bool
-	eSamplerState_BorderColor_Value = 0x3,//See TextureBorderColor 
+	eSamplerState_BorderColor_Value = 0x3,//See TextureBorderColor
 	eSamplerState_GammaCorrect_Value = 0x4,//bool
 	eSamplerState_MipBias_Value = 0x5,//uchar8bit
 	eSamplerState_Count = 0x6,
@@ -2948,7 +2948,7 @@ namespace T3EffectCache {
 		//Second test if with valid features masked into the features is created
 		u32 validK = GetProgramKey(GetValidDynamicFeatures(context, (T3EffectType)effectRef.mpValue->mEffectType, effectRef.mpValue->mParams.mStaticFeatures, effectFeatures, effectRef.mpValue->mParams.mQuality, currentPlatform));
 		pProgramHash = _FindProgramHashEntry(effectRef, validK);
-		
+
 		//ExplodeBucketEntry seemed to just print to somewhere stripped.
 		/*if(!pProgramHash || !(pProgram=_GetProgramInternal(pProgramHash, validK))){
 			//New program hash and programs for the requested feat. If program hash is 0, create the programs but return null.
@@ -3025,7 +3025,7 @@ namespace T3EffectCache {
 		hash = (hash * 16777619) ^ (u8)((params.mStaticFeatures.mWords[1] >> 0) & 0xFF);
 		return hash;
 	}
-	
+
 	inline void InsertBucketKey(T3EffectCacheContext& context, u32 key, StaticFeatures features, T3EffectCacheBucket* pBucket){
 		if (!context._OK())
 			return;
@@ -3058,7 +3058,7 @@ namespace T3EffectCache {
 			T3EffectCacheParams tryParams = params;
 			tryParams.mStaticFeatures = GetValidStaticFeatures(context, effectType, params.mStaticFeatures, params.mQuality);
 			pBucket = FindBucket(context, key, effectType, tryParams);
-			if(!pBucket){			
+			if(!pBucket){
 				u32 hashEntriesIndex = 0;//number of bucket hash entries (already one is stored) index. DOES INCLUDE the [1] at the end of the struct
 				u32 validDynamicFeatures = (1u << GetValidDynamicFeatureCount(context, effectType, params.mStaticFeatures, params.mQuality, context.mLoadedPackagePlatform)) >> 1u;//div 2, dynamic feature count can be 0 to 30, so fits in one u32. div 2, gets range 0 to 15 (ok for hashes 0 to 65657)
 				do {
@@ -3109,7 +3109,7 @@ namespace T3EffectCache {
 	}
 
 	/**
-	 * Call this to load into the library shader packages. Pass in the render context and also the list of string shader pack names to use (.t3fxpack). 
+	 * Call this to load into the library shader packages. Pass in the render context and also the list of string shader pack names to use (.t3fxpack).
 	 * If any of the shader packs don't end in t3fxpack, assumed to be a folder and loaded from the folder.
 	 */
 	void LoadShaderPackages(T3EffectCacheContext& context, RenderThreadContext* pRenderThreadContext, const std::vector<String>& shaderPackNames);
@@ -3146,7 +3146,7 @@ namespace T3EffectCache_Legacy {
 	* 4byte: size of platform compiled shader
 	* for num of params:
 	* 7byte: param value (not sure on the actual data in it, most likely a bitset)
-	* 
+	*
 	* shader compiled
 	*/
 	bool LoadShaderPayload(const T3EffectCachePackage& p, const T3EffectCachePackageShader& shader, char* pDest, DataStream& stream);

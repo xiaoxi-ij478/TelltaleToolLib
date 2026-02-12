@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -11,7 +11,7 @@
 #include "../Meta.hpp"
 #include <math.h>
 #include <cmath>
-
+typedef unsigned UINT;
 struct alignas(4) Color {
 
 	inline Color() { r = g = b = a = 0.f; }
@@ -128,7 +128,7 @@ template<typename T> struct Curve {//not serialized
 };
 
 struct alignas(4) Vector2 {
-	
+
 	static Vector2 Zero;
 
 	union {
@@ -646,7 +646,7 @@ struct BoundingBox {
 		float v7;
 		float v8;
 		float v9;
-		float v10; 
+		float v10;
 		float v11;
 		float v12;
 		float v13;
@@ -1089,7 +1089,7 @@ struct Quaternion {
 inline Vector3 operator*(const Vector3& vec, const Quaternion& quat){
 	Vector3 result{};
 	float v3;
-	Vector3* v4; 
+	Vector3* v4;
 	float v5;
 	float v6;
 	float v7;
@@ -1187,7 +1187,7 @@ struct Polar
 	float mPhi;
 };
 
-struct  __declspec(align(8)) Selectable
+struct  alignas(8) Selectable
 {
 	BoundingBox mBoundingBox;
 	int mSelectionOrder;
@@ -1531,12 +1531,12 @@ inline Matrix4 MatrixRotationYawPitchRollDegrees(float yaw, float pitch, float r
 }
 
 inline void SHProjectDirectionalLight(/*out*/Color shParam[9], Vector3 direction, Color color, float wrapAround){
-	float g; 
-	float b; 
-	float a; 
+	float g;
+	float b;
+	float a;
 	float wra;
-	float v8; 
-	float v9; 
+	float v8;
+	float v9;
 	float v10;
 	float v11;
 	float v12;

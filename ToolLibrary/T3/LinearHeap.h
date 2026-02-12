@@ -16,7 +16,7 @@ class LinearHeap {
 	struct ObjWrapperBase {
 
 		ObjWrapperBase* mpNext;
-		
+
 		inline virtual ~ObjWrapperBase() {}
 
 	};
@@ -59,7 +59,7 @@ class LinearHeap {
 	Page* mpBasePage, * mpCurrentPage;
 
 	inline Page* _AllocatePage(u32 size = 0){
-		size = max(size, mPageSize);
+		size = std::max(size, mPageSize);
 		Page* pg = (Page*)_aligned_malloc(size, 32);
 		if (!pg)
 			return 0;
@@ -107,12 +107,12 @@ class LinearHeap {
 		mCurrentPos = mpContextStack->mPagePos;
 		mpContextStack = mpContextStack->mpNext;
 	}
-	
+
 public:
 
-	inline LinearHeap(u32 pageSize = 0x100000) : mpContextStack(&mBaseContext), mpCurrentPage(0), mpBasePage(0), 
+	inline LinearHeap(u32 pageSize = 0x100000) : mpContextStack(&mBaseContext), mpCurrentPage(0), mpBasePage(0),
 		mTotalMemUsed(0), mPageSize(pageSize), mCurrentPos(0), mPageCount(0) {}
-	
+
 	inline ~LinearHeap() {
 		ReleaseAll();
 	}

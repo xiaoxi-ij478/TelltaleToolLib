@@ -161,13 +161,13 @@ StringBuffer* PrintLogicExp(StringBuffer* str, int dest, LogicExp* exp, int inv_
 void AddStatement(Function* F, StringBuffer* str);
 void ShowState(Function* F);
 
-typedef enum IndexType_ IndexType;
 enum IndexType_ {
 	DOT=0,
 	SELF=1,
 	TABLE=2,
 	SQUARE_BRACKET=3
 };
+typedef enum IndexType_ IndexType;
 IndexType MakeIndex(Function* F, StringBuffer* str, char* rstr, IndexType type);
 int isIdentifier(const char* src);
 

@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -8,7 +8,7 @@
 
 #include "TelltaleToolLibrary.h"
 
-constexpr const unsigned __int32 CRCTable[256] =
+constexpr const uint32_t CRCTable[256] =
 {
 	0, 0x77073096, 0xEE0E612C, 0x990951BA,
 		0x076DC419, 0x706AF48F, 0xE963A535, 0x9E6495A3,
@@ -76,7 +76,7 @@ constexpr const unsigned __int32 CRCTable[256] =
 		0xB40BBE37, 0xC30C8EA1, 0x5A05DF1B, 0x2D02EF8D
 };
 
-constexpr const unsigned __int64 crc_tab[] = {
+constexpr const uint64_t crc_tab[] = {
 		0x0000000000000000L,
 		0x42F0E1EBA9EA3693L, 0x85E1C3D753D46D26L, 0xC711223CFA3E5BB5L,
 		0x493366450E42ECDFL, 0x0BC387AEA7A8DA4CL, 0xCCD2A5925D9681F9L,
@@ -165,18 +165,18 @@ constexpr const unsigned __int64 crc_tab[] = {
 		0x1F1D25F19D51D821L, 0xD80C07CD676F8394L, 0x9AFCE626CE85B507L
 };
 
-unsigned __int32 INLINE CRC32(unsigned __int32 crc, const char* const buffer, unsigned int count) {
+uint32_t INLINE CRC32(uint32_t crc, const char* const buffer, unsigned int count) {
 	/*for(int i = 0; i < count; i++)
 		crc = (crc << 8) ^ CRCTable[((crc >> 24) ^  buffer[i]) & 255];
 	return crc;*/
-	unsigned __int64 v3; // r10@1
+	uint64_t v3; // r10@1
 	const char* v4; // r9@1
 	u64 result; // rax@2
 	unsigned int v6; // ecx@3
-	unsigned __int64 v7; // r8@4
+	uint64_t v7; // r8@4
 	unsigned int v8; // edx@5
 	unsigned int v9; // edx@5
-	__int64 v10; // rcx@5
+	uint64_t v10; // rcx@5
 	char v11; // al@5
 	unsigned int v12; // edx@5
 	char v13; // dl@7
@@ -189,23 +189,23 @@ unsigned __int32 INLINE CRC32(unsigned __int32 crc, const char* const buffer, un
 		if (count >= 4)
 		{
 			v7 = count >> 2;
-			v3 += -4i64 * v7;
+			v3 += -4LL * v7;
 			do
 			{
-				v8 = (v6 >> 8) ^ CRCTable[(unsigned __int8)(v6 ^ *v4)];
-				v9 = CRCTable[(unsigned __int8)(v8 ^ v4[1])] ^ (v8 >> 8);
-				v10 = (unsigned __int8)(v9 ^ v4[2]);
+				v8 = (v6 >> 8) ^ CRCTable[(unsigned char)(v6 ^ *v4)];
+				v9 = CRCTable[(unsigned char)(v8 ^ v4[1])] ^ (v8 >> 8);
+				v10 = (unsigned char)(v9 ^ v4[2]);
 				v11 = v4[3];
 				v4 += 4;
 				v12 = CRCTable[v10] ^ (v9 >> 8);
-				v6 = (v12 >> 8) ^ CRCTable[(unsigned __int8)(v12 ^ v11)];
+				v6 = (v12 >> 8) ^ CRCTable[(unsigned char)(v12 ^ v11)];
 				--v7;
 			} while (v7);
 		}
 		for (; v3; --v3)
 		{
 			v13 = *v4++;
-			v6 = (v6 >> 8) ^ CRCTable[(unsigned __int8)(v6 ^ v13)];
+			v6 = (v6 >> 8) ^ CRCTable[(unsigned char)(v6 ^ v13)];
 		}
 		result = ~v6;
 	}
@@ -216,14 +216,14 @@ unsigned __int32 INLINE CRC32(unsigned __int32 crc, const char* const buffer, un
 	return result;
 }
 
-constexpr unsigned __int64 INLINE CRC64(unsigned __int64 crc, const char* const buf, unsigned int len) {
+constexpr uint64_t INLINE CRC64(uint64_t crc, const char* const buf, unsigned int len) {
 	for(int i = 0; i < len; i++){
 		crc = crc_tab[((int)(crc >> 56) ^ buf[i]) & 0xFF] ^ (crc << 8);
 	}
 	return crc;
 }
 
-constexpr unsigned __int64 INLINE CRC64(unsigned __int64 crc, const char* const buf) {
+constexpr uint64_t INLINE CRC64(uint64_t crc, const char* const buf) {
 	const char* buf1 = buf;
 	while (buf1[0]) {
 		crc = crc_tab[((int)(crc >> 56) ^ buf1[0]) & 0xFF] ^ (crc << 8);
@@ -233,7 +233,7 @@ constexpr unsigned __int64 INLINE CRC64(unsigned __int64 crc, const char* const 
 }
 
 /*
-constexpr unsigned __int64 INLINE CRC64_CaseInsensitive(unsigned __int64 crc, const char* const buf) {
+constexpr uint64_t INLINE CRC64_CaseInsensitive(uint64_t crc, const char* const buf) {
 	const char* cur = buf;
 	while (*cur) {
 		unsigned char ch = cur[0];
@@ -245,7 +245,7 @@ constexpr unsigned __int64 INLINE CRC64_CaseInsensitive(unsigned __int64 crc, co
 	return crc;
 }*/
 
-constexpr unsigned __int64 INLINE CRC64_CaseInsensitive(unsigned __int64 crc, const char* s) {
+constexpr uint64_t INLINE CRC64_CaseInsensitive(uint64_t crc, const char* s) {
 	return *s ? CRC64_CaseInsensitive(crc_tab[((unsigned)(crc >> 56) ^ (
 		*s >= 0b01000001 && *s <= 0b01011010 ? *s | 0b00100000 : *s))
 		& 0xFF] ^ (crc << 8),s+1) : crc;

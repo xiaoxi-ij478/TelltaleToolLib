@@ -80,7 +80,7 @@ void InitOperators() {
 
 char* convertToUpper(const char* str) {
 	char *newstr, *p;
-	p = newstr = _strdup(str);
+	p = newstr = strdup(str);
 	while (*p++ = toupper(*p));
 	return newstr;
 }
@@ -255,9 +255,9 @@ char* DecompileConstant(const Proto* f, int i) {
 	const TValue* o = &f->k[i];
 	switch (ttype(o)) {
 	case LUA_TBOOLEAN:
-		return _strdup(bvalue(o)?"true":"false");
+		return strdup(bvalue(o)?"true":"false");
 	case LUA_TNIL:
-		return _strdup("nil");
+		return strdup("nil");
 #if LUA_VERSION_NUM == 501 || LUA_VERSION_NUM == 502
 	case LUA_TNUMBER:
 	{
@@ -289,6 +289,6 @@ char* DecompileConstant(const Proto* f, int i) {
 		return DecompileString(o);
 #endif
 	default:
-		return _strdup("Unknown_Type_Error");
+		return strdup("Unknown_Type_Error");
 	}
 }

@@ -84,7 +84,7 @@ DataStreamMemory* FMODSoundBank::MakeAudioFile(int sampleIndex, std::string& err
 	/*write the comment header*/
 	ogg_packet commenthead{};
 	ogg_packet_clear(&commenthead);
-	char* tmp1 = _strdup("Telltale Inspector | Lucas Saragosa");
+	char* tmp1 = strdup("Telltale Inspector | Lucas Saragosa");
 	com.vendor = tmp1;
 	com.comments = 1;
 	const char* comments_ = "Exported by The Telltale Inspector";
@@ -116,7 +116,7 @@ DataStreamMemory* FMODSoundBank::MakeAudioFile(int sampleIndex, std::string& err
 	u64 packetno = setuphead.packetno;
 	u64 granulepos = 0;
 	u64 prevblocksz = 0;
-	
+
 	mpCachedStream->SetPosition(base_off + sample.mDataOff, DataStreamSeekType::eSeekType_Begin);
 
 	char tmp[2];

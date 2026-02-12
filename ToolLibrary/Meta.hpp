@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -19,6 +19,7 @@
 #include "Types/TRange.h"
 #include "HashManager.h"
 #include "HashDB/HashDB.h"
+#include <endian.h>
 
 // --------------------------------------------------------------------------------------- MACROS ----------------------------------------------------------------------------------------
 
@@ -27,23 +28,17 @@
 #define METASTREAM_ENABLE_DEBUG true
 #endif
 
-#if defined(__BYTE_ORDER) && __BYTE_ORDER == __BIG_ENDIAN || \
-    defined(__BIG_ENDIAN__) || \
-    defined(__ARMEB__) || \
-    defined(__THUMBEB__) || \
-    defined(__AARCH64EB__) || \
-    defined(_MIBSEB) || defined(__MIBSEB) || defined(__MIBSEB__)
+// in case system header define endians also
+#undef LITTLE_ENDIAN
+#undef BIG_ENDIAN
+
+#if defined(__BYTE_ORDER) && __BYTE_ORDER == __BIG_ENDIAN
 #define LITTLE_ENDIAN 0
 #define BIG_ENDIAN 1
-#elif defined(__BYTE_ORDER) && __BYTE_ORDER == __LITTLE_ENDIAN || \
-    defined(__LITTLE_ENDIAN__) || \
-    defined(__ARMEL__) || \
-    defined(__THUMBEL__) || \
-    defined(__AARCH64EL__) || \
-    defined(_MIPSEL) || defined(__MIPSEL) || defined(__MIPSEL__)
+#elif defined(__BYTE_ORDER) && __BYTE_ORDER == __LITTLE_ENDIAN
 #define LITTLE_ENDIAN 1
 #define BIG_ENDIAN 0
-#elif defined(_MSC_VER) 
+#elif defined(_MSC_VER)
 #define LITTLE_ENDIAN 1
 #define BIG_ENDIAN 0
 #else
@@ -75,7 +70,7 @@ struct DebugString : String {
 /**
  * Any MetaOp returns a MetaOpResult. These are the valid return codes.
  */
-enum MetaOpResult {
+enum MetaOpResult : unsigned {
 	eMetaOp_Fail = 0x0,
 	eMetaOp_Succeed = 0x1,
 	eMetaOp_Invalid = 0x2,
@@ -294,7 +289,7 @@ class ContainerInterface;
 
 typedef ContainerInterface* ContainerInterfaceCastFn(void* praw);
 
-const struct MetaStreamParams {
+struct MetaStreamParams {
 	bool mbCompress;
 };
 
@@ -327,7 +322,7 @@ struct SerializedVersionInfo {
 	SerializedVersionInfo* mpNext = nullptr;
 
 	/**
-	 * Type Member description 
+	 * Type Member description
 	 */
 	struct MemberDesc {
 		String mName;
@@ -353,7 +348,7 @@ struct SerializedVersionInfo {
 	static SerializedVersionInfo* RetrieveCompiledVersionInfo(MetaClassDescription* pObjDescription);
 
 	//Originally would save to <Tool>/Meta/<file> This saves in .vers format. This writes everything (including header).
-	//Vers file (serialized versions) names are in the format %s1(%s2).vers , where %s1 is the type name, 
+	//Vers file (serialized versions) names are in the format %s1(%s2).vers , where %s1 is the type name,
 	//and %s2 is the base 36 of the version CRC. Returns a datastream pointer, which you need to delete
 	//Leave the versName as empty if you already have  the type symbol CRC set and it will be set to mFileName = versName = calc_crc...()
 	// NOTE: THIS WILL ONLY WORK WHEN mbOldVersion is FALSE. OLD VERSIONS CANNOT BE SAVED DUE TO THEIR TYPE NAMES (any they shouldn't be saved !!)
@@ -401,13 +396,13 @@ public:
 	INLINE virtual MetaStream::StreamType GetStreamType() { return StreamType::eStream_Binary; }
 
 	/**
-	 * This saves the meta stream and writes the header. This then closes it and puts this class into a closed state, releasing resources. 
+	 * This saves the meta stream and writes the header. This then closes it and puts this class into a closed state, releasing resources.
 	 * Returns the full size of the written stream.
 	 */
 	virtual u64 Close();
 
 	/**
-	 * Attach. This function attaches a given data stream input (takes ownership, do not delete!) to this class. This will read the header but nothing else. With the header, you can know the primary 
+	 * Attach. This function attaches a given data stream input (takes ownership, do not delete!) to this class. This will read the header but nothing else. With the header, you can know the primary
 	 * type which is serialized (look into mVersionInfo, the first element). Then you can perform the serialize meta operation on a type passing in this stream, and it will read it for you.
 	 */
 	virtual bool Attach(DataStream*, MetaStreamMode, MetaStreamParams);
@@ -623,7 +618,7 @@ public:
 		bool mbEncryptStream : 1;
 		u8 mEncryptVersion : 7;//1 2 or 3
 		bool mbSerializeAsCompressVersion;//MCOM. not supported (unknown int, and no files of this type in public, must be engine private).
-		
+
 		WriteParams() : mbEncryptStream(false), mEncryptVersion(3), mbSerializeAsCompressVersion(false) {}
 
 	};
@@ -652,7 +647,7 @@ public:
 	* 2: MTRE (if the meta stream header is not MTRE its a weird encrypted header)
 	* 3: MCOM
 	* 4: MSV4 - No default section, just async and debug
-	* 5: MSV5 
+	* 5: MSV5
 	* 6: MSV6
 	*/
 	u32 mStreamVersion = 0;
@@ -1069,9 +1064,9 @@ struct MetaSerializeAccel {
 
 	MetaSerializeAccel() : mpFunctionMain(NULL), mpFunctionAsync(NULL), mpMemberDesc(NULL) {}
 
-	MetaOpResult(__cdecl* mpFunctionAsync)(void*, MetaClassDescription*,
+	MetaOpResult(* mpFunctionAsync)(void*, MetaClassDescription*,
 		MetaMemberDescription*, void*);
-	MetaOpResult(__cdecl* mpFunctionMain)(void*, MetaClassDescription*,
+	MetaOpResult(* mpFunctionMain)(void*, MetaClassDescription*,
 		MetaMemberDescription*, void*);
 	MetaMemberDescription* mpMemberDesc;
 };
@@ -1195,7 +1190,7 @@ struct MetaClassDescription {
 	void* mpVTable[5/*6*/];
 	MetaSerializeAccel* mpSerializeAccel;//atomic
 	ContainerInterfaceCastFn* mpVTable_ToContainerInterface;//by lib to not need to implements cast stuff. if list/map/set/etc then this casts inst to containerinterface (may add/rem some bytes from class offset in memory).
-	bool mbNameIsHeapAllocated;//created by lib
+	bool mbNameIsHeapAllocated=false;//created by lib
 	bool mbIsIntrinsic;//created by lib, intrinsics arent added to header. where does this filter?? no clue, so i have to add this
 	//oh wait for the value above, nevermind just realised metaoperation_serializeasync is not ever called on intrinsics.
 	//its only called other objects. since we check for the overloaded specialization function for serialize which is set.
@@ -1229,7 +1224,7 @@ struct MetaClassDescription {
 	INLINE MetaMemberDescription* GetMemberDescription(String* _Str) {
 		return GetMemberDescription(_Str->c_str());
 	}
-
+/*
 	INLINE void Initialize(const std::type_info& info) {
 		//i know its slow but it doesnt need to be super  fast and i cba to change this (heap allocations/deallocations)
 		char* buf = (char*)calloc(1, strlen(info.name()) + 1);
@@ -1246,7 +1241,7 @@ struct MetaClassDescription {
 		TelltaleToolLib_MakeInternalTypeName(&buf);
 		mbNameIsHeapAllocated = true;
 		Initialize(buf);
-	}
+	}*/
 
 	//DO NOT USE typeid(type).name(), THIS IS NOT THE RIGHT FORMAT, use typeid(type) and use the overloaded function!!
 	void Initialize(const char*);
@@ -1375,7 +1370,7 @@ inline MetaClassDescription* _GetMetaClassDescription(const std::type_info& tinf
 	MetaClassDescription* clazz = TelltaleToolLib_GetFirstMetaClassDescription();
 	const char* tn = tinf.name();
 	while (clazz != NULL) {
-		if (!_stricmp(tn, clazz->mpTypeInfoExternalName))
+		if (!strcasecmp(tn, clazz->mpTypeInfoExternalName))
 			return clazz;
 		TelltaleToolLib_GetNextMetaClassDescription(&clazz);
 	}
@@ -1419,7 +1414,7 @@ struct _TetheredMembers {
 	inline _MemTy* Get() const {
 		if(this->mpStruct == 0){
 			TTL_Log("ERROR: Cannot get tethered member as struct is NULL!");
-			__debugbreak();
+			abort();
 			return 0;
 		}
 		return ((_MemTy*)((u8*)this->mpStruct + _NthElem<_MemberIndex>(Offsets...)));
@@ -1482,11 +1477,11 @@ struct _VBitSetBase<_FirstOffset, _CountOffset, false>{
 	inline _VBitSetBase(void* pTether) : mTethers(pTether) {}
 
 	inline u32 GetFirst() const {
-		return *mTethers.Get<eT3Tether_First>();
+		return *mTethers.template Get<eT3Tether_First>();
 	}
 
 	inline u32 GetCount() const {
-		return *mTethers.Get<eT3Tether_Count>();
+		return *mTethers.template Get<eT3Tether_Count>();
 	}
 
 	inline void* _GetTether() const {
@@ -1593,7 +1588,7 @@ struct _BitSet : BitSetBase<NumWords>, _Base {
 			this->SetTether(rhs._GetTether());
 		if (this->GetCount() == rhs.GetCount() && this->GetFirst() == rhs.GetFirst()) {
 			//Normal copy
-			for (u32 i = 0; i < min(_RhsNum, NumWords); i++) {
+			for (u32 i = 0; i < std::min(_RhsNum, NumWords); i++) {
 				this->mWords[i] = rhs.mWords[i];
 			}
 		}

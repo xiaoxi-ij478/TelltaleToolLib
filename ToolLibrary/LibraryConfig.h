@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <string>
 #include <memory>
+#include <unistd.h>
 
 /**
  * Library version.
@@ -18,7 +19,7 @@ enum class DataStreamMode : unsigned char {
 };
 
 //Windows platform definitions
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__WINE__)
 
 // ============================================================= PLATFORM: WINDOWS =============================================================
 
@@ -29,7 +30,7 @@ enum class DataStreamMode : unsigned char {
 #define RELEASEMODE
 #endif
 
-#include <Windows.h>
+#include <windows.h>
 
 //Define to empty file handle for constructor in data stream disc.
 #define EMPTY_FILE_HANDLE (HANDLE)INVALID_HANDLE_VALUE
@@ -37,7 +38,7 @@ enum class DataStreamMode : unsigned char {
 //File handle type
 typedef HANDLE FileHandle;
 
-//Windows internal open file 
+//Windows internal open file
 HANDLE openfile_s_(const char* fp, const char* m);
 
 //Define this to truncate the given file handle
@@ -81,21 +82,79 @@ typedef HMODULE LibraryHandle;
 
 // ============================================================ END PLATFORM: WINDOWS ==========================================================
 
+#elif defined(_POSIX_VERSION)
+
+//Debug/Release macros
+#ifdef _DEBUG
+#define DEBUGMODE
+#else
+#define RELEASEMODE
+#endif
+#include <stdio.h>
+#include <dlfcn.h>
+
+//Define to empty file handle for constructor in data stream disc.
+#define EMPTY_FILE_HANDLE NULL
+
+//File handle type
+typedef FILE* FileHandle;
+
+//Define this to truncate the given file handle
+#define PlatformSpecTrunc(handle, newsize) ftruncate(fileno(handle),newsize)
+
+//Define this to open the given file from mode
+#define PlatformSpecOpenFile(file_path,mode) fopen(file_path,mode == DataStreamMode::eMode_Write ? "wb" : "rb")
+
+//Define this to close the given file
+#define PlatforSpecCloseFile(handle) if(handle) fclose(handle);
+
+#define PlatformLoadLibrary(name) dlopen(name,RTLD_NOW)
+
+#define PlatformFreeLibrary(libHandle) dlclose(libHandle)
+
+typedef void* LibraryHandle;
+
+#define EMPTY_LIBRARY_HANDLE NULL
+
+#define PLATFORM_DYLIB_EXT "so"
+
+ /**
+  * Shortcut for inline spec. Per platform may be different.
+  */
+#define INLINE inline
+
+  /**
+   * Shortcut for force inline spec.
+   */
+#define FORCE_INLINE always_inline
+
+   /**
+	* Export to dynamic library.
+	*/
+#define _TTToolLib_Exp extern "C"
+
+	/**
+	 * Same as _TTToolLib_Exp
+	 */
+#define TTEXPORT _TTToolLib_Exp
+
+// ============================================================ END PLATFORM: WINDOWS ==========================================================
+
 #else
 
 #error "Unknown platform. Please implement the same macros as windows for this platform."
 
 #endif
 
-typedef std::make_unsigned<__int64>::type u64;
-typedef std::make_unsigned<__int32>::type u32;
-typedef std::make_unsigned<__int16>::type u16;
-typedef std::make_unsigned<__int8> ::type u8;
-typedef __int8  i8;
-typedef __int16 i16;
-typedef __int32 i32;
-typedef __int64 i64;
-typedef std::basic_string<i8, std::char_traits<i8>, std::allocator<i8>> String;
+typedef std::make_unsigned<int64_t>::type u64;
+typedef std::make_unsigned<int32_t>::type u32;
+typedef std::make_unsigned<int16_t>::type u16;
+typedef std::make_unsigned<int8_t> ::type u8;
+typedef int8_t  i8;
+typedef int16_t i16;
+typedef int32_t i32;
+typedef int64_t i64;
+typedef std::basic_string<char, std::char_traits<char>, std::allocator<char>> String;
 
 inline void* operator new(size_t s){
 	if (!s)
@@ -112,7 +171,7 @@ inline void* operator new[](size_t s){
 inline void operator delete(void* ptr) noexcept {
 	if (ptr)
 		free(ptr);
-} 
+}
 
 inline void operator delete[](void* ptr) noexcept {
 	if (ptr)

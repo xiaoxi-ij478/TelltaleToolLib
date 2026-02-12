@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -32,7 +32,7 @@ struct WalkBoxes {
 		SArray<Edge, 3> mEdgeInfo;
 		SArray<int, 3> mVertOffsets;
 		SArray<float, 3> mVertScales;
-		
+
 		Tri() {
 			mFootstepMaterial.mVal = SoundFootsteps::Material::Default;
 			mQuadBuddy = -1;
@@ -122,16 +122,16 @@ struct WalkBoxes {
 		if (r != eMetaOp_Succeed)return r;
 		WalkBoxes* v6 = static_cast<WalkBoxes*>(pObj);
 		int v7; // ebp@1
-		__int64 v8; // rsi@2
+		int64_t v8; // rsi@2
 		WalkBoxes::Vert* v9; // rcx@3
 		WalkBoxes::Quad* v10; // rbx@3
-		signed __int64 v11; // rax@3
+		int64_t v11; // rax@3
 		int v12; // xmm1_4@3
 		int v13; // xmm0_4@3
 		Vector3 v14; // r9@3
 		Vector3 v15; // r8@3
 		WalkBoxes::Vert* v16; // rcx@3
-		signed __int64 v17; // rax@3
+		int64_t v17; // rax@3
 		int v18; // xmm1_4@3
 		int v19; // xmm0_4@3
 		Vector3 v20; // r9@3
@@ -146,7 +146,7 @@ struct WalkBoxes {
 		v7 = 0;
 		if (v6->mQuads.mSize > 0)
 		{
-			v8 = 0i64;
+			v8 = 0LL;
 			do
 			{
 				v9 = v6->mVerts.mpStorage;
@@ -154,7 +154,7 @@ struct WalkBoxes {
 				v11 = v10[v8].mVerts.mData[0];
 				v12 = v9[v10[v8].mVerts.mData[0]].mPos.y;
 				v23 = v9[v10[v8].mVerts.mData[0]].mPos.x;
-				v13 = v9[(unsigned __int64)(4 * v11) / 0x10].mPos.z;
+				v13 = v9[(unsigned int64_t)(4 * v11) / 0x10].mPos.z;
 				v14 = v9[v10[v8].mVerts.mData[2]].mPos;
 				v24 = v12;
 				v15 = v9[v10[v8].mVerts.mData[1]].mPos;
@@ -164,7 +164,7 @@ struct WalkBoxes {
 				v17 = v10[v8].mVerts.mData[3];
 				v18 = v16[v10[v8].mVerts.mData[3]].mPos.y;
 				v26 = v16[v10[v8].mVerts.mData[3]].mPos.x;
-				v19 = v16[(unsigned __int64)(4 * v17) / 0x10].mPos.z;
+				v19 = v16[(unsigned int64_t)(4 * v17) / 0x10].mPos.z;
 				v20 = v16[v10[v8].mVerts.mData[1]].mPos;
 				v27 = v18;
 				v21 = v16[v10[v8].mVerts.mData[2]].mPos;

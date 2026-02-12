@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -106,7 +106,7 @@ public:
 
 	virtual void RemoveElement(int at_index) override {
 		int v2;
-		__int64 v3;
+		int64_t v3;
 		v2 = this->mSize;
 		if (v2)
 		{
@@ -144,7 +144,7 @@ public:
 		}
 	}
 
-	virtual void SetElement(int at_index, const void* pKeyData, void* pValue) {
+	virtual void SetElement(int at_index, [[maybe_unused]] const void* pKeyData, void* pValue) {
 		T* elem = &mpStorage[at_index];
 		if (pValue)
 			*elem = *static_cast<T*>(pValue);
@@ -161,15 +161,15 @@ public:
 		mSize++;
 	}
 
-	virtual void AddElementMove(int at_index, const void* pKeyDat, void* pValue) {
+	virtual void AddElementMove(int at_index, [[maybe_unused]] const void* pKeyDat, void* pValue) {
 		if (mSize == mCapacity) {
 			Resize(4);//bit different to telltale who cares
 		}
 		if (mSize && !at_index)at_index = mSize;
-		
+
 		T* elem = &mpStorage[at_index];
 		if (pValue)
-			*elem = _STD move(*static_cast<T*>(pValue));
+			*elem = std:: move(*static_cast<T*>(pValue));
 		else
 			memset(elem, 0, sizeof(T));
 
@@ -198,7 +198,7 @@ public:
 		}
 		return false;
 	}
-	
+
 	//Reserves memory, does not change size
 	virtual bool Resize(int num_to_add_or_remove) {
 		if (!num_to_add_or_remove)return true;
@@ -211,13 +211,13 @@ public:
 			if (mSize >= newcap) {
 				//memcpy(mpStorage, oldstorage, sizeof(T) * newcap);
 				for (int i = 0; i < newcap; i++) {
-					mpStorage[i] = _STD move(oldstorage[i]);
+					mpStorage[i] = std:: move(oldstorage[i]);
 				}
 				mSize = newcap;
 			}
 			else {//newcap>size
 				for (int i = 0; i < mSize; i++) {
-					mpStorage[i] = _STD move(oldstorage[i]);
+					mpStorage[i] = std:: move(oldstorage[i]);
 				}
 			}
 			if (oldstorage)delete[] oldstorage;
@@ -306,7 +306,7 @@ public:
 };
 
 //DCArrayNoMeta (not serialized)
-template<typename T> 
+template<typename T>
 using DCArrayNM = DCArray<T>;
 
 #endif

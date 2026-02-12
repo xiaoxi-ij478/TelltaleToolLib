@@ -1,4 +1,4 @@
-// This file was written by Lucas Saragosa. Im the author of this interpretation of 
+// This file was written by Lucas Saragosa. Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -54,7 +54,7 @@ HANDLE openfile_s_(const char* fp, const char* m) {
 
 // DATA STREAM FUNCTIONS
 
-bool DataStream::Copy(DataStream* pDst, unsigned __int64 pDstOffset, unsigned __int64 pSrcOffset, unsigned __int64 size) {
+bool DataStream::Copy(DataStream* pDst, uint64_t pDstOffset, uint64_t pSrcOffset, uint64_t size) {
 	static char _CopyBuf[0x10000];
 	if (pDst == this)return true;
 	if (!pDst || pSrcOffset + size > GetSize() || mMode != DataStreamMode::eMode_Read
@@ -80,11 +80,11 @@ bool DataStream::Copy(DataStream* pDst, unsigned __int64 pDstOffset, unsigned __
 	return true;
 }
 
-void DataStreamContainer::Create(DataStreamContainer::ProgressF f, DataStreamContainerParams params, unsigned __int64 insize) {
+void DataStreamContainer::Create(DataStreamContainer::ProgressF f, DataStreamContainerParams params, uint64_t insize) {
 #define writeint(var, size) to->Serialize((char*)&var,size)
 	if (!params.mpSrcStream || !params.mpDstStream)return;
 	if (params.mbEncrypt)params.mbCompress = true;
-	unsigned __int64 v;
+	uint64_t v;
 	DataStream* to = params.mpDstStream;
 	DataStream* from = params.mpSrcStream;
 	to->SetPosition(params.mDstOffset, DataStreamSeekType::eSeekType_Begin);
@@ -96,7 +96,7 @@ void DataStreamContainer::Create(DataStreamContainer::ProgressF f, DataStreamCon
 		else {
 			v = params.mbEncrypt ? 1414808389 : 1414808410;
 		}
-		unsigned __int64 start = to->GetPosition();
+		uint64_t start = to->GetPosition();
 		writeint(v, 4);
 		if (params.mCompressionLibrary != Compression::Library::ZLIB)
 			writeint(params.mCompressionLibrary, 4);
@@ -104,9 +104,9 @@ void DataStreamContainer::Create(DataStreamContainer::ProgressF f, DataStreamCon
 		int pages = insize / params.mWindowSize;
 		if (insize % params.mWindowSize)pages++;
 		writeint(pages, 4);
-		unsigned __int64 pagesoff = to->GetPosition();
-		unsigned __int64 csize = 0;
-		unsigned __int64 *pagebuf = (unsigned __int64*)calloc(1, (pages + 1) * 8);
+		uint64_t pagesoff = to->GetPosition();
+		uint64_t csize = 0;
+		uint64_t *pagebuf = (uint64_t*)calloc(1, (pages + 1) * 8);
 		to->Serialize((char*)pagebuf, (pages + 1) * 8);
 		pagebuf[0] = to->GetPosition() - start;
 
@@ -156,7 +156,7 @@ void DataStreamContainer::Create(DataStreamContainer::ProgressF f, DataStreamCon
 
 		free(decompressed);
 		free(compressed);
-		unsigned __int64 endpos = to->GetPosition();
+		uint64_t endpos = to->GetPosition();
 		to->SetPosition(pagesoff, DataStreamSeekType::eSeekType_Begin);
 		to->Serialize((char*)pagebuf, (pages + 1) * 8);
 		to->SetPosition(endpos, DataStreamSeekType::eSeekType_Begin);
@@ -183,7 +183,7 @@ DataStream& DataStream::operator=(DataStream&& o)  {
 	return *this;
 }
 
-bool DataStreamLegacyEncrypted::Serialize(char* buffer, unsigned __int64 size) {
+bool DataStreamLegacyEncrypted::Serialize(char* buffer, uint64_t size) {
 	if (!mpBase->IsRead() || !buffer && size || size + mOffset > mSize)
 		return false;
 	if (!size)return true;
@@ -246,7 +246,7 @@ bool DataStreamLegacyEncrypted::Serialize(char* buffer, unsigned __int64 size) {
 	return true;
 }
 
-DataStreamLegacyEncrypted::DataStreamLegacyEncrypted(DataStream* base, int version, unsigned int header) : 
+DataStreamLegacyEncrypted::DataStreamLegacyEncrypted(DataStream* base, int version, unsigned int header) :
 	mHeader(header), mpBase(base),  mOffset(0), mSize(base->GetSize()-header), mCurrentBlock(-1),DataStream(DataStreamMode::eMode_Read) {
 	if (version == 1)
 	{
@@ -268,7 +268,7 @@ DataStreamLegacyEncrypted::DataStreamLegacyEncrypted(DataStream* base, int versi
 	}
 }
 
-bool DataStreamContainer::Serialize(char* dest, unsigned __int64 size) {
+bool DataStreamContainer::Serialize(char* dest, uint64_t size) {
 	if (mStreamPosition + size > mStreamSize)return false;
 	if (mParams.mbCompress) {
 		if (mCurrentIndex == -1 && !GetChunk(0))
@@ -317,9 +317,9 @@ bool DataStreamContainer::Serialize(char* dest, unsigned __int64 size) {
 	return true;
 }
 
-void DataStreamContainer::Read(unsigned __int64 offset, unsigned __int64* pContainerSize) {
+void DataStreamContainer::Read(uint64_t offset, uint64_t* pContainerSize) {
 	mParams.mpSrcStream->SetPosition(offset, DataStreamSeekType::eSeekType_Begin);
-	unsigned __int32 type = 0;
+	uint32_t type = 0;
 	mStreamStart = offset;
 	ok = false;
 	if (!mParams.mpSrcStream->Serialize((char*)&type, 4))
@@ -335,7 +335,7 @@ void DataStreamContainer::Read(unsigned __int64 offset, unsigned __int64* pConta
 		return;
 	}
 	else {
-		unsigned __int32 libtype = 0;
+		uint32_t libtype = 0;
 		mParams.mbCompress = true;
 		switch (type) {
 		case 1414808389: //TTCE
@@ -367,7 +367,7 @@ void DataStreamContainer::Read(unsigned __int64 offset, unsigned __int64* pConta
 	mParams.mpSrcStream->Serialize((char*)&mParams.mWindowSize, 4);
 	mParams.mpSrcStream->Serialize((char*)&mNumPages, 4);
 	mNumPages++;
-	mPageOffsets = (unsigned __int64*)calloc(1, mNumPages * 8);
+	mPageOffsets = (uint64_t*)calloc(1, mNumPages * 8);
 	mParams.mpSrcStream->Serialize((char*)mPageOffsets, mNumPages * 8);
 	*pContainerSize = (--mNumPages) * mParams.mWindowSize;
 	mStreamSize = *pContainerSize;
@@ -391,10 +391,10 @@ DataStreamContainer::~DataStreamContainer() {
 	mParams.mpSrcStream = 0;
 }
 
-bool DataStreamContainer::GetChunk(unsigned __int64 index) {
+bool DataStreamContainer::GetChunk(uint64_t index) {
 	if (mCurrentIndex == index)return true;
-	unsigned __int64 offset = mPageOffsets[index];
-	unsigned __int64 size = GetCompressedPageSize(index);
+	uint64_t offset = mPageOffsets[index];
+	uint64_t size = GetCompressedPageSize(index);
 	mParams.mpSrcStream->SetPosition(mStreamStart + offset, DataStreamSeekType
 		::eSeekType_Begin);
 	mParams.mpSrcStream->Serialize(mpReadTransitionBuf, size);
@@ -456,12 +456,12 @@ bool DataStreamContainer::GetChunk(unsigned __int64 index) {
 };*/
 
 
-inline unsigned __int64 DataStreamContainer::GetCompressedPageSize(unsigned __int32 index) {
+inline uint64_t DataStreamContainer::GetCompressedPageSize(uint32_t index) {
 	return mPageOffsets[index + 1] - mPageOffsets[index];
 }
 
-bool DataStreamContainer::SetPosition(signed __int64 pos, DataStreamSeekType type) {
-	unsigned __int64 final = 0;
+bool DataStreamContainer::SetPosition(int64_t pos, DataStreamSeekType type) {
+	uint64_t final = 0;
 	switch (type) {
 	case DataStreamSeekType::eSeekType_Begin:
 		final = pos;
@@ -485,8 +485,8 @@ bool DataStreamContainer::SetPosition(signed __int64 pos, DataStreamSeekType typ
 	return true;
 }
 
-bool DataStreamLegacyEncrypted::SetPosition(signed __int64 pos, DataStreamSeekType type) {
-	unsigned __int64 final = 0;
+bool DataStreamLegacyEncrypted::SetPosition(int64_t pos, DataStreamSeekType type) {
+	uint64_t final = 0;
 	switch (type) {
 	case DataStreamSeekType::eSeekType_Begin:
 		final = pos;
@@ -503,8 +503,8 @@ bool DataStreamLegacyEncrypted::SetPosition(signed __int64 pos, DataStreamSeekTy
 	return mpBase->SetPosition(pos + mHeader, type);
 }
 
-bool DataStreamSubStream::SetPosition(signed __int64 pos, DataStreamSeekType type) {
-	unsigned __int64 final = 0;
+bool DataStreamSubStream::SetPosition(int64_t pos, DataStreamSeekType type) {
+	uint64_t final = 0;
 	switch (type) {
 	case DataStreamSeekType::eSeekType_Begin:
 		final = pos;
@@ -527,7 +527,7 @@ bool DataStream::SetMode(DataStreamMode mode) {
 	return true;
 }
 
-bool DataStreamMemory::Serialize(char* buffer, unsigned __int64 bufsize) {
+bool DataStreamMemory::Serialize(char* buffer, uint64_t bufsize) {
 	if (!buffer && bufsize)return false;
 	if (!bufsize)return true;
 	if (IsRead()) {
@@ -575,8 +575,8 @@ bool DataStreamMemory::Serialize(char* buffer, unsigned __int64 bufsize) {
 	return true;
 }
 
-bool DataStreamMemory::SetPosition(signed __int64 pos, DataStreamSeekType type) {
-	unsigned __int64 final = 0;
+bool DataStreamMemory::SetPosition(int64_t pos, DataStreamSeekType type) {
+	uint64_t final = 0;
 	switch (type) {
 	case DataStreamSeekType::eSeekType_Begin:
 		final = pos;
@@ -611,17 +611,17 @@ DataStreamMemory& DataStreamMemory::operator=(DataStreamMemory&& other) {
 	return *this;
 }
 
-DataStreamMemory::DataStreamMemory(unsigned __int64 initial, unsigned __int64 growth) : DataStreamMemory(initial) {
+DataStreamMemory::DataStreamMemory(uint64_t initial, uint64_t growth) : DataStreamMemory(initial) {
 	mGFact = growth;
 }
 
-DataStreamMemory::DataStreamMemory(unsigned __int64 initial) : mOffset(0), mSize(initial),
+DataStreamMemory::DataStreamMemory(uint64_t initial) : mOffset(0), mSize(initial),
 	DataStream(DataStreamMode::eMode_Write) {
 	if (mGFact > initial) {
 		mMemoryBuffer = calloc(1, mGFact);
 	}
 	else {
-		unsigned __int64 memorybufsize = mSize;
+		uint64_t memorybufsize = mSize;
 		if (mSize % mGFact)memorybufsize += mGFact - (mSize % mGFact);
 		mMemoryBuffer = calloc(1, memorybufsize);
 	}
@@ -635,7 +635,7 @@ DataStreamMemory::DataStreamMemory(DataStreamMemory&& other) : mOffset(other.mOf
 	other.mMemoryBuffer = calloc(1, other.mGFact);
 }
 
-bool DataStreamSubStream::Serialize(char* buf, unsigned __int64 bufsize) {
+bool DataStreamSubStream::Serialize(char* buf, uint64_t bufsize) {
 	if (!bufsize)return true;
 	if ((!buf && bufsize) || (mOffset + bufsize > mSize))return false;
 	if (!mpBase->SetPosition(mStreamOffset + mOffset, DataStreamSeekType::eSeekType_Begin))return false;
@@ -644,7 +644,7 @@ bool DataStreamSubStream::Serialize(char* buf, unsigned __int64 bufsize) {
 	return true;
 }
 
-DataStreamSubStream* DataStream::GetSubStream(unsigned __int64 off, unsigned __int64 size) {
+DataStreamSubStream* DataStream::GetSubStream(uint64_t off, uint64_t size) {
 	if (!IsRead())return NULL;
 	if (off + size > GetSize()) {
 		return NULL;
@@ -652,13 +652,13 @@ DataStreamSubStream* DataStream::GetSubStream(unsigned __int64 off, unsigned __i
 	return new DataStreamSubStream(this, size, off);
 }
 
-DataStreamSubStream* DataStreamSubStream::GetSubStream(unsigned __int64 off, unsigned __int64 size) {
+DataStreamSubStream* DataStreamSubStream::GetSubStream(uint64_t off, uint64_t size) {
 	if (!IsRead())return NULL;
 	if (this->mOffset + size > mSize) return NULL;
 	return new DataStreamSubStream(this, size, off);
 }
-																
-bool DataStreamMemory::Truncate(unsigned __int64 newsize) {
+
+bool DataStreamMemory::Truncate(uint64_t newsize) {
 	if (!IsWrite())return false;
 	int memorybufsize = mSize;
 	if (mSize % mGFact)memorybufsize += mGFact - (mSize % mGFact);
@@ -679,7 +679,7 @@ bool DataStreamMemory::Truncate(unsigned __int64 newsize) {
 	return true;
 }
 
-bool DataStreamMemory::Transfer(DataStream* dst, unsigned __int64 off, unsigned __int64 size) {
+bool DataStreamMemory::Transfer(DataStream* dst, uint64_t off, uint64_t size) {
 	if (off + size > mSize || !dst)return false;
 	bool settoread = false;
 	if (dst->mMode == DataStreamMode::eMode_Read)settoread = true;
@@ -689,13 +689,13 @@ bool DataStreamMemory::Transfer(DataStream* dst, unsigned __int64 off, unsigned 
 	return true;
 }
 
-bool DataStreamSubStream::Transfer(DataStream* dst, unsigned __int64 off, unsigned __int64 size) {
+bool DataStreamSubStream::Transfer(DataStream* dst, uint64_t off, uint64_t size) {
 	if (off + size > mSize || !dst)return false;
 	return mpBase->Transfer(dst, mStreamOffset + off, size);
 }
 
-DataStreamSubStream::DataStreamSubStream(DataStream* base, unsigned __int64 size,
-	unsigned __int64 off) : DataStream(DataStreamMode::eMode_Read), mpBase(base),
+DataStreamSubStream::DataStreamSubStream(DataStream* base, uint64_t size,
+	uint64_t off) : DataStream(DataStreamMode::eMode_Read), mpBase(base),
 mSize(size), mStreamOffset(off), mOffset(0) {
 	if (!base)throw "No base passed";
 	if (off > base->GetSize())
@@ -704,7 +704,7 @@ mSize(size), mStreamOffset(off), mOffset(0) {
 }
 
 
-DataStreamSubStream::DataStreamSubStream(DataStream* base, unsigned __int64 size) : DataStream(DataStreamMode::eMode_Read), mpBase(base),
+DataStreamSubStream::DataStreamSubStream(DataStream* base, uint64_t size) : DataStream(DataStreamMode::eMode_Read), mpBase(base),
 mSize(size), mOffset(0) {
 	if (!base)throw "No base passed";
 	mStreamOffset = base->GetPosition();
@@ -739,19 +739,19 @@ DataStreamSubStream::~DataStreamSubStream() {
 	mpBase->mSubStreams--;
 }
 
-bool DataStreamFile_PlatformSpecific::Truncate(unsigned __int64 newSize) {
+bool DataStreamFile_PlatformSpecific::Truncate(uint64_t newSize) {
 	static char _TruncateBuffer[0x1000];
 	if (!IsWrite())return false;
 	if (newSize == mStreamSize)return true;
 	if (newSize > mStreamSize) {//add bytes
-		unsigned __int64 off = GetPosition();
-		SetFilePointer((HANDLE)mHandle, mStreamSize, NULL,  FILE_BEGIN);
-		unsigned __int64 diff = newSize - mStreamSize;
-		unsigned __int64 blocks = diff / 0x1000;
+		uint64_t off = GetPosition();
+	fseek(mHandle,mStreamSize, SEEK_SET);
+		uint64_t diff = newSize - mStreamSize;
+		uint64_t blocks = diff / 0x1000;
 		for (int i = 0; i < blocks; i++)
-			WriteFile((HANDLE)mHandle, _TruncateBuffer, 0x1000, NULL, NULL);
-		WriteFile((HANDLE)mHandle, _TruncateBuffer, diff % 0x1000, NULL, NULL);
-		SetFilePointer((HANDLE)mHandle, off, NULL, FILE_BEGIN);
+			fwrite(_TruncateBuffer,1,0x1000,mHandle);
+		fwrite(_TruncateBuffer,1,diff%0x1000,mHandle);
+		fseek(mHandle,off,SEEK_SET);
 	}
 	else {//remove bytes, windows version can add bytes but just in case for other platforms :D
 
@@ -764,13 +764,13 @@ bool DataStreamFile_PlatformSpecific::Truncate(unsigned __int64 newSize) {
 }
 
 
-bool DataStreamFile_PlatformSpecific::Transfer(DataStream* dst, unsigned __int64 off, unsigned __int64 size)
+bool DataStreamFile_PlatformSpecific::Transfer(DataStream* dst, uint64_t off, uint64_t size)
 {
 	return Copy(dst, dst->GetPosition(), off, size);
 }
 
-bool DataStreamFile_PlatformSpecific::SetPosition(signed __int64 pos, DataStreamSeekType type) {
-	unsigned __int64 final = 0;
+bool DataStreamFile_PlatformSpecific::SetPosition(int64_t pos, DataStreamSeekType type) {
+	uint64_t final = 0;
 	switch (type) {
 	case DataStreamSeekType::eSeekType_Begin:
 		final = pos;
@@ -783,22 +783,21 @@ bool DataStreamFile_PlatformSpecific::SetPosition(signed __int64 pos, DataStream
 		break;
 	}
 	if (final > mStreamSize)return false;
-	LONG hi = final << 32;
-	SetFilePointer((HANDLE)mHandle, final, &hi, FILE_BEGIN);
+	fseek(mHandle,final,SEEK_SET);
 	this->mStreamOffset = final;
 	return true;
 }
 
-bool DataStreamFile_PlatformSpecific::Serialize(char* buf, unsigned __int64 bufsize) {
+bool DataStreamFile_PlatformSpecific::Serialize(char* buf, uint64_t bufsize) {
 	if (!bufsize)return true;
 	if (IsInvalid() || !buf && bufsize) {
 		TelltaleToolLib_RaiseError("Cannot read from data stream disk: stream is invalid - file did not exist or could not be opened or parameters are invalid (buffer)", ERR);
 		return false;
 	}
-	SetFilePointer((HANDLE)mHandle, mStreamOffset, NULL, FILE_BEGIN);
+	fseek(mHandle,mStreamOffset, SEEK_SET);
 	if (IsWrite()) {
-		if (1 != WriteFile((HANDLE)mHandle, buf, bufsize, NULL, NULL)) {
-			sprintf(TelltaleToolLib_Alloc_GetFixed1024ByteStringBuffer(), "Cannot write to data stream disk : windows WriteFile failed with %d", (u32)GetLastError());
+		if (bufsize != fwrite(buf,1,bufsize,mHandle)) {
+			sprintf(TelltaleToolLib_Alloc_GetFixed1024ByteStringBuffer(), "Cannot write to data stream disk : windows WriteFile failed with %d", errno);
 			TelltaleToolLib_RaiseError(TelltaleToolLib_Alloc_GetFixed1024ByteStringBuffer(), ERR);
 			return false;//if we couldnt write 1 element
 		}
@@ -808,12 +807,18 @@ bool DataStreamFile_PlatformSpecific::Serialize(char* buf, unsigned __int64 bufs
 	else {
 		if (mStreamOffset + bufsize > mStreamSize) {
 			sprintf(TelltaleToolLib_Alloc_GetFixed1024ByteStringBuffer(), "Cannot read from data stream: trying to read %d bytes but only %d bytes left (lower file size from Windows reads %d)", (u32)bufsize, (u32)(mStreamSize - mStreamOffset)
-				, (u32)GetFileSize((HANDLE)mHandle,0));
+				, ({
+					long orig=ftell(mHandle);
+					fseek(mHandle,0,SEEK_END);
+					long leng=ftell(mHandle);
+					fseek(mHandle,orig,SEEK_SET);
+					leng;
+					}));
 			TelltaleToolLib_RaiseError(TelltaleToolLib_Alloc_GetFixed1024ByteStringBuffer(), ERR);
 			return false;//if we couldnt write 1 element
 		}
-		if(1!=ReadFile((HANDLE)mHandle, buf, bufsize, NULL, NULL)) {
-			sprintf(TelltaleToolLib_Alloc_GetFixed1024ByteStringBuffer(), "Cannot read from data stream disk : windows ReadFile failed with %d", (u32)GetLastError());
+		if(bufsize!=fread(buf,1,bufsize,mHandle)) {
+			sprintf(TelltaleToolLib_Alloc_GetFixed1024ByteStringBuffer(), "Cannot read from data stream disk : windows ReadFile failed with %d", errno);
 			TelltaleToolLib_RaiseError(TelltaleToolLib_Alloc_GetFixed1024ByteStringBuffer(), ERR);
 			return false;//if we couldnt write 1 element
 		}
@@ -834,9 +839,11 @@ DataStreamFile_PlatformSpecific::DataStreamFile_PlatformSpecific(FileHandle hand
 		mHandle = EMPTY_FILE_HANDLE;
 		return;
 	}
-	DWORD hi{ 0 };
-	mStreamSize = GetFileSize((HANDLE)handle, &hi);
-	mStreamSize |= ((unsigned __int64)hi) << 32;
+	long orig=ftell(mHandle);
+	fseek(mHandle,0,SEEK_END);
+	long leng=ftell(mHandle);
+	fseek(mHandle,orig,SEEK_SET);
+	mStreamSize = leng;
 	mStreamOffset = 0;
 }
 

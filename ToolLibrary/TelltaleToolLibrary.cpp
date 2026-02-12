@@ -220,7 +220,7 @@ _TTToolLib_Exp int TelltaleToolLib_SetProxyVersionDatabases(const char* pFolder)
 _TTToolLib_Exp i32 TelltaleToolLib_GetGameKeyIndex(const char* pGameID) {
     if (pGameID) {
         for (int i = 0; i < KEY_COUNT; i++) {
-            if (!_stricmp(sBlowfishKeys[i].game_id, pGameID)) {
+            if (!strcasecmp(sBlowfishKeys[i].game_id, pGameID)) {
                 return i;
             }
         }
@@ -243,7 +243,7 @@ void (*printf_hook)(const char* const fmt, va_list args) = NULL;
 
 void _DefaultCallback(const char* msg, ErrorSeverity e) {
 #ifdef DEBUGMODE
-    TTL_Log("ERROR: %s: [%s]\n",msg, e == ErrorSeverity::CRITICAL_ERROR ? "CRITICAL" : e == ErrorSeverity::NOTIFY ? "NOTIFY" 
+    TTL_Log("ERROR: %s: [%s]\n",msg, e == ErrorSeverity::CRITICAL_ERROR ? "CRITICAL" : e == ErrorSeverity::NOTIFY ? "NOTIFY"
     : e == ErrorSeverity::WARN ? "WARNING" : "ERR");
 #endif
     if (e == ErrorSeverity::CRITICAL_ERROR)exit(-1);
@@ -269,7 +269,9 @@ _TTToolLib_Exp void TTL_Log(const char* const  _Fmt, ...){
     va_list va{};
     va_start(va, _Fmt);
 #ifdef _DEBUG
-    vprintf_s(_Fmt, va); //print as normal
+    vprintf(_Fmt, va); //print as normal
+    va_end(va);
+    va_start(va, _Fmt);
 #endif
     if (printf_hook != NULL)
         printf_hook(_Fmt, va);
@@ -302,7 +304,7 @@ _TTToolLib_Exp void* TelltaleToolLib_CreateClassInstance(MetaClassDescription* p
 
 _TTToolLib_Exp LibraryHandle TelltaleToolLib_GetLibrary(const char* pName) {
     char buf[256];
-    sprintf_s(buf, "./LibBin/%s64." PLATFORM_DYLIB_EXT, pName);
+    sprintf(buf, "./LibBin/%s64." PLATFORM_DYLIB_EXT, pName);
     pName = buf;
     for(auto& it : loadedLibraries){
         if (!memcmp(pName, it.pName, strlen(pName)))
@@ -474,7 +476,7 @@ _TTToolLib_Exp MetaClassDescription* TelltaleToolLib_FindMetaClassDescription_By
 _TTToolLib_Exp MetaClassDescription* TelltaleToolLib_FindMetaClassDescription(const char* pStr, bool pIsName) {
     if (pIsName) {
         u64 crc = CRC64_CaseInsensitive(0, pStr);
-        for (MetaClassDescription* i = TelltaleToolLib_GetFirstMetaClassDescription(); i;) {          
+        for (MetaClassDescription* i = TelltaleToolLib_GetFirstMetaClassDescription(); i;) {
             if (i->mHash == crc)
                 return i;
             TelltaleToolLib_GetNextMetaClassDescription(&i);
@@ -486,7 +488,7 @@ _TTToolLib_Exp MetaClassDescription* TelltaleToolLib_FindMetaClassDescription(co
                 TelltaleToolLib_GetNextMetaClassDescription(&i);
                 continue;
             }
-            if (!_stricmp(pStr,i->mpExt))
+            if (!strcasecmp(pStr,i->mpExt))
                 return i;
             TelltaleToolLib_GetNextMetaClassDescription(&i);
         }
@@ -788,7 +790,7 @@ _TTToolLib_Exp void* TelltaleToolLib_Container(int op, void* container, void* ar
         if (container == nullptr)
             return 0;
         MetaClassDescription* clazz = (MetaClassDescription*)arg1;
-        return (void*)((clazz->mpFirstMember != nullptr && !_stricmp(clazz->mpFirstMember->mpName,"Baseclass_ContainerInterface")) ? 1llu : 0llu);
+        return (void*)((clazz->mpFirstMember != nullptr && !strcasecmp(clazz->mpFirstMember->mpName,"Baseclass_ContainerInterface")) ? 1llu : 0llu);
     }
     ContainerInterface* pInterface = (ContainerInterface*)container;
     if (pInterface == nullptr)
@@ -837,7 +839,7 @@ _TTToolLib_Exp MetaMemberDescription* TelltaleToolLib_FindMember(MetaClassDescri
          return nullptr;
      MetaMemberDescription* pMem = clazz->mpFirstMember;
      while(pMem){
-         if (!_stricmp(memberVarName, pMem->mpName))
+         if (!strcasecmp(memberVarName, pMem->mpName))
              return pMem;
          pMem = pMem->mpNextMember;
      }
@@ -868,7 +870,7 @@ _TTToolLib_Exp bool TelltaleToolLib_WriteMetaStream(DataStream* pOut, MetaClassD
 _TTToolLib_Exp bool TelltaleToolLib_SetBlowfishKey(const char* game_id) {
     if (game_id) {
         for (int i = 0; i < KEY_COUNT; i++) {
-            if (!_stricmp(sBlowfishKeys[i].game_id, game_id)) {
+            if (!strcasecmp(sBlowfishKeys[i].game_id, game_id)) {
                 sSetKeyIndex = i;
                 return true;
                 break;
@@ -891,7 +893,7 @@ _TTToolLib_Exp bool TelltaleToolLib_Initialize(const char* game_id) {
     if (game_id) {
         const BlowfishKey* k = NULL;
         for (int i = 0; i < KEY_COUNT; i++) {
-            if (!_stricmp(sBlowfishKeys[i].game_id, game_id)) {
+            if (!strcasecmp(sBlowfishKeys[i].game_id, game_id)) {
                 k = &sBlowfishKeys[i];
                 sSetKeyIndex = i;
                 break;
@@ -961,7 +963,7 @@ _TTToolLib_Exp void TelltaleToolLib_MakeInternalTypeName(char** _StringPtr) {
     //for (int i = 0; i < slen; i++) {
     //    nbuf[i] |= 0b100000;
     //}
-    nbuf[slen] = 0i8;
+    nbuf[slen] = 0;
     free(*_StringPtr);
     *_StringPtr = nbuf;
 }

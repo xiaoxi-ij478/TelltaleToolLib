@@ -192,7 +192,7 @@ HashDatabase_Legacy::Page* HashDatabase_Legacy::FindPage(const char* n) {
 	if (!this->db_pages)return NULL;
 	int pages = this->NumPages();
 	for (int i = 0; i < pages; i++) {
-		if (!_stricmp(PageAt(i)->pageName, n)) return PageAt(i);
+		if (!strcasecmp(PageAt(i)->pageName, n)) return PageAt(i);
 	}
 	return NULL;
 }
@@ -274,7 +274,7 @@ HashDatabase::Page* HashDatabase::PageAt(int index)
 HashDatabase::Page* HashDatabase::FindPage(const char* name)
 {
 	for (auto it = mPages.begin(); it != mPages.end(); it++)
-		if (!_stricmp(name,it->mPageName.c_str()))
+		if (!strcasecmp(name,it->mPageName.c_str()))
 			return &(*it);
 	return 0;
 }
@@ -429,7 +429,7 @@ bool HashDatabase::Create(const char* fp, DataStream* pOut, bool bVerbose, bool 
 	std::vector<Page> pages{};
 	std::vector<std::vector<std::string>> values{};
 	FILE* stream{};
-	fopen_s(&stream, fp, "r");
+	stream=fopen(fp, "r");
 	if (!stream)
 		return false;
 	if (!pOut || !fp)
@@ -441,7 +441,7 @@ bool HashDatabase::Create(const char* fp, DataStream* pOut, bool bVerbose, bool 
 		char* buf = fgets(_buf, 512, stream);
 		if (!buf)
 			break;
-		if (strlen(buf) >= 8 && !_stricmp(std::string(buf).substr(0,7).c_str(), "NEWPAGE")) {
+		if (strlen(buf) >= 8 && !strcasecmp(std::string(buf).substr(0,7).c_str(), "NEWPAGE")) {
 			if(currentPage.mPageName.length() != 0){
 				if (bVerbose)
 					TTL_Log("-collected page %s: %d hashes\n", currentPage.mPageName.c_str(), (u32)cur_values.size());

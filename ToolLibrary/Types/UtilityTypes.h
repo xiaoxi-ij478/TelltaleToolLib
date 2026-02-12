@@ -915,7 +915,7 @@ namespace UID {
 
 	typedef int idT;
 
-	struct __declspec(align(8)) Generator {
+	struct alignas(8) Generator {
 		static constexpr idT msUninitID = -1;
 		idT miNextUniqueID;
 
@@ -945,7 +945,7 @@ namespace UID {
 		}
 	};
 
-	struct __declspec(align(8)) Owner {
+	struct alignas(8) Owner {
 		idT miUniqueID;
 
 		Owner() : miUniqueID(-1) {}

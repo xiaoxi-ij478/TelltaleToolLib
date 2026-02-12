@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 #include "Compression.h"
@@ -11,17 +11,19 @@ LibraryHandle Compression::LoadOodleLibrary(const char* pDLLName) {
 }
 
 bool Compression::OodleLZCompress(void* pDst, unsigned int* dstLength, const void* pSrc, unsigned int srcLength,LibraryHandle l) {
-	OodleLZ_Compress compressor = (OodleLZ_Compress)GetProcAddress(l, "OodleLZ_Compress");
-	if (!compressor)return false;
-	*dstLength = compressor(6, pSrc, srcLength, pDst,7,0,0,0);
-	return true;
+	return false;
+//	OodleLZ_Compress compressor = (OodleLZ_Compress)GetProcAddress(l, "OodleLZ_Compress");
+//	if (!compressor)return false;
+//	*dstLength = compressor(6, pSrc, srcLength, pDst,7,0,0,0);
+//	return true;
 }
 
 bool Compression::OodleLZDecompress(void* pDst, unsigned int dstLength, const void* pSrc, unsigned int srcLength, LibraryHandle l) {
-	OodleLZ_Decompress decompressor = (OodleLZ_Decompress)GetProcAddress(l, "OodleLZ_Decompress");
-	if (!decompressor)return false;
-	decompressor((void*)pSrc, srcLength, pDst, dstLength, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 3);
-	return true;
+	return false;
+//	OodleLZ_Decompress decompressor = (OodleLZ_Decompress)GetProcAddress(l, "OodleLZ_Decompress");
+//	if (!decompressor)return false;
+//	decompressor((void*)pSrc, srcLength, pDst, dstLength, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 3);
+//	return true;
 }
 
 bool Compression::ZlibDecompress(void* dest, unsigned int* destLen, const void* source, unsigned int sourceLen) {

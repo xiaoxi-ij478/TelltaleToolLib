@@ -1,24 +1,37 @@
-# TelltaleModdingLib - Telltale Tool Modding Library
+# TelltaleModdingLib - Telltale Tool Modding Library (Linux Ver)
+
 A Library which implements the Meta part of the Telltale Tool Engine. 
 This is a very strict library, and requires that you understand the fundamentals.
 
+## What this fork contains
+
+Still, this library can only run on Windows, so in order to port Telltale Inspector to Linux, I ported this library to Linux as well. It is still highly experimental and may break at anywhere. But I don't have much time working on it.....
+
+Note though that since oodle is shipped only as a Windows DLL so oodle compression is disabled in this Library. If there's an open source oodle compression implementation I may consider add it to this library.
+
 ### Library Information
-This is a 64bit WINDOWS C++ library and is only meant to be built for windows. It should ideally be linked as a static library; however, if you are going to built it into your application then the header and source files are all in the same directories. Ideally you would copy the whole source into your project (note, credit must be given), and use it like that; this is also a template library for some types so this would benefit. This library should be shipped with/in your applications alongside the oo2core Oodle compression library DLL.
+
+This is ~~a 64bit WINDOWS C++ library and is only meant to be built for windows~~ a library for Windows and Linux(WIP). It should ideally be linked as a static library; however, if you are going to built it into your application then the header and source files are all in the same directories. Ideally you would copy the whole source into your project (note, credit must be given), and use it like that; this is also a template library for some types so this would benefit. ~~This library should be shipped with/in your applications alongside the oo2core Oodle compression library DLL.~~
 This library can also be compiled as an application, the CLI folder should be deleted to not compile the CLI translation unit.
 Also note that Telltale Games for functions and classes and members does not use camelCase by default, most words are Capitalised. However they do use hungarian notation (a very c++ style) for all globals variables and member fields.
 Please note that the games this supports are the PC versions of Telltale's games. It may well work for other platforms, but I have not tested and do not aim to. If you are using this library you are most likely wanting to mod the games, and that is best done on PC. <br> IMPORTANT: One thing also to note is that Batman: Season 1 can only serialize D3DMeshes (read and write) that are from the LATEST PC version. The library will raise an error if its not. Also only D3DMeshes in games newer than (and including) TWD: Michonne can be serialized. Games older than and including MCSM: Season 1 cannot be, at the moment.
+
 #### Important Compiler options
+
 Must be compiled with /bigobj on the MSVC compiler, other compilers may have a similar option to this.
 
 ### Setting up
+
 Once you have the code included or static library added to the linker arguments then you can start by including TelltaleToolLib.h first.
 This header contains all the library exported functions and functions which will should be used to perform all operations in the library (although, other headers can be included and functions in them called, but unless they are in the Types folder then they arent documented for you to be using them.
 
 #### Fundamental structures
+
 Telltale Games store all 'files' in a sectioned wrapping file format called a `MetaStream`. A Meta Stream is a file stream, which can be written to and read from, and has three main sections: the `header` section, `default` section, `debug` section, and `async` section.
 The header section contains the section sizes in the meta stream, the meta version, and a list of type symbol CRC64s (with their version CRC32s) for all types serialized using the Meta namespace default serialization (more on that later). The default section contains the main chunk of serialized data, most data read in files is from this section. The debug section, as the name implies, contains debug data used when making games in Tool. The last section, the asynchronous section, contains data which would need to be accessed by other threads in the runtime Game Engine. This is normally data such as texture data. All of this can be found inside the Meta.hpp header, so get that included.
 The following snippet of code shows you how to initialize a MetaStream for reading.
 <br>
+
 ```
 #include "TelltaleToolLib.h"
 #include "Meta.hpp"
@@ -29,9 +42,9 @@ int MyExample() {
   MetaStream myStream;
   //The last parameter can be kept as empty, since no parameters are usually needed.
   myStream.Open(_OpenDataStreamFromDisc("C:/Users/User/Desktop/Input_File.d3dtx", READ), MetaStreamMode::eMetaStream_Read, { 0 });
-  
+
   // Read file specific data...
-  
+
   //This gets called by default on destructor, and essentially what this does is if the stream mode is closed, nothing. If its in read mode, returns the complete stream size,
   //and if its in write mode then this will write the data currently written to this MetaStream to the current output stream. This is why you way want to set the mode to 
   //closed before letting it get destructed.
@@ -55,6 +68,7 @@ myStream.Close();
 ```
 
 #### Serializing types of data
+
 Ok, so we can write data to MetaStreams. But what data? This is where MetaClassDescriptions come into play. A MetaClassDescription is a view of a class/struct or any intrinsic type of data, a meta view, which holds a list of the member variables in the class (names, and their offsets etc) and is used to present these types programmatically in the game engine. In each meta class description is also a linked list of meta member descriptions which describe a list of member variables in the class/struct. These contain the variable names, variable offsets in the struct layed out in memory and its flags. They also contain enum and flag descriptions, which if the member is an enum or has flags that can be set, can contain enum names and values, and flag names and values. 
 
 Meta classes also store information about specialized meta operations. A meta operation is a function declared as `MetaOpResult MetaOperation_<funcName>(void* pObj, MetaClassDescription* pObjDescription, MetaMemberDescription* pContextDescription, void* pUserData)`. Returns a result to return if the operation succeeded. pObj is an instance of the meta class description type. pContextDescription is most of the time NULL, if not its the member this type belongs to in another type (meta members all have a meta class description member, the type of the member). 
@@ -83,7 +97,7 @@ int MyExample(){
   //PerformMetaSerializeFull(&stream, &db, TelltaleToolLib_FindMetaClassDescription("landb", false))
   PerformMetaSerializeAsync<LanguageDB>(&stream, &db);
   //Now all data from the .landb is in the instance!
-  
+
   //Now we can write it back to another file (deletes old stream)
   stream.SwitchToMode(MetaStreamMode::eMetaStream_Write,_OpenDataStreamFromDisc("C:/Path/To/Output.landb",WRITE));
   //Write the new .landb to the metastream

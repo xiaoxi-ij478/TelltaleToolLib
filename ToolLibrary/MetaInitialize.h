@@ -1,5 +1,5 @@
  // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -8,6 +8,8 @@
 #include "TelltaleToolLibrary.h"
 #include "LegacyTypes/D3DMeshLegacy.h"
 #include "MetaInitHelpers.h"
+
+// to fill up any of the type gaps
 
 namespace MetaInit {
 
@@ -18,100 +20,85 @@ namespace MetaInit {
 	//ONLY TO BE CALLED BY LIBRARY, USE LIBTELLTALETOOL_INIT
 	void Initialize() {
 		{
-			DEFINET(char, char)
+			DEFINET(char, int8_t,"int8")
 				meta_char.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta_char.Initialize("int8");
-			meta_char.mpTypeInfoExternalName = typeid(char).name();
 			meta_char.mbIsIntrinsic = true;
 			METAOP_CUSTOM(char, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncint8);
 			meta_char.InstallSpecializedMetaOperation(&meta_char_eMetaOpSerializeAsync);
 			meta_char.Insert();
-			DEFINET(ushort, u16)
+			DEFINET(ushort, uint16_t,"uint16")
 				meta_ushort.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta_ushort.Initialize("uint16");
 			METAOP_CUSTOM(ushort, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncuint16);
 			meta_ushort.InstallSpecializedMetaOperation(&meta_ushort_eMetaOpSerializeAsync);
 			meta_ushort.Insert();
 			meta_ushort.mbIsIntrinsic = true;
-			DEFINET(short, i16)
+			DEFINET(short, int16_t,"int16")
 				meta_short.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta_short.Initialize("int16");
 			METAOP_CUSTOM(short, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncint16);
 			meta_short.InstallSpecializedMetaOperation(&meta_short_eMetaOpSerializeAsync);
 			meta_short.Insert();
 			meta_short.mbIsIntrinsic = true;
-			DEFINET(int, i32)
+			DEFINET(int, int32_t,"int")
 				meta_int.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta_int.Initialize("int");
 			METAOP_CUSTOM(int, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncint32);
 			meta_int.InstallSpecializedMetaOperation(&meta_int_eMetaOpSerializeAsync);
 			meta_int.Insert();
 			meta_int.mbIsIntrinsic = true;
-			DEFINET(long, long)
+			DEFINET(long, int32_t,"long")
 				meta_long.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled | MetaFlag::MetaFlag_PlaceInAddPropMenu;
-			meta_long.Initialize("long");
 			METAOP_CUSTOM(long, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncint32);
 			meta_long.InstallSpecializedMetaOperation(&meta_long_eMetaOpSerializeAsync);
 			meta_long.Insert();
 			meta_long.mbIsIntrinsic = true;
-			DEFINET(u64, u64)
+			DEFINET(u64, uint64_t,"uint64")
 				meta_u64.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta_u64.Initialize("uint64");
 			METAOP_CUSTOM(u64, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncuint64);
 			meta_u64.InstallSpecializedMetaOperation(&meta_u64_eMetaOpSerializeAsync);
 			meta_u64.Insert();
 			meta_u64.mbIsIntrinsic = true;
 
-			DEFINET(float, float)
+			DEFINET(float, float,"float")
 				meta_float.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled | MetaFlag::MetaFlag_PlaceInAddPropMenu;
-			meta_float.Initialize("float");
 			METAOP_CUSTOM(float, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncfloat);
 			meta_float.InstallSpecializedMetaOperation(&meta_float_eMetaOpSerializeAsync);
 			meta_float.Insert();
 			meta_float.mbIsIntrinsic = true;
-			DEFINET(double, double)
+			DEFINET(double, double,"double")
 				meta_double.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta_double.Initialize("double");
 			METAOP_CUSTOM(double, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncdouble);
 			meta_double.InstallSpecializedMetaOperation(&meta_double_eMetaOpSerializeAsync);
 			meta_double.Insert();
 			meta_double.mbIsIntrinsic = true;
-			DEFINET(__int64, __int64)
+			DEFINET(__int64, uint64_t,"int64")
 				meta___int64.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta___int64.Initialize("int64");
 			METAOP_CUSTOM(__int64, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncint64);
 			meta___int64.InstallSpecializedMetaOperation(&meta___int64_eMetaOpSerializeAsync);
 			meta___int64.Insert();
 			meta___int64.mbIsIntrinsic = true;
-			DEFINET(__uint32, unsigned __int32)
+			DEFINET(__uint32, uint32_t,"uint32")
 				meta___uint32.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta___uint32.Initialize("uint32");
 			METAOP_CUSTOM(__uint32, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncuint32);
 			meta___uint32.InstallSpecializedMetaOperation(&meta___uint32_eMetaOpSerializeAsync);
 			meta___uint32.Insert();
 			meta___uint32.mbIsIntrinsic = true;
-			DEFINET(__int32, __int32)
+			DEFINET(__int32, int32_t,"int32")
 				meta___int32.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta___int32.Initialize("int32");
 			METAOP_CUSTOM(__int32, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncint32);
 			meta___int32.InstallSpecializedMetaOperation(&meta___int32_eMetaOpSerializeAsync);
 			meta___int32.Insert();
 			meta___int32.mbIsIntrinsic = true;
-			DEFINET(__uint8, unsigned __int8)
+			DEFINET(__uint8, uint8_t,"uint8")
 				meta___uint8.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta___uint8.Initialize("uint8");
 			METAOP_CUSTOM(__uint8, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncuint8);
 			meta___uint8.InstallSpecializedMetaOperation(&meta___uint8_eMetaOpSerializeAsync);
 			meta___uint8.Insert();
 			meta___uint8.mbIsIntrinsic = true;
-			DEFINET(symbol, Symbol)
+			DEFINET(symbol, Symbol,"Symbol")
 				meta_symbol.mFlags = MetaFlag::MetaFlag_MetaSerializeNonBlockedVariableSize;
-			meta_symbol.Initialize("Symbol");
 			METAOP_CUSTOM(symbol, eMetaOpSerializeAsync, Symbol::MetaOperation_SerializeAsync);
 			meta_symbol.InstallSpecializedMetaOperation(&meta_symbol_eMetaOpSerializeAsync);
 			meta_symbol.Insert();
-			DEFINET(flags, Flags)
-				meta_flags.Initialize(typeid(Flags));
+			DEFINET(flags, Flags,"Flags")
 			DEFINEM(flags, mFlags);
 			meta_flags_mFlags.mpName = "mFlags";
 			meta_flags_mFlags.mFlags |= MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
@@ -120,24 +107,21 @@ namespace MetaInit {
 			meta_flags.mpFirstMember = &meta_flags_mFlags;
 			meta_flags.mFlags.mFlags |= MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
 			meta_flags.Insert();
-			DEFINET(bool, bool)
+			DEFINET(bool, bool,"bool")
 				meta_bool.mFlags = MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
-			meta_bool.Initialize("bool");
 			METAOP_CUSTOM(bool, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncbool);
 			meta_bool.InstallSpecializedMetaOperation(&meta_bool_eMetaOpSerializeAsync);
 			meta_bool.Insert();
 			meta_bool.mbIsIntrinsic = true;
-			DEFINET(ztest, ZTestFunction)
+			DEFINET(ztest, ZTestFunction,"ZTestFunction")
 				meta_ztest.mFlags |= MetaFlag_EnumWrapperClass;
-			meta_ztest.Initialize(typeid(ZTestFunction));
 			DEFINEM(ztest, mZTestType);
 			meta_ztest_mZTestType.mpName = "mZTestType";
 			meta_ztest_mZTestType.mpMemberDesc = &meta_long;
 			meta_ztest_mZTestType.mOffset = offsetof(ZTestFunction, mZTestType);
 			meta_ztest.mpFirstMember = &meta_ztest_mZTestType;
 			meta_ztest.Insert();
-			DEFINET(uidowner, UID::Owner)
-				meta_uidowner.Initialize(typeid(UID::Owner));
+			DEFINET(uidowner, UID::Owner,"UID::Owner")
 			DEFINEM(uidowner, miUniqueID);
 			meta_uidowner_miUniqueID.mpName = "miUniqueID";
 			meta_uidowner_miUniqueID.mpMemberDesc = &meta_long;
@@ -148,8 +132,7 @@ namespace MetaInit {
 
 			//UID::Generator
 
-			DEFINET(uidgen, UID::Generator)
-				meta_uidgen.Initialize(typeid(UID::Generator));
+			DEFINET(uidgen, UID::Generator,"UID::Generator")
 			DEFINEM(uidgen, miNextUniqueID);
 			meta_uidgen_miNextUniqueID.mpName = "miNextUniqueID";
 			meta_uidgen_miNextUniqueID.mpMemberDesc = &meta_long;
@@ -159,8 +142,7 @@ namespace MetaInit {
 
 			//T3VertexSampleDataBase
 
-			DEFINET(t3vsdb, T3VertexSampleDataBase);
-			meta_t3vsdb.Initialize(typeid(T3VertexSampleDataBase));
+			DEFINET(t3vsdb, T3VertexSampleDataBase,"T3VertexSampleDataBase");
 
 			DEFINEOP(t3vsdb, serialize, MetaOperationDescription::sIDs::eMetaOpSerializeAsync, NULL);
 			meta_t3vsdb.InstallSpecializedMetaOperation(&meta_t3vsdb_serialize);
@@ -179,8 +161,7 @@ namespace MetaInit {
 
 			meta_t3vsdb.Insert();
 
-			DEFINET(string, String);
-			meta_string.Initialize("String");
+			DEFINET(string, String,"String");
 			METAOP_CUSTOM(string, eMetaOpSerializeAsync, MetaOperation_SerializeIntrinsicAsyncString);
 			meta_string.InstallSpecializedMetaOperation(&meta_string_eMetaOpSerializeAsync);
 			meta_string.mFlags.mFlags |= (int)MetaFlag::MetaFlag_PlaceInAddPropMenu;
@@ -188,15 +169,13 @@ namespace MetaInit {
 			meta_string.mbIsIntrinsic = true;
 
 			//ContainerInterface
-			DEFINETABS(cinterface, ContainerInterface);
-			meta_cinterface.Initialize("ContainerInterface");
+			DEFINETABS(cinterface, ContainerInterface,"ContainerInterface");
 			//Override operatoins: collecttyped, objectstate, scriptunlock, scriptlock,
 			meta_cinterface.mFlags.mFlags |= (int)MetaFlag_MetaSerializeBlockingDisabled | (int)MetaFlag_BaseClass;
 			meta_cinterface.Insert();
 
 			//Vector2
-			DEFINET(vec2, Vector2);
-			meta_vec2.Initialize(typeid(Vector2));
+			DEFINET(vec2, Vector2,"Vector2");
 			meta_vec2.mFlags.mFlags |= (int)MetaFlag_MetaSerializeBlockingDisabled | (int)MetaFlag_PlaceInAddPropMenu;
 			DEFINEM(vec2, y);
 			meta_vec2_y.mpName = "y";
@@ -210,21 +189,18 @@ namespace MetaInit {
 			meta_vec2_x.mpNextMember = &meta_vec2_y;
 			meta_vec2.Insert();
 
-			DEFINETABS(handlebase, HandleBase);
-			meta_handlebase.Initialize(typeid(HandleBase));
+			DEFINETABS(handlebase, HandleBase,"HandleBase");
 			METAOP_CUSTOM(handlebase, eMetaOpSerializeAsync, HandleBase::MetaOperation_SerializeAsync);
 			meta_handlebase.InstallSpecializedMetaOperation(&meta_handlebase_eMetaOpSerializeAsync);
 			meta_handlebase.Insert();
 
-			DEFINETABS(handleun, HandleUncached);
-			meta_handleun.Initialize(typeid(HandleUncached));
+			DEFINETABS(handleun, HandleUncached,"HandleUncached");
 			METAOP_CUSTOM(handlebase1, eMetaOpSerializeAsync, HandleBase::MetaOperation_SerializeAsync);
 			meta_handleun.InstallSpecializedMetaOperation(&meta_handlebase1_eMetaOpSerializeAsync);
 			meta_handleun.Insert();
 
 			//TRange<uint>
-			DEFINET(rangeuint, TRange<unsigned int>);
-			meta_rangeuint.Initialize(typeid(TRange<unsigned int>));
+			DEFINET(rangeuint, TRange<unsigned int>,"TRange<unsignedint>");
 			meta_rangeuint.mFlags |= 6;//blocking disabled, add to prop menu
 			DEFINEM(rangeuint, max);
 			meta_rangeuint_max.mpName = "max";
@@ -238,8 +214,7 @@ namespace MetaInit {
 			meta_rangeuint.mpFirstMember = &meta_rangeuint_min;
 			meta_rangeuint.Insert();
 			//TRange<float>
-			DEFINET(rangef, TRange<float>);
-			meta_rangef.Initialize(typeid(TRange<float>));
+			DEFINET(rangef, TRange<float>,"TRange<float>");
 			meta_rangef.mFlags |= 6;//blocking disabled, add to prop menu
 			DEFINEM(rangef, max);
 			meta_rangef_max.mpName = "max";
@@ -252,10 +227,9 @@ namespace MetaInit {
 			meta_rangef_min.mpNextMember = &meta_rangef_max;
 			meta_rangef.mpFirstMember = &meta_rangef_min;
 			meta_rangef.Insert();
-			
+
 			//Vector3
-			DEFINET(vec3, Vector3);
-			meta_vec3.Initialize(typeid(Vector3));
+			DEFINET(vec3, Vector3,"Vector3");
 			meta_vec3.mFlags.mFlags |= (int)MetaFlag_MetaSerializeBlockingDisabled | (int)MetaFlag_PlaceInAddPropMenu;
 			DEFINEM(vec3, z);
 			meta_vec3_z.mpName = "z";
@@ -277,8 +251,7 @@ namespace MetaInit {
 			meta_vec3.InstallSpecializedMetaOperation(&meta_vec3_eMetaOpSerializeAsync);
 
 			//Vector4
-			DEFINET(vec4, Vector4);
-			meta_vec4.Initialize(typeid(Vector4));
+			DEFINET(vec4, Vector4,"Vector4");
 			meta_vec4.mFlags.mFlags |= (int)MetaFlag_MetaSerializeBlockingDisabled;
 			DEFINEM(vec4, w);
 			meta_vec4_w.mpName = "w";
@@ -305,8 +278,7 @@ namespace MetaInit {
 			meta_vec4.InstallSpecializedMetaOperation(&meta_vec4_eMetaOpSerializeAsync);
 
 			//Quaternion
-			DEFINET(quat, Quaternion);
-			meta_quat.Initialize(typeid(Quaternion));
+			DEFINET(quat, Quaternion,"Quaternion");
 			meta_quat.mFlags.mFlags |= (int)MetaFlag_MetaSerializeBlockingDisabled | (int)MetaFlag_PlaceInAddPropMenu;
 			DEFINEM(quat, w);
 			meta_quat_w.mpName = "w";
@@ -332,8 +304,7 @@ namespace MetaInit {
 			METAOP_CUSTOM(quat, eMetaOpSerializeAsync, Quaternion::MetaOperation_SerializeAsync);
 			meta_quat.InstallSpecializedMetaOperation(&meta_quat_eMetaOpSerializeAsync);
 
-			DEFINET(transform, Transform);
-			meta_transform.Initialize(typeid(Transform));
+			DEFINET(transform, Transform,"Transform");
 			DEFINEM(transform, trans);
 			meta_transform_trans.mpName = "mTrans";
 			meta_transform_trans.mpMemberDesc = &meta_vec3;
@@ -346,8 +317,7 @@ namespace MetaInit {
 			meta_transform.mpFirstMember = &meta_transform_rot;
 			meta_transform.Insert();
 
-			DEFINET(rect, Rect);
-			meta_rect.Initialize(typeid(Rect));
+			DEFINET(rect, Rect,"Rect");
 			meta_rect.mFlags |= (int)MetaFlag::MetaFlag_MetaSerializeBlockingDisabled;
 			DEFINEM(rect, bottom);
 			meta_rect_bottom.mpName = "bottom";
@@ -371,8 +341,7 @@ namespace MetaInit {
 			meta_rect_left.mpNextMember = &meta_rect_right;
 			meta_rect.Insert();
 
-			DEFINET(sphere, Sphere);
-			meta_sphere.Initialize(typeid(Sphere));
+			DEFINET(sphere, Sphere,"Sphere");
 			DEFINEM(sphere, radius);
 			meta_sphere_radius.mOffset = offsetof(Sphere, mRadius);
 			meta_sphere_radius.mpName = "mRadius";
@@ -385,9 +354,8 @@ namespace MetaInit {
 			meta_sphere.mpFirstMember = &meta_sphere_center;
 			meta_sphere.Insert();
 
-			DEFINET(color, Color);
+			DEFINET(color, Color,"Color");
 			meta_color.mFlags = 0x6;
-			meta_color.Initialize(typeid(Color));
 			DEFINEM(color, alpha);
 			meta_color_alpha.mpName = "a";
 			meta_color_alpha.mOffset = offsetof(Color, a);
@@ -409,93 +377,51 @@ namespace MetaInit {
 			meta_color_r.mpNextMember = &meta_color_g;
 			meta_color.mpFirstMember = &meta_color_r;
 			meta_color.Insert();
-			DEFINEHANDLE(propset, PropertySet);
-			DEFINESARRAY(u32, 3);
-			DEFINESARRAY(u8, 32);
-			DEFINESARRAY(i32, 4);
-			DEFINESARRAY(i32, 3);
-			DEFINESARRAY(float, 9);
-			DEFINESARRAY(float, 3);
-			DEFINESARRAY_(TRange<float>, rangefloat, 3);
-			DEFINEDCARRAY(i32);
-			DEFINEDCARRAY(u16);
-			DEFINEDCARRAY(u64);
-			DEFINEDCARRAY(u32);
-			DEFINEDCARRAY(u8);
-			DEFINEDCARRAY(float);
-			DEFINEDCARRAY(Symbol);
-			DEFINEDCARRAY(bool);
-			DEFINEDCARRAY(String);
-			MKNAME(meta_sarray_u32_3, "SArray<unsigned int,3>");
-			MKNAME(meta_sarray_i32_4, "SArray<int,4>");
-			MKNAME(meta_sarray_i32_3, "SArray<int,3>");
-			MKNAME(meta_sarray_float_3, "SArray<float,3>");
-			MKNAME(meta_sarray_float_9, "SArray<float,9>");
-			MKNAME(meta_DCArray_float, "DCArray<float>");
-			MKNAME(meta_DCArray_String, "DCArray<String>");
-			MKNAME(meta_DCArray_bool, "DCArray<bool>");
-			MKNAME(meta_sarray_rangefloat_3, "SArray<TRange<float>,3>");
-			if (meta_DCArray_String.mbNameIsHeapAllocated) {
-				free((void*)meta_DCArray_String.mpTypeInfoName);
-				meta_DCArray_String.mbNameIsHeapAllocated = false;
-			}
-			meta_DCArray_String.mpTypeInfoName = "DCArray<String>";//string is std::basic_string<...> etc
-			meta_DCArray_String.mHash = CRC64_CaseInsensitive(0, meta_DCArray_String.mpTypeInfoName);
-			DEFINESET(i32);
-			DEFINESET(String);
-			DEFINESET(u32);
-			DEFINESET(u64);
-			DEFINELIST(Symbol);
-			DEFINELIST(i32);
-			DEFINELIST(String);
-			DEFINEDEQUE(i32);
-			DEFINEDEQUE(String);
-			MKNAME(meta_Set_i32, "Set<int,less<int>>");
-			MKNAME(meta_Set_String, "Set<String,Less<String>>");
-			MKNAME(meta_Set_u32, "Set<uint,less<uint>>");
-			MKNAME(meta_Set_u64, "Set<uint64,less<uint64>>");
-			MKNAME(meta_List_Symbol, "List<Symbol>");
-			MKNAME(meta_List_i32, "List<int>");
-			MKNAME(meta_List_String, "List<String>");
-			MKNAME(meta_Deque_i32, "Deque<int>");
-			MKNAME(meta_Deque_String, "Deque<String>");
-			DEFINEMAP(Symbol, String, Symbol::CompareCRC);
-			DEFINEMAP(Symbol, Symbol, Symbol::CompareCRC);
-			DEFINEMAP(Symbol, float, Symbol::CompareCRC);
-			DEFINEMAP(Symbol, int, Symbol::CompareCRC);
-			DEFINEMAP(String, int, std::less<String>);
-			DEFINEMAP(int, Symbol, std::less<int>);
-			DEFINEMAP(int, String, std::less<int>);
-			DEFINEMAP(int, int, std::less<int>);
-			DEFINEMAP(int, float, std::less<int>);
-			DEFINEMAP2(Symbol, Set<Symbol>, Symbol, setsymbol, Symbol::CompareCRC);
-			DEFINEMAP2(String, DCArray<String>, String, dcarraystring, Symbol::CompareCRC);
-			DEFINEMAP2(int, Map<int SEP Map<Symbol SEP float SEP Symbol::CompareCRC>>, int, mapintmapsymbolfloat, std::less<int>);
-			DEFINEMAP2(int, Map<int SEP int SEP std::less<int>>, int, mapintint, std::less<int>);
-			DEFINEMAP(String, String, std::less<String>);
-			DEFINEMAP2(String, PropertySet, String, PropertySet, std::less<String>);
-			DEFINEMAP2(Symbol, PropertySet, Symbol, PropertySet, std::less<String>);
-			DEFINEMAP(int, bool, std::less<int>);
-			MKNAME(meta_Map_String_PropertySet, "Map<String,PropertySet,Less<String>>");
-			MKNAME(meta_Map_Symbol_PropertySet, "Map<Symbol,PropertySet,Less<Symbol>>");
-			MKNAME(meta_Map_int_String, "Map<int,String,Less<int>>");
-			MKNAME(meta_Map_Symbol_String, "Map<Symbol,String,Less<Symbol>>");
-			MKNAME(meta_Map_Symbol_Symbol, "Map<Symbol,Symbol,Less<Symbol>>");
-			MKNAME(meta_Map_Symbol_float , "Map<Symbol,Float,Less<Symbol>>");
-			MKNAME(meta_Map_Symbol_int   , "Map<Symbol,int,Less<Symbol>>");
-			MKNAME(meta_Map_String_int   , "Map<String,int,Less<String>>");
-			MKNAME(meta_Map_int_Symbol, "Map<int,Symbol,Less<int>>");
-			MKNAME(meta_Map_int_int, "Map<int,int,Less<int>>");
-			MKNAME(meta_Map_int_float, "Map<int,float,Less<int>>");
-			MKNAME(meta_Map_Symbol_setsymbol, "Map<Symbol,Set<Symbol,less<Symbol>>,Less<Symbol>>");
-			MKNAME(meta_Map_String_dcarraystring, "Map<String,DCArray<String>,Less<String>>");
-			MKNAME(meta_Map_int_bool, "Map<int,bool,less<int>>");
-			MKNAME(meta_Map_String_String, "Map<String,String,Less<String>>");
-			MKNAME(meta_Map_int_mapintint, "Map<int,Map<int,int,less<int>>,less<int>>");
-			MKNAME(meta_Map_int_mapintmapsymbolfloat, "Map<int,Map<int,Map<Symbol,float,less<Symbol>>,less<int>>,less<int>>");
-			DEFINESET_(PropertySet::KeyInfo, keyinfo);
-			DEFINET(prop, PropertySet);
-			meta_prop.Initialize(typeid(PropertySet));
+			DEFINEHANDLE(propset, PropertySet,"Handle<PropertySet>","DCArray<Handle<PropertySet>>","HandleLock<PropertySet>","DCArray<HandleLock<PropertySet>>");
+			DEFINESARRAY(u32, 3, "SArray<unsignedint,3>");
+			DEFINESARRAY(u8, 32, "SArray<unsignedchar,32>");
+			DEFINESARRAY(i32, 4, "SArray<int,4>");
+			DEFINESARRAY(i32, 3, "SArray<int,3>");
+			DEFINESARRAY(float, 9, "SArray<float,9>");
+			DEFINESARRAY(float, 3, "SArray<float,3>");
+			DEFINESARRAY_(TRange<float>, rangefloat, 3, "SArray<TRange<float>,3>");
+			DEFINEDCARRAY(i32, "DCArray<int>");
+			DEFINEDCARRAY(u16, "DCArray<short>");
+			DEFINEDCARRAY(u64, "DCArray<unsigned__int64>");
+			DEFINEDCARRAY(u32, "DCArray<unsignedint>");
+			DEFINEDCARRAY(u8, "DCArray<unsignedchar>");
+			DEFINEDCARRAY(float, "DCArray<float>");
+			DEFINEDCARRAY(Symbol, "DCArray<Symbol>");
+			DEFINEDCARRAY(bool, "DCArray<bool>");
+			DEFINEDCARRAY(String, "DCArray<String>");
+			DEFINESET(i32, "Set<int,less<int>>");
+			DEFINESET(String, "Set<String,Less<String>>");
+			DEFINESET(u32, "Set<uint,less<uint>>");
+			DEFINESET(u64, "Set<uint64,less<uint64>>");
+			DEFINELIST(Symbol, "List<Symbol>");
+			DEFINELIST(i32, "List<int>");
+			DEFINELIST(String, "List<String>");
+			DEFINEDEQUE(i32, "Deque<int>");
+			DEFINEDEQUE(String, "Deque<String>");
+			DEFINEMAP(Symbol, String, Symbol::CompareCRC, "Map<Symbol,String,Less<Symbol>>");
+			DEFINEMAP(Symbol, Symbol, Symbol::CompareCRC, "Map<Symbol,Symbol,Less<Symbol>>");
+			DEFINEMAP(Symbol, float, Symbol::CompareCRC, "Map<Symbol,Float,Less<Symbol>>");
+			DEFINEMAP(Symbol, int, Symbol::CompareCRC, "Map<Symbol,int,Less<Symbol>>");
+			DEFINEMAP(String, int, std::less<String>, "Map<String,int,Less<String>>");
+			DEFINEMAP(int, Symbol, std::less<int>, "Map<int,Symbol,Less<int>>");
+			DEFINEMAP(int, String, std::less<int>, "Map<int,String,Less<int>>");
+			DEFINEMAP(int, int, std::less<int>, "Map<int,int,Less<int>>");
+			DEFINEMAP(int, float, std::less<int>, "Map<int,float,Less<int>>");
+			DEFINEMAP2(Symbol, Set<Symbol>, Symbol, setsymbol, Symbol::CompareCRC, "Map<Symbol,Set<Symbol,less<Symbol>>,Less<Symbol>>");
+			DEFINEMAP2(String, DCArray<String>, String, dcarraystring, Symbol::CompareCRC, "Map<String,DCArray<String>,Less<String>>");
+			DEFINEMAP2(int, Map<int SEP Map<Symbol SEP float SEP Symbol::CompareCRC>>, int, mapintmapsymbolfloat, std::less<int>, "Map<int,Map<int,Map<Symbol,float,less<Symbol>>,less<int>>,less<int>>");
+			DEFINEMAP2(int, Map<int SEP int SEP std::less<int>>, int, mapintint, std::less<int>, "Map<int,Map<int,int,less<int>>,less<int>>");
+			DEFINEMAP(String, String, std::less<String>, "Map<String,String,Less<String>>");
+			DEFINEMAP2(String, PropertySet, String, PropertySet, std::less<String>, "Map<String,PropertySet,Less<String>>");
+			DEFINEMAP2(Symbol, PropertySet, Symbol, PropertySet, std::less<String>, "Map<Symbol,PropertySet,Less<Symbol>>");
+			DEFINEMAP(int, bool, std::less<int>, "Map<int,bool,less<int>>");
+			DEFINESET_(PropertySet::KeyInfo, keyinfo,"Set<PropertySet::KeyInfo,less<PropertySet::KeyInfo>>");
+			DEFINET(prop, PropertySet, "PropertySet");
 			meta_prop.mpExt = "prop";
 			METAOP_CUSTOM(prop, eMetaOpSerializeAsync, PropertySet::MetaOperation_SerializeAsync);
 			meta_prop.InstallSpecializedMetaOperation(&meta_prop_eMetaOpSerializeAsync);
@@ -517,8 +443,7 @@ namespace MetaInit {
 			meta_prop_flags.mpNextMember = &meta_prop_keymap;
 			meta_prop.Insert();
 
-			DEFINET(bc, BoneContraints);
-			meta_bc.Initialize(typeid(BoneContraints));
+			DEFINET(bc, BoneContraints, "BoneContraints");
 			DEFINEM(bc, btype);
 			meta_bc_btype.mOffset = offsetof(BoneContraints, mBoneType);
 			meta_bc_btype.mpName = "mBoneType";
@@ -545,8 +470,7 @@ namespace MetaInit {
 			meta_bc.mpFirstMember = &meta_bc_btype;
 			meta_bc.Insert();
 
-			DEFINET(sklentry, Skeleton::Entry);
-			meta_sklentry.Initialize(typeid(Skeleton::Entry));
+			DEFINET(sklentry, Skeleton::Entry, "Skeleton::Entry");
 			DEFINEM(sklentry, flags);
 			meta_sklentry_flags.mpName = "mFlags";
 			meta_sklentry_flags.mpMemberDesc = &meta_flags;
@@ -624,12 +548,10 @@ namespace MetaInit {
 			meta_sklentry_jn.mpMemberDesc = &meta_symbol;
 			meta_sklentry.mpFirstMember = &meta_sklentry_jn;
 			meta_sklentry.Insert();
-			MKNAME(meta_sklentry, "Skeleton::Entry");
 
-			DEFINEDCARRAY2(Skeleton::Entry, sklentry);
+			DEFINEDCARRAY2(Skeleton::Entry, sklentry,"DCArray<Skeleton::Entry>");
 
-			DEFINET(skl, Skeleton);
-			meta_skl.Initialize(typeid(Skeleton));
+			DEFINET(skl, Skeleton, "Skeleton");
 			meta_skl.mpExt = "skl";
 			DEFINEM(skl, entries);
 			meta_skl_entries.mpName = "mEntries";
@@ -637,10 +559,8 @@ namespace MetaInit {
 			meta_skl_entries.mpMemberDesc = &meta_DCArray_sklentry;
 			meta_skl.mpFirstMember = &meta_skl_entries;
 			meta_skl.Insert();
-			MKNAME(meta_skl, "Skeleton");
 
-			DEFINET(aam, ActorAgentMapper);
-			meta_aam.Initialize(typeid(ActorAgentMapper));
+			DEFINET(aam, ActorAgentMapper,"ActorAgentMapper");
 			meta_aam.mpExt = "aam";
 			DEFINEM(aam, aam);
 			meta_aam_aam.mpName = "mActorAgentMap";
@@ -653,10 +573,8 @@ namespace MetaInit {
 			meta_aam_aa.mOffset = offsetof(ActorAgentMapper, mActionActors);
 			meta_aam_aam.mpNextMember = &meta_aam_aa;
 			meta_aam.Insert();
-			MKNAME(meta_aam, "ActorAgentMapper");
 
-			DEFINET(amape, AgentMap::AgentMapEntry);
-			meta_amape.Initialize(typeid(AgentMap::AgentMapEntry));
+			DEFINET(amape, AgentMap::AgentMapEntry,"AgentMap::AgentMapEntry");
 			DEFINEM(amape, name);
 			meta_amape_name.mpName = "mzName";
 			meta_amape_name.mOffset = offsetof(AgentMap::AgentMapEntry, mzName);
@@ -688,13 +606,10 @@ namespace MetaInit {
 
 			meta_amape.mpFirstMember = &meta_amape_name;
 			meta_amape.Insert();
-			MKNAME(meta_amape, "AgentMap::AgentMapEntry");
 
-			DEFINEMAP2(String, AgentMap::AgentMapEntry, str, amape, std::less<String>);
-			MKNAME(meta_Map_str_amape, "Map<String,AgentMap::AgentMapEntry,less<String>>");
+			DEFINEMAP2(String, AgentMap::AgentMapEntry, str, amape, std::less<String>, "Map<String,AgentMap::AgentMapEntry,less<String>>");
 
-			DEFINET(amap, AgentMap);
-			meta_amap.Initialize(typeid(AgentMap));
+			DEFINET(amap, AgentMap,"AgentMap");
 			meta_amap.mpExt = "amap";
 			DEFINEM(amap, agents);
 			meta_amap_agents.mpName = "maAgents";
@@ -702,10 +617,8 @@ namespace MetaInit {
 			meta_amap_agents.mpMemberDesc = &meta_Map_str_amape;
 			meta_amap.mpFirstMember = &meta_amap_agents;
 			meta_amap.Insert();
-			MKNAME(meta_amap, "AgentMap");
 
-			DEFINET(acol, AssetCollection);
-			meta_acol.Initialize(typeid(AssetCollection));
+			DEFINET(acol, AssetCollection, "AssetCollection");
 			meta_acol.mpExt = "acol";
 			DEFINEM(acol, inc);
 			DEFINEM(acol, exl);
@@ -724,12 +637,9 @@ namespace MetaInit {
 			meta_acol_inc.mpNextMember = &meta_acol_exl;
 			meta_acol_exl.mpNextMember = &meta_acol_pre;
 			meta_acol.Insert();
-			MKNAME(meta_acol, "AssetCollection");
 
-			DEFINEMAP2(String, SoundBusSystem::BusDescription, str, bd, std::less<String>);//we can define since it doesnt ref the mcd yet
-			MKNAME(meta_Map_str_bd, "Map<String,SoundBusSystem::BusDescription,less<String>>");
-			DEFINET(busd, SoundBusSystem::BusDescription);
-			meta_busd.Initialize(typeid(SoundBusSystem::BusDescription));
+			DEFINEMAP2(String, SoundBusSystem::BusDescription, str, bd, std::less<String>, "Map<String,SoundBusSystem::BusDescription,less<String>>");//we can define since it doesnt ref the mcd yet
+			DEFINET(busd, SoundBusSystem::BusDescription, "SoundBusSystem::BusDescription");
 			FIRSTMEM(busd, "fVolumedB", fVolumedB, SoundBusSystem::BusDescription, float, 0);
 			NEXTMEM(busd, "fReverbWetLeveldB", fReverbWetLeveldB, SoundBusSystem::BusDescription, float, 0, fVolumedB);
 			NEXTMEM(busd, "fLowPassFrequencyCutoff", fLowPassFrequencyCutoff, SoundBusSystem::BusDescription, float, 0, fReverbWetLeveldB);
@@ -740,8 +650,7 @@ namespace MetaInit {
 			NEXTMEM(busd, "autoAssignPatternCollection", autoAssignPatternCollection, SoundBusSystem::BusDescription, acol, 0, children);
 			meta_busd.Insert();
 
-			DEFINET(bus, SoundBusSystem::BusHolder);
-			meta_bus.Initialize(typeid(SoundBusSystem::BusHolder));
+			DEFINET(bus, SoundBusSystem::BusHolder,"SoundBusSystem::BusHolder");
 			meta_bus.mpExt = "audiobus";
 			DEFINEM(bus, mbus);
 			meta_bus_mbus.mpName = "masterBus";
@@ -756,16 +665,16 @@ namespace MetaInit {
 			meta_bus.mpFirstMember = &meta_bus_mbus;
 			meta_bus.Insert();
 
-			DEFINET2(imapm, InputMapper::EventMapping);
+			DEFINET2(imapm, InputMapper::EventMapping,"InputMapper::EventMapping");
 			FIRSTMEM(imapm, "mInputCode", mInputCode, InputMapper::EventMapping, long, MetaFlag::MetaFlag_EnumIntType);
 			NEXTMEM2(imapm, mEvent, InputMapper::EventMapping, long, MetaFlag::MetaFlag_EnumIntType, mInputCode);
 			NEXTMEM2(imapm, mScriptFunction, InputMapper::EventMapping, string, 0, mEvent);
 			NEXTMEM2(imapm, mControllerIndexOverride, InputMapper::EventMapping, long, 0, mScriptFunction);
 			ADD(imapm);
 
-			DEFINEDCARRAY2(InputMapper*, imapptr);//telltale made a mistake! would not need to serialize ptrs? has overriden metaop tho
+			DEFINEDCARRAY2(InputMapper*, imapptr, "DCArray<InputMapper*>");//telltale made a mistake! would not need to serialize ptrs? has overriden metaop tho
 
-			DEFINET2(imapr, InputMapper::RawEvent);
+			DEFINET2(imapr, InputMapper::RawEvent,"InputMapper::RawEvent");
 			FIRSTMEM2(imapr, mKey, InputMapper::RawEvent, long, MetaFlag::MetaFlag_EnumIntType);
 			NEXTMEM2(imapr, mType, InputMapper::RawEvent, long, MetaFlag::MetaFlag_EnumIntType, mKey);
 			NEXTMEM2(imapr, mX, InputMapper::RawEvent, float, 0, mType);
@@ -774,9 +683,9 @@ namespace MetaInit {
 			NEXTMEM2(imapr, mIMAPFilter, InputMapper::RawEvent, DCArray_imapptr, MetaFlag::MetaFlag_NoPanelCaption | MetaFlag::MetaFlag_BaseClass, mController);
 			ADD(imapr);
 
-			DEFINEDCARRAY2(InputMapper::EventMapping, eventmapping);
+			DEFINEDCARRAY2(InputMapper::EventMapping, eventmapping, "DCArray<InputMapper::EventMapping>");
 
-			DEFINET2(imap, InputMapper);
+			DEFINET2(imap, InputMapper,"InputMapper");
 			EXT(imap, imap);
 			METAOP_CUSTOM(imap, eMetaOpSerializeAsync, InputMapper::MetaOperation_SerializeAsync);
 			meta_imap.InstallSpecializedMetaOperation(&meta_imap_eMetaOpSerializeAsync);
@@ -784,22 +693,22 @@ namespace MetaInit {
 			NEXTMEM2(imap, mMappedEvents, InputMapper, DCArray_eventmapping, 0, mName);
 			ADD(imap);
 
-			DEFINET2(pmapm, PlatformInputMapper::EventMapping);
+			DEFINET2(pmapm, PlatformInputMapper::EventMapping,"PlatformInputMapper::EventMapping");
 			FIRSTMEM2(pmapm, mPlatformInputCode, PlatformInputMapper::EventMapping, long, 0);
 			NEXTMEM2(pmapm, mInputCode, PlatformInputMapper::EventMapping, long, 0, mPlatformInputCode);
 			ADD(pmapm);
 
-			DEFINEHANDLE(scene, Scene);
-			DEFINEDCARRAY2(HandleLock<Scene>, hlscene);
+			DEFINEHANDLE(scene, Scene, "Handle<Scene>","DCArray<Handle<Scene>>","HandleLock<Scene>","DCArray<HandleLock<Scene>>");
+			DEFINEDCARRAY2(HandleLock<Scene>, hlscene, "DCArray<HandleLock<Scene>>");
 
-			DEFINET2(sceneagent, Scene::AgentInfo);
+			DEFINET2(sceneagent, Scene::AgentInfo,"Scene::AgentInfo");
 			FIRSTMEM2(sceneagent, mAgentName, Scene::AgentInfo, string, 0);
 			NEXTMEM2(sceneagent, mAgentSceneProps, Scene::AgentInfo, prop, 0, mAgentName);
 			ADD(sceneagent);
 
-			DEFINELIST_(Scene::AgentInfo*, agentinfoptr);
+			DEFINELIST_(Scene::AgentInfo*, agentinfoptr,"List<Scene::AgentInfo*>");
 
-			DEFINET2NOCOPY(scene, Scene);
+			DEFINET2NOCOPY(scene, Scene,"Scene");
 			METAOP_CUSTOM(scene, eMetaOpSerializeAsync, Scene::MetaOperation_SerializeAsync);
 			meta_scene.InstallSpecializedMetaOperation(&meta_scene_eMetaOpSerializeAsync);
 			FIRSTMEM2(scene, mTimeScale, Scene, float, 1);
@@ -811,11 +720,11 @@ namespace MetaInit {
 			EXT(scene, scene);
 			ADD(scene);
 
-			DEFINET2(dlgprops1, DlgObjectPropsMap);
+			DEFINET2(dlgprops1, DlgObjectPropsMap,"DlgObjectPropsMap");
 			SERIALIZER(dlgprops1, DlgObjectPropsMap);
 			ADD(dlgprops1);
 
-			DEFINET2(dlgdef, DlgObjectPropsMap::GroupDefinition);
+			DEFINET2(dlgdef, DlgObjectPropsMap::GroupDefinition,"DlgObjectPropsMap::GroupDefinition");
 			SERIALIZER(dlgdef, DlgObjectPropsMap::GroupDefinition);
 			ADDFLAGS(dlgdef, MetaFlag::MetaFlag_NoPanelCaption);
 			DEFINEM(dlgdef, uidowner);
@@ -829,29 +738,29 @@ namespace MetaInit {
 
 			ADD(dlgdef);
 
-			DEFINET2(dss, DlgSystemSettings);
+			DEFINET2(dss, DlgSystemSettings,"DlgSystemSettings");
 			EXT(dss, dss);
 			FIRSTMEM2(dss, mPropsMapUser, DlgSystemSettings, dlgprops1, 0);
 			NEXTMEM2(dss, mPropsMapProduction, DlgSystemSettings, dlgprops1, 0, mPropsMapUser);
 			ADD(dss);
 
-			DEFINET2(bb, BinaryBuffer);
+			DEFINET2(bb, BinaryBuffer,"BinaryBuffer");
 			FIRSTMEM2(bb, mDataSize, BinaryBuffer, long, 0);
 			SERIALIZER(bb, BinaryBuffer);
 			ADD(bb);
 
-			DEFINET2(enlsig, EnlightenSignature);
+			DEFINET2(enlsig, EnlightenSignature,"EnlightenSignature");
 			FIRSTMEM2(enlsig, mSignature, EnlightenSignature, __int64, 0);
 			NEXTMEM2(enlsig, mMagicNumber, EnlightenSignature, long, 0, mSignature);
 			NEXTMEM2(enlsig, mVersion, EnlightenSignature, long, 0, mMagicNumber);
 			ADD(enlsig);
 
-			DEFINET2(enlprobe, EnlightenProbeData);
+			DEFINET2(enlprobe, EnlightenProbeData,"EnlightenProbeData");
 			FIRSTMEM2(enlprobe, mEnvTileName, EnlightenProbeData, symbol, 0);
 			NEXTMEM2(enlprobe, mRadProbeSetCore, EnlightenProbeData, bb, 0, mEnvTileName);
 			ADD(enlprobe);
 
-			DEFINET2(enlsys, EnlightenSystemData);
+			DEFINET2(enlsys, EnlightenSystemData,"EnlightenSystemData");
 			FIRSTMEM2(enlsys, mName, EnlightenSystemData, symbol, 0);
 			NEXTMEM2(enlsys, mEnvTileName, EnlightenSystemData, symbol, 0, mName);
 			NEXTMEM2(enlsys, mRadSystemCore, EnlightenSystemData, bb, 0, mEnvTileName);
@@ -860,10 +769,10 @@ namespace MetaInit {
 			NEXTMEM2(enlsys, mPrecomputedVisibility, EnlightenSystemData, bb, 0, mClusterAlbedoWorkspaceMaterial);
 			ADD(enlsys);
 
-			DEFINEDCARRAY(EnlightenSystemData);
-			DEFINEDCARRAY(EnlightenProbeData);
+			DEFINEDCARRAY(EnlightenSystemData,"DCArray<EnlightenSystemData>");
+			DEFINEDCARRAY(EnlightenProbeData,"DCArray<EnlightenProbeData>");
 
-			DEFINET2(enl, EnlightenData);
+			DEFINET2(enl, EnlightenData,"EnlightenData");
 			EXT(enl, enl);
 			FIRSTMEM2(enl, mSignature, EnlightenData, enlsig, 0);
 			NEXTMEM2(enl, mName, EnlightenData, string, 0, mSignature);
@@ -872,7 +781,7 @@ namespace MetaInit {
 			//no need for overriden metaops since they just call meta::x
 			ADD(enl);
 
-			DEFINET2(reverb, SoundReverbDefinition);
+			DEFINET2(reverb, SoundReverbDefinition,"SoundReverbDefinition");
 			EXT(reverb, reverb);
 			FIRSTMEM2(reverb, mbEnabled, SoundReverbDefinition, bool, 0);
 			NEXTMEM2(reverb, mfRoomEffectLevel, SoundReverbDefinition, float, 0, mbEnabled);
@@ -890,20 +799,20 @@ namespace MetaInit {
 			NEXTMEM2(reverb, mfDensity, SoundReverbDefinition, float, 0, mfDiffusion);
 			ADD(reverb);
 
-			DEFINET2(anminterface, AnimationValueInterfaceBase);
+			DEFINET2(anminterface, AnimationValueInterfaceBase,"AnimationValueInterfaceBase");
 			FIRSTMEM2(anminterface, mName, AnimationValueInterfaceBase, symbol, 0);
 			NEXTMEM2(anminterface, mFlags, AnimationValueInterfaceBase, long, 0, mName);
 			ADD(anminterface);
 
-			DEFINET2(keyframedvalueinterface, KeyframedValueInterface);
+			DEFINET2(keyframedvalueinterface, KeyframedValueInterface, "KeyframedValueInterface");
 			ADDFLAGS(keyframedvalueinterface, MetaFlag::MetaFlag_MetaSerializeDisable | MetaFlag::MetaFlag_SkipObjectState);
 			ADD(keyframedvalueinterface);
 
-			DEFINET2(sampler, T3SamplerStateBlock);
+			DEFINET2(sampler, T3SamplerStateBlock, "T3SamplerStateBlock");
 			FIRSTMEM2(sampler, mData, T3SamplerStateBlock, long, 0);
 			ADD(sampler);
 
-			DEFINET2(pt, EnumPlatformType);
+			DEFINET2(pt, EnumPlatformType, "EnumPlatformType");
 			FIRSTMEM2(pt, mVal, EnumPlatformType, long, 0);
 			ADDFLAGS(pt, MetaFlag::MetaFlag_NoPanelCaption | MetaFlag::MetaFlag_EnumWrapperClass);
 			FIRSTENUM(pt, mVal, ePlatform_None, 0, 0);
@@ -925,21 +834,21 @@ namespace MetaInit {
 			ADDFLAGS(pt_mVal, MetaFlag::MetaFlag_EnumIntType);
 			ADD(pt);
 
-			DEFINET2(tp, ToolProps);
+			DEFINET2(tp, ToolProps, "ToolProps");
 			SERIALIZER(tp, ToolProps);
 			ADDFLAGS(tp, MetaFlag::MetaFlag_MetaSerializeNonBlockedVariableSize);
 			FIRSTMEM2(tp, mbHasProps, ToolProps, bool, 0);
 			ADD(tp);
 
-			DEFINET2(t3gr, T3ToonGradientRegion);
+			DEFINET2(t3gr, T3ToonGradientRegion, "T3ToonGradientRegion");
 			FIRSTMEM2(t3gr, mColor, T3ToonGradientRegion, color, 0);
 			NEXTMEM2(t3gr, mSize, T3ToonGradientRegion, float, 0, mColor);
 			NEXTMEM2(t3gr, mGradientSize, T3ToonGradientRegion, float, 0, mSize);
 			ADD(t3gr);
 
-			DEFINEDCARRAY(T3ToonGradientRegion);
+			DEFINEDCARRAY(T3ToonGradientRegion,"DCArray<T3ToonGradientRegion>");
 
-			DEFINET2(swizzle, RenderSwizzleParams);
+			DEFINET2(swizzle, RenderSwizzleParams, "RenderSwizzleParams");
 			SERIALIZER(swizzle, RenderSwizzleParams);
 			DEFINEM(RenderSwizzleParams, s0);
 			size_t start = offsetof(RenderSwizzleParams, mSwizzle);
@@ -964,7 +873,7 @@ namespace MetaInit {
 			meta_RenderSwizzleParams_s2.mpNextMember = &meta_RenderSwizzleParams_s3;
 			ADD(swizzle);
 
-			DEFINET2(tex, T3Texture);
+			DEFINET2(tex, T3Texture, "T3Texture");
 			EXT(tex, d3dtx);
 			FIRSTMEM2(tex, mVersion, T3Texture, long, MetaFlag::MetaFlag_EditorHide);
 			NEXTMEM2(tex, mSamplerState, T3Texture, sampler, 0, mVersion);
@@ -1141,13 +1050,13 @@ namespace MetaInit {
 			SERIALIZER(tex, T3Texture);
 			ADD(tex);
 
-			DEFINET2(theader, T3Texture::StreamHeader);
+			DEFINET2(theader, T3Texture::StreamHeader, "T3Texture::StreamHeader");
 			FIRSTMEM2(theader, mRegionCount, T3Texture::StreamHeader, long, 0);
 			NEXTMEM2(theader, mAuxDataCount, T3Texture::StreamHeader, long, 0, mRegionCount);
 			NEXTMEM2(theader, mTotalDataSize, T3Texture::StreamHeader, long, 0, mAuxDataCount);
 			ADD(theader);
 
-			DEFINET2(rsh, T3Texture::RegionStreamHeader);
+			DEFINET2(rsh, T3Texture::RegionStreamHeader, "T3Texture::RegionStreamHeader");
 			FIRSTMEM2(rsh, mFaceIndex, T3Texture::RegionStreamHeader, long, 0);
 			NEXTMEM2(rsh, mMipIndex, T3Texture::RegionStreamHeader, long, 0, mFaceIndex);
 			NEXTMEM2(rsh, mMipCount, T3Texture::RegionStreamHeader, long, 0, mMipIndex);
@@ -1156,12 +1065,12 @@ namespace MetaInit {
 			NEXTMEM4(rsh, mSlicePitch, T3Texture::RegionStreamHeader, long, 0, mPitch, TelltaleToolLib_GetGameKeyIndex("BAT"),-1);
 			ADD(rsh);
 
-			DEFINET2(aux, T3Texture::AuxilaryData);
+			DEFINET2(aux, T3Texture::AuxilaryData, "T3Texture::AuxilaryData");
 			FIRSTMEM2(aux, mType, T3Texture::AuxilaryData, symbol, 0);
 			NEXTMEM2(aux, mData, T3Texture::AuxilaryData, bb, 0, mType);
 			ADD(aux);
 
-			DEFINET2(locreg, LocalizationRegistry);
+			DEFINET2(locreg, LocalizationRegistry, "LocalizationRegistry");
 			EXT(locreg, locreg);
 			FIRSTMEM2(locreg, mFlagIndexMap, LocalizationRegistry, Map_Symbol_int, 0);
 			NEXTMEM2(locreg, mFlagIndexMapReverse, LocalizationRegistry, Map_int_Symbol, 0, mFlagIndexMap);
@@ -1169,38 +1078,36 @@ namespace MetaInit {
 			meta_locreg_mToolProps.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("wdc");
 			ADD(locreg);
 
-			DEFINEHANDLE(dlg, Dlg);
+			DEFINEHANDLE(dlg, Dlg, "Handle<Dlg>", "DCArray<Handle<Dlg>>","HandleLock<Dlg>","DCArray<HandleLock<Dlg>>");
 
-			DEFINET2(dlgset, LanguageLookupMap::DlgIDSet);
+			DEFINET2(dlgset, LanguageLookupMap::DlgIDSet, "LanguageLookupMap::DlgIDSet");
 			FIRSTMEM2(dlgset, mIDRange, LanguageLookupMap::DlgIDSet, rangeuint, 0);
 			NEXTMEM2(dlgset, mAdditionalIDs, LanguageLookupMap::DlgIDSet, Set_u32, 0, mIDRange);
 			NEXTMEM2(dlgset, mhDlg, LanguageLookupMap::DlgIDSet, Handledlg, 0, mAdditionalIDs);
 			ADD(dlgset);
 
-			DEFINEDCARRAY2(LanguageLookupMap::DlgIDSet, dlgsetarr);
+			DEFINEDCARRAY2(LanguageLookupMap::DlgIDSet, dlgsetarr, "DCArray<LanguageLookupMap::DlgIDSet>");
 
-			DEFINET2(llm, LanguageLookupMap);
+			DEFINET2(llm, LanguageLookupMap, "LanguageLookupMap");
 			EXT(llm, llm);
 			FIRSTMEM2(llm, mIDSets, LanguageLookupMap, DCArray_dlgsetarr, 0);
 			ADD(llm);
 
-			DEFINEKEYFRAMEDVALUE(float, float, float);
+			DEFINEKEYFRAMEDVALUE(float, float, float, "KeyframedValue<float>::Sample", "DCArray<KeyframedValue<float>::Sample>", "AnimatedValueInterface<float>", "KeyframedValue<float>");
 
-			DEFINET2(trm, TransitionRemapper);
+			DEFINET2(trm, TransitionRemapper, "TransitionRemapper");
 			FIRSTMEM2(trm, mRemapKeys, TransitionRemapper, kfv_float, 0);
 			ADD(trm);
 
-			DEFINET2(tmi, TransitionMap::TransitionMapInfo);
+			DEFINET2(tmi, TransitionMap::TransitionMapInfo, "TransitionMap::TransitionMapInfo");
 			FIRSTMEM2(tmi, mRemapper, TransitionMap::TransitionMapInfo, trm, 0);
 			ADD(tmi);
 
-			DEFINEMAP2(Symbol, TransitionMap::TransitionMapInfo, symbol, tmapinfo, Symbol::CompareCRC);
-			MKNAME(meta_Map_symbol_tmapinfo, "Map<Symbol,TransitionMap::TransitionMapInfo,less<Symbol>>");
+			DEFINEMAP2(Symbol, TransitionMap::TransitionMapInfo, symbol, tmapinfo, Symbol::CompareCRC, "Map<Symbol,TransitionMap::TransitionMapInfo,less<Symbol>>");
 
-			DEFINEMAP2(String, TransitionMap::TransitionMapInfo, string, tmapinfo, std::less<String>);
-			MKNAME(meta_Map_string_tmapinfo, "Map<String,TransitionMap::TransitionMapInfo,less<String>>");
+			DEFINEMAP2(String, TransitionMap::TransitionMapInfo, string, tmapinfo, std::less<String>, "Map<String,TransitionMap::TransitionMapInfo,less<String>>");
 
-			DEFINET2(tmap, TransitionMap);
+			DEFINET2(tmap, TransitionMap, "TransitionMap");
 			EXT(tmap, tmap);
 			FIRSTMEM2(tmap, mTransitionRemappers_WDCAndAbove, TransitionMap, Map_symbol_tmapinfo, 0);
 			meta_tmap_mTransitionRemappers_WDCAndAbove.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("WDC");
@@ -1210,11 +1117,11 @@ namespace MetaInit {
 			meta_tmap_mTransitionRemappers_BAT2AndBelow.mpName = "mTransitionRemappers";
 			ADD(tmap);
 
-			DEFINET2(enumbase, EnumBase);
+			DEFINET2(enumbase, EnumBase, "EnumBase");
 			ADDFLAGS(enumbase, 0x21);
 			ADD(enumbase);
 
-			DEFINET2(soundmat, SoundFootsteps::EnumMaterial);
+			DEFINET2(soundmat, SoundFootsteps::EnumMaterial, "SoundFootsteps::EnumMaterial");
 			ADDFLAGS(soundmat, 0x8008);
 			FIRSTMEM2(soundmat, mVal, SoundFootsteps::EnumMaterial, long, 0x40);
 			FIRSTENUM(soundmat, mVal, Default, SoundFootsteps::Default, 0);
@@ -1242,7 +1149,7 @@ namespace MetaInit {
 			meta_soundmat_mVal.mpNextMember = &meta_soundmat_base;
 			ADD(soundmat);
 
-			DEFINET2(wboxedge, WalkBoxes::Edge);
+			DEFINET2(wboxedge, WalkBoxes::Edge, "WalkBoxes::Edge");
 			FIRSTMEM2(wboxedge, mV1, WalkBoxes::Edge, long, 0);
 			NEXTMEM2(wboxedge, mV2, WalkBoxes::Edge, long, 0, mV1);
 			NEXTMEM2(wboxedge, mEdgeDest, WalkBoxes::Edge, long, 0, mV2);
@@ -1251,18 +1158,18 @@ namespace MetaInit {
 			NEXTMEM2(wboxedge, mMaxRadius, WalkBoxes::Edge, float, 0, mEdgeDir);
 			ADD(wboxedge);
 
-			DEFINET2(wboxquad, WalkBoxes::Quad);
+			DEFINET2(wboxquad, WalkBoxes::Quad, "WalkBoxes::Quad");
 			FIRSTMEM2(wboxquad, mVerts, WalkBoxes::Quad, sarray_i32_4, 0);
 			ADD(wboxquad);
 
-			DEFINET2(wboxvert, WalkBoxes::Vert);
+			DEFINET2(wboxvert, WalkBoxes::Vert, "WalkBoxes::Vert");
 			FIRSTMEM2(wboxvert, mFlags, WalkBoxes::Vert, flags, 0);
 			NEXTMEM2(wboxvert, mPos, WalkBoxes::Vert, vec3, 0, mFlags);
 			ADD(wboxvert);
 
-			DEFINESARRAY_(WalkBoxes::Edge, wboxedge, 3);
+			DEFINESARRAY_(WalkBoxes::Edge, wboxedge, 3, "SArray<WalkBoxes::Edge,3>");
 
-			DEFINET2(wboxtri, WalkBoxes::Tri);
+			DEFINET2(wboxtri, WalkBoxes::Tri, "WalkBoxes::Tri");
 			FIRSTMEM2(wboxtri, mFootstepMaterial, WalkBoxes::Tri, soundmat, 0);
 			NEXTMEM2(wboxtri, mFlags, WalkBoxes::Tri, flags, 0, mFootstepMaterial);
 			NEXTMEM2(wboxtri, mNormal, WalkBoxes::Tri, long, 0, mFlags);
@@ -1274,12 +1181,12 @@ namespace MetaInit {
 			NEXTMEM2(wboxtri, mVertScales, WalkBoxes::Tri, sarray_float_3, 0, mVertOffsets);
 			ADD(wboxtri);
 
-			DEFINEDCARRAY2(WalkBoxes::Tri, tri);
-			DEFINEDCARRAY2(WalkBoxes::Vert, vert);
-			DEFINEDCARRAY2(WalkBoxes::Quad, quad);
-			DEFINEDCARRAY2(Vector3, vec3);
+			DEFINEDCARRAY2(WalkBoxes::Tri, tri, "DCArray<WalkBoxes::Tri>");
+			DEFINEDCARRAY2(WalkBoxes::Vert, vert, "DCArray<WalkBoxes::Vert>");
+			DEFINEDCARRAY2(WalkBoxes::Quad, quad, "DCArray<WalkBoxes::Quad>");
+			DEFINEDCARRAY2(Vector3, vec3, "DCArray<Vector3>");
 
-			DEFINET2(wbox, WalkBoxes);
+			DEFINET2(wbox, WalkBoxes, "WalkBoxes");
 			EXT(wbox, wbox);
 			SERIALIZER(wbox, WalkBoxes);
 			FIRSTMEM2(wbox, mName, WalkBoxes, string, 0);
@@ -1289,43 +1196,43 @@ namespace MetaInit {
 			NEXTMEM2(wbox, mQuads, WalkBoxes, DCArray_quad, 0x20, mNormals);
 			ADD(wbox);
 
-			DEFINET2(sebmp, SoundEventBankMap);
+			DEFINET2(sebmp, SoundEventBankMap, "SoundEventBankMap");
 			EXT(sebmp, soundeventbankmap);
 			FIRSTMEM2(sebmp, mBankMap, SoundEventBankMap, Map_String_dcarraystring, 0);
 			NEXTMEM2(sebmp, mbLoadAllBanksGlobally, SoundEventBankMap, bool, 0, mBankMap);
 			ADD(sebmp);
 
-			DEFINET2(sedd, SoundEventData);
+			DEFINET2(sedd, SoundEventData, "SoundEventData");
 			ADDFLAGS(sedd, MetaFlag::MetaFlag_DontAsyncLoad | MetaFlag::MetaFlag_VirtualResource);
 			ADD(sedd);
 
-			DEFINET2(sedd1, SoundEventSnapshotData);
+			DEFINET2(sedd1, SoundEventSnapshotData, "SoundEventSnapshotData");
 			ADDFLAGS(sedd1, MetaFlag::MetaFlag_DontAsyncLoad | MetaFlag::MetaFlag_VirtualResource);
 			ADD(sedd1);
 
-			DEFINEHANDLE(seddh, SoundEventData);
-			DEFINEHANDLE(sedd1h, SoundEventSnapshotData);
+			DEFINEHANDLE(seddh, SoundEventData, "Handle<SoundEventData>", "DCArray<Handle<SoundEventData>>","HandleLock<SoundEventData>","DCArray<HandleLock<SoundEventData>>");
+			DEFINEHANDLE(sedd1h, SoundEventSnapshotData, "Handle<SoundEventSnapshotData>", "DCArray<Handle<SoundEventSnapshotData>>","HandleLock<SoundEventSnapshotData>","DCArray<HandleLock<SoundEventSnapshotData>>");
 
-			DEFINEHANDLE(hanm, Animation);
-			DEFINEHANDLE(hchore, Chore);
+			DEFINEHANDLE(hanm, Animation, "Handle<Animation>", "DCArray<Handle<Animation>>","HandleLock<Animation>","DCArray<HandleLock<Animation>>");
+			DEFINEHANDLE(hchore, Chore, "Handle<Chore>", "DCArray<Handle<Chore>>","HandleLock<Chore>","DCArray<HandleLock<Chore>>");
 
-			DEFINET2(animorchore, AnimOrChore);
+			DEFINET2(animorchore, AnimOrChore, "AnimOrChore");
 			ADDFLAGS(animorchore, MetaFlag::MetaFlag_PlaceInAddPropMenu);
 			FIRSTMEM2(animorchore, mhAnim, AnimOrChore, Handlehanm, 0);
 			NEXTMEM2(animorchore, mhChore, AnimOrChore, Handlehchore, 0, mhAnim);
 			ADD(animorchore);
 
-			DEFINET2(resgroups, ResourceGroups);
+			DEFINET2(resgroups, ResourceGroups, "ResourceGroups");
 			ADDFLAGS(resgroups, MetaFlag::MetaFlag_EditorHide);
 			FIRSTMEM2(resgroups, mGroups, ResourceGroups, Map_Symbol_float, 0);
 			ADD(resgroups);
 
-			DEFINET2(propo, ActingOverridablePropOwner);
+			DEFINET2(propo, ActingOverridablePropOwner, "ActingOverridablePropOwner");
 			FIRSTMEM2(propo, mSerializationFlags, ActingOverridablePropOwner, flags, 0);
 			SERIALIZER(propo, ActingOverridablePropOwner);
 			ADD(propo);
 
-			DEFINET2(tanmode, EnumeTangentModes);
+			DEFINET2(tanmode, EnumeTangentModes, "EnumeTangentModes");
 			FIRSTMEM2(tanmode, mVal, EnumeTangentModes, long, 0);
 			FIRSTENUM(tanmode, mVal, eTangentUnknown, eTangentUnknown, 0);
 			NEXTENUM(tanmode, mVal, eTangentStepped, eTangentStepped, 0, eTangentUnknown);
@@ -1336,13 +1243,13 @@ namespace MetaInit {
 				EnumeTangentModes, enumbase, 0, mVal);
 			ADD(tanmode);
 
-			DEFINET2(actres, ActingResource);
+			DEFINET2(actres, ActingResource, "ActingResource");
 			FIRSTMEM(actres, "Baseclass_ActingOverridablePropOwner", mSerializationFlags, ActingResource, propo, 0);
 			NEXTMEM2(actres, mResource, ActingResource, animorchore, MetaFlag::MetaFlag_EditorHide, mSerializationFlags);
 			NEXTMEM2(actres, mValidIntensityRange, ActingResource, rangef, 0, mResource);
 			ADD(actres);
 
-			DEFINET2(actdur, ActingPalette::EnumActiveDuring);
+			DEFINET2(actdur, ActingPalette::EnumActiveDuring, "ActingPalette::EnumActiveDuring");
 			ADDFLAGS(actdur, 0x8008);
 			FIRSTMEM2(actdur, mVal, ActingPalette::EnumActiveDuring, long, 0);
 			FIRSTENUM(actdur, mVal, always, ActingPalette::ActiveDuring::always, 0);
@@ -1352,7 +1259,7 @@ namespace MetaInit {
 				ActingPalette::EnumActiveDuring, enumbase, 0x10, mVal);
 			ADD(actdur);
 
-			DEFINET2(actrun1, ActingAccentPalette::EnumOverrun);
+			DEFINET2(actrun1, ActingAccentPalette::EnumOverrun, "ActingAccentPalette::EnumOverrun");
 			ADDFLAGS(actrun1, 0x8008);
 			FIRSTMEM2(actrun1, mVal, ActingAccentPalette::EnumOverrun, long, 0);
 			FIRSTENUM(actrun1, mVal, disallowed, ActingAccentPalette::Overrun::disallowed, 0);
@@ -1361,7 +1268,7 @@ namespace MetaInit {
 				ActingAccentPalette::EnumOverrun, enumbase, 0x10, mVal);
 			ADD(actrun1);
 
-			DEFINET2(actrun, ActingPalette::EnumOverrun);
+			DEFINET2(actrun, ActingPalette::EnumOverrun, "ActingPalette::EnumOverrun");
 			ADDFLAGS(actrun, 0x8008);
 			FIRSTMEM2(actrun, mVal, ActingPalette::EnumOverrun, long, 0);
 			FIRSTENUM(actrun, mVal, disallowed, ActingPalette::Overrun::disallowed, 0);
@@ -1370,7 +1277,7 @@ namespace MetaInit {
 				ActingPalette::EnumOverrun, enumbase, 0x10, mVal);
 			ADD(actrun);
 
-			DEFINET2(actrel, ActingPalette::EnumEndRelativeTo);
+			DEFINET2(actrel, ActingPalette::EnumEndRelativeTo, "ActingPalette::EnumEndRelativeTo");
 			ADDFLAGS(actrel, 0x8008);
 			FIRSTMEM2(actrel, mVal, ActingPalette::EnumEndRelativeTo, long, 0);
 			FIRSTENUM(actrel, mVal, beginning, ActingPalette::EndRelativeTo::beginning, 0);
@@ -1380,11 +1287,11 @@ namespace MetaInit {
 				ActingPalette::EnumEndRelativeTo, enumbase, 0x10, mVal);
 			ADD(actrel);
 
-			DEFINET2(aresp, ActingResource*);
+			DEFINET2(aresp, ActingResource*, "ActingResource*");
 			ADD(aresp);
-			DEFINEDCARRAY2(ActingResource*, actresp);
+			DEFINEDCARRAY2(ActingResource*, actresp, "DCArray<ActingResource*>");
 
-			DEFINET2(actp, ActingPalette);
+			DEFINET2(actp, ActingPalette, "ActingPalette");
 			FIRSTMEM(actp, "Baseclass_ActingOverridablePropOwner", mSerializationFlags, ActingPalette, propo, 0x10);
 			NEXTMEM(actp, "Baseclass_UID::Owner", miUniqueID, ActingPalette, uidowner, 0x10, mSerializationFlags);
 			SERIALIZER(actp, ActingPalette);
@@ -1409,7 +1316,7 @@ namespace MetaInit {
 			ADD(actp);
 
 
-			DEFINET2(actap, ActingAccentPalette);
+			DEFINET2(actap, ActingAccentPalette, "ActingAccentPalette");
 			ADDFLAGS(actap, 0x40);
 			SERIALIZER(actap, ActingAccentPalette);
 			FIRSTMEM(actap, "Baseclass_ActingOverridablePropOwner", mSerializationFlags, ActingAccentPalette, propo, 0x10);
@@ -1432,9 +1339,9 @@ namespace MetaInit {
 			NEXTMEM2(actap, mVersion, ActingAccentPalette, long, 0x20, mFlags);
 			ADD(actap);
 
-			DEFINEHANDLE(tmap, TransitionMap);
+			DEFINEHANDLE(tmap, TransitionMap, "Handle<TransitionMap>", "DCArray<Handle<TransitionMap>>","HandleLock<TransitionMap>","DCArray<HandleLock<TransitionMap>>");
 
-			DEFINET2(idlet, ActingPaletteGroup::EnumIdleTransition);
+			DEFINET2(idlet, ActingPaletteGroup::EnumIdleTransition, "ActingPaletteGroup::EnumIdleTransition");
 			ADDFLAGS(idlet, 0x8008);
 			FIRSTMEM(idlet, "mVal", mVal, ActingPaletteGroup::EnumIdleTransition, long, 0);
 			FIRSTENUM(idlet, mVal, transitionLinear, 1, 0);
@@ -1444,7 +1351,7 @@ namespace MetaInit {
 				ActingPalette::EnumEndRelativeTo, enumbase, 0x10, mVal);
 			ADD(idlet);
 
-			DEFINET2(actpt, ActingPaletteGroup::ActingPaletteTransition);
+			DEFINET2(actpt, ActingPaletteGroup::ActingPaletteTransition, "ActingPaletteGroup::ActingPaletteTransition");
 			FIRSTMEM2(actpt, mTransition, ActingPaletteGroup::ActingPaletteTransition, string, 0);
 			NEXTMEM2(actpt, mTransitionIn, ActingPaletteGroup::ActingPaletteTransition, animorchore, 0, mTransition);
 			NEXTMEM2(actpt, mCenterOffset, ActingPaletteGroup::ActingPaletteTransition, float, 0, mTransitionIn);
@@ -1453,9 +1360,9 @@ namespace MetaInit {
 			NEXTMEM2(actpt, mFadeTime, ActingPaletteGroup::ActingPaletteTransition, float, 0, mPostDelay);
 			ADD(actpt);
 
-			DEFINELIST_(ActingPaletteGroup::ActingPaletteTransition, acttrans);
+			DEFINELIST_(ActingPaletteGroup::ActingPaletteTransition, acttrans, "List<ActingPaletteGroup::ActingPaletteTransition>");
 
-			DEFINET2(actg, ActingPaletteGroup);
+			DEFINET2(actg, ActingPaletteGroup, "ActingPaletteGroup");
 			SERIALIZER(actg, ActingPaletteGroup);
 			FIRSTMEM(actg, "Baseclass_UID::Owner", miUniqueID, ActingPaletteGroup, uidowner, 0x10);
 			NEXTMEM2(actg, mName, ActingPaletteGroup, string, 0x20, miUniqueID);
@@ -1474,22 +1381,22 @@ namespace MetaInit {
 			NEXTMEM2(actg, mRandomAutoMax, ActingPaletteGroup, float, 0, mRandomAutoMin);
 			ADD(actg);
 
-			DEFINET2(actpp, ActingPalette*);
+			DEFINET2(actpp, ActingPalette*, "ActingPalette*");
 			ADD(actpp);
 
-			DEFINEDCARRAY2(ActingPalette*, actpp);
+			DEFINEDCARRAY2(ActingPalette*, actpp, "DCArray<ActingPalette*>");
 
-			DEFINET2(actapp, ActingAccentPalette*);
+			DEFINET2(actapp, ActingAccentPalette*, "ActingAccentPalette*");
 			ADD(actapp);
 
-			DEFINEDCARRAY2(ActingAccentPalette*, actapp);
+			DEFINEDCARRAY2(ActingAccentPalette*, actapp, "DCArray<ActingAccentPalette*>");
 
-			DEFINET2(actppg, ActingPaletteGroup*);
+			DEFINET2(actppg, ActingPaletteGroup*, "ActingPaletteGroup*");
 			ADD(actppg);
 
-			DEFINEDCARRAY2(ActingPaletteGroup*, actppg);
+			DEFINEDCARRAY2(ActingPaletteGroup*, actppg, "DCArray<ActingPaletteGroup*>");
 
-			DEFINET2(actc, ActingPaletteClass);
+			DEFINET2(actc, ActingPaletteClass, "ActingPaletteClass");
 			SERIALIZER(actc, ActingPaletteClass);
 			FIRSTMEM(actc, "Baseclass_UID::Generator", miNextUniqueID, ActingPaletteClass, uidgen, 0x10);
 			NEXTMEM(actc, "Baseclass_UID::Owner", miUniqueID, ActingPaletteClass, uidowner, 0x10, miNextUniqueID);
@@ -1504,9 +1411,9 @@ namespace MetaInit {
 			NEXTMEM2(actc, mInstantChange, ActingPaletteClass, bool, 0x20, mFlags);
 			ADD(actc);
 
-			DEFINEDCARRAY2(ActingPaletteClass*, actcp);
-			DEFINEDCARRAY2(ActingPaletteClass, actc);
-			DEFINET2(sg, StyleGuide);
+			DEFINEDCARRAY2(ActingPaletteClass*, actcp, "DCArray<ActingPaletteClass*>");
+			DEFINEDCARRAY2(ActingPaletteClass, actc, "DCArray<ActingPaletteClass>");
+			DEFINET2(sg, StyleGuide, "StyleGuide");
 			SERIALIZER(sg, StyleGuide);
 			EXT(sg, style);
 			FIRSTMEM(sg, "Baseclass_UID::Generator", miNextUniqueID, StyleGuide, uidgen, 0x10);
@@ -1519,14 +1426,13 @@ namespace MetaInit {
 			NEXTMEM2(sg, mDefPaletteClassIndex, StyleGuide, long, 0x20, mPaletteClasses);
 			ADD(sg);
 
-			DEFINEHANDLE(sound, SoundData);
+			DEFINEHANDLE(sound, SoundData, "Handle<SoundData>", "DCArray<Handle<SoundData>>","HandleLock<SoundData>","DCArray<HandleLock<SoundData>>");
 
-			DEFINET(ptrbase, void*);
-			meta_ptrbase.Initialize("Ptr<PtrBase>");
+			DEFINET(ptrbase, void*, "Ptr<PtrBase>");
 			meta_ptrbase.mFlags |= 1u;
 			ADD(ptrbase);
 
-			DEFINET2(lr, LanguageResource);
+			DEFINET2(lr, LanguageResource, "LanguageResource");
 			SERIALIZER(lr, LanguageResource);
 			EXT(lr, langres);
 			FIRSTMEM2(lr, mId, LanguageResource, long, 0);
@@ -1562,10 +1468,9 @@ namespace MetaInit {
 			meta_lr_mFlags.mFlags = MetaFlag::MetaFlag_FlagType;
 			ADD(lr);
 
-			DEFINEMAP(int, LanguageResource, std::less<int>);
-			MKNAME(meta_Map_int_LanguageResource, "Map<int,LanguageResource,less<int>>");
+			DEFINEMAP(int, LanguageResource, std::less<int>, "Map<int,LanguageResource,less<int>>");
 
-			DEFINET2(langdb, LanguageDatabase);
+			DEFINET2(langdb, LanguageDatabase, "LanguageDatabase");
 			EXT(langdb, langdb);
 			SERIALIZER(langdb, LanguageDatabase);
 			FIRSTMEM2(langdb, mLanguageResources, LanguageDatabase,
@@ -1573,25 +1478,25 @@ namespace MetaInit {
 			NEXTMEM2(langdb, mName, LanguageDatabase, string, 0, mLanguageResources);
 			ADD(langdb);
 
-			DEFINET2(locali, LocalizeInfo);
+			DEFINET2(locali, LocalizeInfo, "LocalizeInfo");
 			FIRSTMEM2(locali, mFlags, LocalizeInfo, flags, 0);
 			ADD(locali);
 
-			DEFINET2(langresl, LanguageResLocal);
+			DEFINET2(langresl, LanguageResLocal, "LanguageResLocal");
 			ADDFLAGS(langresl, MetaFlag::MetaFlag_NoPanelCaption);
 			FIRSTMEM2(langresl, mPrefix, LanguageResLocal, string, 0);
 			NEXTMEM2(langresl, mText, LanguageResLocal, string, 0, mPrefix);
 			NEXTMEM2(langresl, mLocalInfo, LanguageResLocal, locali, 0x20, mText);
 			ADD(langresl);
 
-			DEFINEDCARRAY2(LanguageResLocal, lresl);
+			DEFINEDCARRAY2(LanguageResLocal, lresl, "DCArray<LanguageResLocal>");
 
-			DEFINET2(pidp, ProjectDatabaseIDPair);
+			DEFINET2(pidp, ProjectDatabaseIDPair, "ProjectDatabaseIDPair");
 			FIRSTMEM2(pidp, mProjectID, ProjectDatabaseIDPair, long, 0);
 			NEXTMEM2(pidp, mDBID, ProjectDatabaseIDPair, long, 0, mProjectID);
 			ADD(pidp);
 
-			DEFINET2(recs, RecordingUtils::EnumRecordingStatus);
+			DEFINET2(recs, RecordingUtils::EnumRecordingStatus, "RecordingUtils::EnumRecordingStatus");
 			FIRSTMEM2(recs, mVal, RecordingUtils::EnumRecordingStatus, long, 0);
 			FIRSTENUM2(recs, mVal, "Not Recorded", notrec, 0, 0);
 			NEXTENUM2(recs, mVal, "Sent To Studio", sent, 0, 1, notrec);
@@ -1601,7 +1506,7 @@ namespace MetaInit {
 				RecordingUtils::EnumRecordingStatus, enumbase, 0x10, mVal);
 			ADD(recs);
 
-			DEFINET2(lres, LanguageRes);
+			DEFINET2(lres, LanguageRes, "LanguageRes");
 			FIRSTMEM2(lres, mResName, LanguageRes, symbol, 0);
 			NEXTMEM2(lres, mID, LanguageRes, long, 0x20, mResName);
 			NEXTMEM2(lres, mIDAlias, LanguageRes, long, 0, mID);
@@ -1640,17 +1545,16 @@ namespace MetaInit {
 			EXT(lres, lang);
 			ADD(lres);
 
-			DEFINET2(lanreg, LanguageRegister);
+			DEFINET2(lanreg, LanguageRegister, "LanguageRegister");
 			FIRSTMEM(lanreg, "Baseclass_UID::Generator", miNextUniqueID, LanguageRegister, uidgen, 0x10);
 			EXT(lanreg, lanreg);
 			ADD(lanreg);
 
-			DEFINEDCARRAY2(ProjectDatabaseIDPair, pdbidp);
+			DEFINEDCARRAY2(ProjectDatabaseIDPair, pdbidp, "DCArray<ProjectDatabaseIDPair>");
 
-			DEFINEMAP2(unsigned int, LanguageRes, uint, langres, std::less<unsigned int>);
-			MKNAME(meta_Map_uint_langres, "Map<unsignedint,LanguageRes,less<unsignedint>>");
+			DEFINEMAP2(unsigned int, LanguageRes, uint, langres, std::less<unsigned int>, "Map<unsignedint,LanguageRes,less<unsignedint>>");
 
-			DEFINET2(landb, LanguageDB);
+			DEFINET2(landb, LanguageDB, "LanguageDB");
 			EXT(landb, landb);
 			SERIALIZER(landb,LanguageDB);
 			FIRSTMEM(landb, "Baseclass_UID::Owner", miUniqueID, LanguageDB, uidowner, 0x10);
@@ -1662,11 +1566,11 @@ namespace MetaInit {
 			NEXTMEM2(landb, mExpandedIDRanges, LanguageDB, DCArray_pdbidp, 0, mProjectID);
 			ADD(landb);
 
-			DEFINEHANDLE(sprite, ParticleSprite);
-			DEFINEHANDLE(tex, T3Texture);
-			DEFINEHANDLE(font, Font);
+			DEFINEHANDLE(sprite, ParticleSprite, "Handle<ParticleSprite>", "DCArray<Handle<ParticleSprite>>","HandleLock<ParticleSprite>","DCArray<HandleLock<ParticleSprite>>");
+			DEFINEHANDLE(tex, T3Texture, "Handle<T3Texture>", "DCArray<Handle<T3Texture>>","HandleLock<T3Texture>","DCArray<HandleLock<T3Texture>>");
+			DEFINEHANDLE(font, Font, "Handle<Font>", "DCArray<Handle<Font>>","HandleLock<Font>","DCArray<HandleLock<Font>>");
 
-			DEFINET2(ovsp, T3OverlaySpriteParams);
+			DEFINET2(ovsp, T3OverlaySpriteParams, "T3OverlaySpriteParams");
 			FIRSTMEM2(ovsp, mhSprite, T3OverlaySpriteParams, Handlesprite, 0);
 			NEXTMEM2(ovsp, mInitialPosition, T3OverlaySpriteParams, vec2, 0, mhSprite);
 			NEXTMEM2(ovsp, mSize, T3OverlaySpriteParams, vec2, 0, mInitialPosition);
@@ -1680,7 +1584,7 @@ namespace MetaInit {
 			meta_ovsp_mFlags.mpFlagDescriptions = &ovspf;
 			ADD(ovsp);
 
-			DEFINET2(oodtp, T3OverlayTextParams);
+			DEFINET2(oodtp, T3OverlayTextParams, "T3OverlayTextParams");
 			FIRSTMEM2(oodtp, mhFont, T3OverlayTextParams, Handlefont, 0);
 			NEXTMEM2(oodtp, mhDlg, T3OverlayTextParams, Handledlg, 0, mhFont);
 			NEXTMEM2(oodtp, mDlgNodeName, T3OverlayTextParams, symbol, 0, mhDlg);
@@ -1688,27 +1592,27 @@ namespace MetaInit {
 			NEXTMEM2(oodtp, mInitialPosition, T3OverlayTextParams, vec2, 0, mText);
 			ADD(oodtp);
 
-			DEFINET2(oods, T3OverlayObjectData_Sprite);
+			DEFINET2(oods, T3OverlayObjectData_Sprite, "T3OverlayObjectData_Sprite");
 			FIRSTMEM2(oods, mName, T3OverlayObjectData_Sprite, symbol, 0);
 			NEXTMEM2(oods, mParams, T3OverlayObjectData_Sprite, ovsp, 0, mName);
 			ADD(oods);
 
-			DEFINET2(oodt, T3OverlayObjectData_Text);
+			DEFINET2(oodt, T3OverlayObjectData_Text, "T3OverlayObjectData_Text");
 			FIRSTMEM2(oodt, mName, T3OverlayObjectData_Text, symbol, 0);
 			NEXTMEM2(oodt, mParams, T3OverlayObjectData_Text, oodtp, 0, mName);
 			ADD(oodt);
 
-			DEFINET2(op, T3OverlayParams);
+			DEFINET2(op, T3OverlayParams, "T3OverlayParams");
 			FIRSTMEM2(op, mhBackgroundTexture, T3OverlayParams, Handletex, 0);
 			NEXTMEM2(op, mhChore, T3OverlayParams, Handlehchore, 0, mhBackgroundTexture);
 			NEXTMEM2(op, mMinDisplayTime, T3OverlayParams, float, 0, mhChore);
 			NEXTMEM2(op, mFadeTime, T3OverlayParams, float, 0, mMinDisplayTime);
 			ADD(op);
 
-			DEFINEDCARRAY2(T3OverlayObjectData_Text, overlaytext);
-			DEFINEDCARRAY2(T3OverlayObjectData_Sprite, overlaysprite);
+			DEFINEDCARRAY2(T3OverlayObjectData_Text, overlaytext, "DCArray<T3OverlayObjectData_Text>");
+			DEFINEDCARRAY2(T3OverlayObjectData_Sprite, overlaysprite, "DCArray<T3OverlayObjectData_Sprite>");
 
-			DEFINET2(overlay, T3OverlayData);
+			DEFINET2(overlay, T3OverlayData, "T3OverlayData");
 			EXT(overlay, overlay);
 			FIRSTMEM2(overlay, mName, T3OverlayData, string, 0x20);
 			NEXTMEM2(overlay, mSpriteObjects, T3OverlayData, DCArray_overlaysprite, 0, mName);
@@ -1716,7 +1620,7 @@ namespace MetaInit {
 			NEXTMEM2(overlay, mParams, T3OverlayData, op, 0, mTextObjects);
 			ADD(overlay);
 
-			DEFINET2(blendmode, BlendMode);
+			DEFINET2(blendmode, BlendMode, "BlendMode");
 			FIRSTMEM2(blendmode, mVal, BlendMode, long, MetaFlag::MetaFlag_EnumIntType);
 			FIRSTENUM2(blendmode, mVal, "Normal", normal, T3BlendMode::eBlendModeNormal, 0);
 			NEXTENUM2(blendmode, mVal, "Default", default, T3BlendMode::eBlendModeDefault, 0, normal);
@@ -1737,17 +1641,17 @@ namespace MetaInit {
 			NEXTMEM1(blendmode, "Baseclass_EnumBase", BASE_CLASS, mVal, BlendMode, enumbase, MetaFlag::MetaFlag_BaseClass, mVal);
 			ADD(blendmode);
 
-			DEFINESARRAY_( Handle<T3Texture>, handletex, 1);
+			DEFINESARRAY_(Handle<T3Texture>, handletex, 1, "SArray<Handle<T3Texture>,1>");
 
-			DEFINET2(spriteanm, ParticleSprite::Animation);
+			DEFINET2(spriteanm, ParticleSprite::Animation, "ParticleSprite::Animation");
 			FIRSTMEM2(spriteanm, mName, ParticleSprite::Animation, symbol, 0);
 			NEXTMEM2(spriteanm, mStartFrame, ParticleSprite::Animation, long, 0, mName);
 			NEXTMEM2(spriteanm, mFrameCount, ParticleSprite::Animation, long, 0, mStartFrame);
 			ADD(spriteanm);
 
-			DEFINEDCARRAY2(ParticleSprite::Animation, spriteanm);
+			DEFINEDCARRAY2(ParticleSprite::Animation, spriteanm, "DCArray<ParticleSprite::Animation>");
 
-			DEFINET2(sprite, ParticleSprite);
+			DEFINET2(sprite, ParticleSprite, "ParticleSprite");
 			EXT(sprite, sprite);
 			SERIALIZER(sprite, ParticleSprite);
 			FIRSTMEM2(sprite, mName, ParticleSprite, string, 0x20);
@@ -1759,7 +1663,7 @@ namespace MetaInit {
 			NEXTMEM2(sprite, mAnimations, ParticleSprite, DCArray_spriteanm, 0, mBlendMode);
 			ADD(sprite);
 
-			DEFINET2(rectf, TRect<float>);
+			DEFINET2(rectf, TRect<float>, "TRect<float>");
 			ADDFLAGS(rectf, MetaFlag::MetaFlag_MetaSerializeBlockingDisabled);
 			FIRSTMEM2(rectf, left, TRect<float>, float, 0);
 			NEXTMEM2(rectf, right, TRect<float>, float, 0,left);
@@ -1767,7 +1671,7 @@ namespace MetaInit {
 			NEXTMEM2(rectf, bottom, TRect<float>, float, 0, top);
 			ADD(rectf);
 
-			DEFINET2(glyph, Font::GlyphInfo);
+			DEFINET2(glyph, Font::GlyphInfo, "Font::GlyphInfo");
 			FIRSTMEM2(glyph, mTexturePage, Font::GlyphInfo, long, 0);
 			NEXTMEM2(glyph, mChannel, Font::GlyphInfo, long, 0, mTexturePage);
 			NEXTMEM2(glyph, mGlyph, Font::GlyphInfo, rectf, 0, mChannel);
@@ -1779,16 +1683,12 @@ namespace MetaInit {
 			NEXTMEM4(glyph, mGradientSize, Font::GlyphInfo, float, 0, mXAdvance, -1, TelltaleToolLib_GetGameKeyIndex("WDM"));
 			ADD(glyph);
 
-			DEFINEMAP2(unsigned int, Font::GlyphInfo, uint,
-				glyphinf, std::less<unsigned int>);
+			DEFINEMAP2(unsigned int, Font::GlyphInfo, uint, glyphinf, std::less<unsigned int>, "Map<uint,Font::GlyphInfo,less<uint>>");
 
-			DEFINEDCARRAY(T3Texture);
-			DEFINEDCARRAY2(unsigned int, uint);
-			MKNAME(meta_DCArray_T3Texture, "DCArray<T3Texture>");
-			MKNAME(meta_DCArray_uint, "DCArray<uint>");
-			MKNAME(meta_Map_uint_glyphinf, "Map<uint,Font::GlyphInfo,less<uint>>");
+			DEFINEDCARRAY(T3Texture, "DCArray<T3Texture>");
+			DEFINEDCARRAY2(unsigned int, uint, "DCArray<uint>");
 
-			DEFINET2(font, Font);
+			DEFINET2(font, Font, "Font");
 			ADDFLAGS(font, MetaFlag::MetaFlag_RenderResource);
 			EXT(font, font);
 			SERIALIZER(font, Font);
@@ -1812,92 +1712,91 @@ namespace MetaInit {
 			//------
 			ADD(font);
 
-			DEFINET2(dlgid, DlgObjID);
+			DEFINET2(dlgid, DlgObjID, "DlgObjID");
 			FIRSTMEM2(dlgid, mID, DlgObjID, symbol, 0);
 			ADD(dlgid);
 
-			DEFINET2(startnodeoff, PreloadPackage::StartNodeOffset);
+			DEFINET2(startnodeoff, PreloadPackage::StartNodeOffset, "PreloadPackage::StartNodeOffset");
 			FIRSTMEM2(startnodeoff, mStartNodeChain, PreloadPackage::StartNodeOffset, dlgid, 0);
 			NEXTMEM2(startnodeoff, fStartTimeSeconds, PreloadPackage::StartNodeOffset, float, 0,mStartNodeChain);
 			NEXTMEM2(startnodeoff, mfMinDurationToPreload, PreloadPackage::StartNodeOffset, float, 0, fStartTimeSeconds);
 			ADD(startnodeoff);
 
-			DEFINET2(idandnodeoff, PreloadPackage::RuntimeDataDialog::DlgObjIdAndStartNodeOffset);
+			DEFINET2(idandnodeoff, PreloadPackage::RuntimeDataDialog::DlgObjIdAndStartNodeOffset, "PreloadPackage::RuntimeDataDialog::DlgObjIdAndStartNodeOffset");
 			FIRSTMEM2(idandnodeoff, mID, PreloadPackage::RuntimeDataDialog::DlgObjIdAndStartNodeOffset, dlgid, 0);
 			NEXTMEM2(idandnodeoff, mOffset, PreloadPackage::RuntimeDataDialog::DlgObjIdAndStartNodeOffset, startnodeoff, 0, mID);
 			ADD(idandnodeoff);
 
-			DEFINESET_(Symbol SEP Symbol::CompareCRC, symbol);
-			MKNAME(meta_Set_symbol, "Set<Symbol,Less<Symbol>>");
+			DEFINESET_(Symbol SEP Symbol::CompareCRC, symbol, "Set<Symbol,Less<Symbol>>");
 
-			DEFINET2(seen, PreloadPackage::ResourceSeenTimes);
+			DEFINET2(seen, PreloadPackage::ResourceSeenTimes, "PreloadPackage::ResourceSeenTimes");
 			FIRSTMEM2(seen, mfEarliest, PreloadPackage::ResourceSeenTimes, float, 0);
 			NEXTMEM2(seen, mfLatest, PreloadPackage::ResourceSeenTimes, float, 0, mfEarliest);
 			NEXTMEM2(seen, mAdditionalScenes, PreloadPackage::ResourceSeenTimes, Set_symbol,0, mfLatest);
 			ADD(seen);
 
-			DEFINET2(bitsetbase3, BitSetBase<3>);
+			DEFINET2(bitsetbase3, BitSetBase<3>, "BitSetBase<3>");
 			SERIALIZER(bitsetbase3, BitSetBase<3>);
 			ADD(bitsetbase3);
 
-			DEFINET2(bitsetbase2, BitSetBase<2>);
+			DEFINET2(bitsetbase2, BitSetBase<2>, "BitSetBase<2>");
 			SERIALIZER(bitsetbase2, BitSetBase<2>);
 			ADD(bitsetbase2);
 
-			DEFINET2(bitsetbase1, BitSetBase<1>);
+			DEFINET2(bitsetbase1, BitSetBase<1>, "BitSetBase<1>");
 			SERIALIZER(bitsetbase1, BitSetBase<1>);
 			ADD(bitsetbase1);
 
-			DEFINET2(reskey, PreloadPackage::ResourceKey);
+			DEFINET2(reskey, PreloadPackage::ResourceKey, "PreloadPackage::ResourceKey");
 			FIRSTMEM2(reskey, mResourceName, PreloadPackage::ResourceKey, symbol, 0);
 			NEXTMEM2(reskey, mMetaClassDescriptionCrc, PreloadPackage::ResourceKey, __int64, 0, mResourceName);
 			//NEWER GAMES
 			NEXTMEM4(reskey, mRenderQualities, PreloadPackage::ResourceKey, bitsetbase1, 0x20, mMetaClassDescriptionCrc
 				,TelltaleToolLib_GetGameKeyIndex("BAT"),-1);
-			NEXTMEM4(reskey, mVisible, PreloadPackage::ResourceKey, bool, 
+			NEXTMEM4(reskey, mVisible, PreloadPackage::ResourceKey, bool,
 				0, mRenderQualities, TelltaleToolLib_GetGameKeyIndex("WD4"), -1);
 			NEXTMEM4(reskey, mPrefix, PreloadPackage::ResourceKey, string,
 				0, mVisible, TelltaleToolLib_GetGameKeyIndex("WD4"), -1);
 			//--
 			ADD(reskey);
 
-			DEFINEDCARRAY2(PreloadPackage::ResourceKey, reskey);
+			DEFINEDCARRAY2(PreloadPackage::ResourceKey, reskey, "DCArray<PreloadPackage::ResourceKey>");
 
-			DEFINET2(ppkgs, PreloadPackage::RuntimeDataScene);
+			DEFINET2(ppkgs, PreloadPackage::RuntimeDataScene, "PreloadPackage::RuntimeDataScene");
 			EXT(ppkgs, preloadpackagerts);
 			FIRSTMEM2(ppkgs, mResources, PreloadPackage::RuntimeDataScene, DCArray_reskey, 0);
 			ADD(ppkgs);
 
-			DEFINET2(dlgresinf, PreloadPackage::RuntimeDataDialog::DialogResourceInfo);
+			DEFINET2(dlgresinf, PreloadPackage::RuntimeDataDialog::DialogResourceInfo, "PreloadPackage::RuntimeDataDialog::DialogResourceInfo");
 			FIRSTMEM2(dlgresinf, mResourceKey, PreloadPackage::RuntimeDataDialog::DialogResourceInfo, reskey, 0);
 			NEXTMEM2(dlgresinf, mResourceSeenTimes, PreloadPackage::RuntimeDataDialog::DialogResourceInfo, seen, 0, mResourceKey);
 			ADD(dlgresinf);
 
-			DEFINEDCARRAY2(PreloadPackage::RuntimeDataDialog::DialogResourceInfo, resinfodlg);
+			DEFINEDCARRAY2(PreloadPackage::RuntimeDataDialog::DialogResourceInfo, resinfodlg, "DCArray<PreloadPackage::RuntimeDataDialog::DialogResourceInfo>");
 
-			DEFINET2(idandvec, PreloadPackage::RuntimeDataDialog::DlgObjIdAndResourceVector);
+			DEFINET2(idandvec, PreloadPackage::RuntimeDataDialog::DlgObjIdAndResourceVector, "PreloadPackage::RuntimeDataDialog::DlgObjIdAndResourceVector");
 			FIRSTMEM2(idandvec, mID, PreloadPackage::RuntimeDataDialog::DlgObjIdAndResourceVector, dlgid, 0);
 			NEXTMEM2(idandvec, mVector, PreloadPackage::RuntimeDataDialog::DlgObjIdAndResourceVector, DCArray_resinfodlg, 0, mID);
 			ADD(idandvec);
 
-			DEFINEDCARRAY2(PreloadPackage::RuntimeDataDialog::DlgObjIdAndResourceVector, resvec);
-			DEFINEDCARRAY2(PreloadPackage::RuntimeDataDialog::DlgObjIdAndStartNodeOffset, startnodeoffandid);
+			DEFINEDCARRAY2(PreloadPackage::RuntimeDataDialog::DlgObjIdAndResourceVector, resvec, "DCArray<PreloadPackage::RuntimeDataDialog::DlgObjIdAndResourceVector>");
+			DEFINEDCARRAY2(PreloadPackage::RuntimeDataDialog::DlgObjIdAndStartNodeOffset, startnodeoffandid, "DCArray<PreloadPackage::RuntimeDataDialog::DlgObjIdAndStartNodeOffset>");
 
-			DEFINET2(ppkgd, PreloadPackage::RuntimeDataDialog);
+			DEFINET2(ppkgd, PreloadPackage::RuntimeDataDialog, "PreloadPackage::RuntimeDataDialog");
 			EXT(ppkgd, preloadpackagertd);
 			FIRSTMEM2(ppkgd, mDialogResourceVectors, PreloadPackage::RuntimeDataDialog, DCArray_resvec, 0);
 			NEXTMEM2(ppkgd, mStartNodeOffsets, PreloadPackage::RuntimeDataDialog, DCArray_startnodeoffandid, 0, mDialogResourceVectors);
 			ADD(ppkgd);
 
-			DEFINET2(sounddata, SoundData);
+			DEFINET2(sounddata, SoundData, "SoundData");
 			EXT(sounddata, wav);
 			ADD(sounddata);
 
-			DEFINET2(pathbase, PathBase);
+			DEFINET2(pathbase, PathBase, "PathBase");
 			ADDFLAGS(pathbase, MetaFlag::MetaFlag_Memberless);
 			ADD(pathbase);
 
-			DEFINET2(ldb, LocomotionDB::AnimationInfo);
+			DEFINET2(ldb, LocomotionDB::AnimationInfo, "LocomotionDB::AnimationInfo");
 			FIRSTMEM2(ldb, mu64TimeStamp, LocomotionDB::AnimationInfo, u64, 0);
 			NEXTMEM2(ldb, mzName, LocomotionDB::AnimationInfo, string, 0, mu64TimeStamp);
 			NEXTMEM2(ldb, meCategory, LocomotionDB::AnimationInfo, long, MetaFlag::MetaFlag_EnumIntType, mzName);
@@ -1925,19 +1824,18 @@ namespace MetaInit {
 			NEXTMEM2(ldb, mbTurn, LocomotionDB::AnimationInfo, bool, 0, mbTurnRight);
 			ADD(ldb);
 
-			DEFINEMAP2(String, LocomotionDB::AnimationInfo, string, ldbanim, std::less<String>);
+			DEFINEMAP2(String, LocomotionDB::AnimationInfo, string, ldbanim, std::less<String>, "Map<String,LocomotionDB::AnimationInfo,less<String>>");
 
-			DEFINET2(dbl, LocomotionDB);
+			DEFINET2(dbl, LocomotionDB, "LocomotionDB");
 			EXT(dbl, ldb);
 			FIRSTMEM2(dbl, mAnimInfoList, LocomotionDB, Map_string_ldbanim, 0);
 			ADD(dbl);
 
-			DEFINEHANDLE(dbl, LocomotionDB);
+			DEFINEHANDLE(dbl, LocomotionDB, "Handle<LocomotionDB>", "DCArray<Handle<LocomotionDB>>","HandleLock<LocomotionDB>","DCArray<HandleLock<LocomotionDB>>");
 
-			DEFINEMAP(Symbol, bool, Symbol::CompareCRC);
-			MKNAME(meta_Map_Symbol_bool, "Map<Symbol,bool,less<Symbol>>");
+			DEFINEMAP(Symbol, bool, Symbol::CompareCRC, "Map<Symbol,bool,less<Symbol>>");
 
-			DEFINET2(litem, LogicGroup::LogicItem);
+			DEFINET2(litem, LogicGroup::LogicItem, "LogicGroup::LogicItem");
 			FIRSTMEM(litem, "Baseclass_PropertySet", mPropVersion,LogicGroup::LogicItem, prop, 0);
 			meta_litem_mPropVersion.mOffset = PARENT_OFFSET(PropertySet, LogicGroup::LogicItem);
 			NEXTMEM2(litem, mName, LogicGroup::LogicItem, string, 0, mPropVersion);
@@ -1948,11 +1846,10 @@ namespace MetaInit {
 			meta_litem_mReferenceKeyList.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("WD4");
 			ADD(litem);
 
-			DEFINEDCARRAY(LogicGroup);
-			DEFINEMAP2(String, LogicGroup::LogicItem, string, logicitem, std::less<String>);
-			MKNAME(meta_Map_string_logicitem, "Map<String,LogicGroup::LogicItem,less<String>>");
+			DEFINEDCARRAY(LogicGroup, "DCArray<LogicGroup>");
+			DEFINEMAP2(String, LogicGroup::LogicItem, string, logicitem, std::less<String>, "Map<String,LogicGroup::LogicItem,less<String>>");
 
-			DEFINET2(lgroup, LogicGroup);
+			DEFINET2(lgroup, LogicGroup, "LogicGroup");
 			FIRSTMEM2(lgroup, mOperator, LogicGroup, long, 0);
 			NEXTMEM2(lgroup, mItems, LogicGroup, Map_string_logicitem, 0, mOperator);
 			NEXTMEM2(lgroup, mLogicGroups, LogicGroup,DCArray_LogicGroup, 0, mItems);
@@ -1961,7 +1858,7 @@ namespace MetaInit {
 			NEXTMEM2(lgroup, mName, LogicGroup, string, 0, mType);
 			ADD(lgroup);
 
-			DEFINET2(rule, Rule);
+			DEFINET2(rule, Rule, "Rule");
 			ADDFLAGS(rule, MetaFlag::MetaFlag_ScriptTransient | MetaFlag::MetaFlag_PlaceInAddPropMenu);
 			SERIALIZER(rule, Rule);
 			FIRSTMEM2(rule, mName, Rule, string, 0);
@@ -1973,9 +1870,9 @@ namespace MetaInit {
 			NEXTMEM2(rule, mAgentCategory, Rule, string, 0, mElse);
 			ADD(rule);
 
-			DEFINEMAP2(String, Rule*, string, ruleptr, std::less<String>);
+			DEFINEMAP2(String, Rule*, string, ruleptr, std::less<String>, "Map<String,Rule*,less<String>>");
 
-			DEFINET2(rules, Rules);
+			DEFINET2(rules, Rules, "Rules");
 			SERIALIZER(rules, Rules);
 			EXT(rules, rules);
 			FIRSTMEM2(rules, mFlags, Rules, flags, 0);
@@ -1983,12 +1880,12 @@ namespace MetaInit {
 			NEXTMEM2(rules, mRuleMap, Rules, Map_string_ruleptr, MetaFlag::MetaFlag_MetaSerializeDisable, mhLogicProps);
 			ADD(rules);
 
-			DEFINET2(eloge, EventLoggerEvent);
+			DEFINET2(eloge, EventLoggerEvent, "EventLoggerEvent");
 			FIRSTMEM2(eloge, mEventID, EventLoggerEvent, long, 0);
 			NEXTMEM2(eloge, mMaxSeverity, EventLoggerEvent, long, 0, mEventID);
 			ADD(eloge);
 
-			DEFINET2(epage, EventStoragePage);
+			DEFINET2(epage, EventStoragePage, "EventStoragePage");
 			SERIALIZER(epage, EventStoragePage);
 			EXT(epage, epage);
 			FIRSTMEM2(epage, mVersion, EventStoragePage, long, 0);
@@ -1996,17 +1893,17 @@ namespace MetaInit {
 			NEXTMEM4(epage, mFlushedNameOnDisk, EventStoragePage, string, 0, mSessionID, TelltaleToolLib_GetGameKeyIndex("BORDERLANDS"), -1);
 			ADD(epage);
 
-			DEFINEDCARRAY2(EventStorage::PageEntry, estoreentry);
-			DEFINEHANDLE(estorepage, EventStoragePage);
-			
+			DEFINEDCARRAY2(EventStorage::PageEntry, estoreentry, "DCArray<EventStorage::PageEntry>");
+			DEFINEHANDLE(estorepage, EventStoragePage, "Handle<EventStoragePage>", "DCArray<Handle<EventStoragePage>>","HandleLock<EventStoragePage>","DCArray<HandleLock<EventStoragePage>>");
 
-			DEFINET2(estoree, EventStorage::PageEntry);
+
+			DEFINET2(estoree, EventStorage::PageEntry, "EventStorage::PageEntry");
 			ADDFLAGS(estoree, MetaFlag::MetaFlag_Handle | MetaFlag::MetaFlag_PlaceInAddPropMenu);
 			FIRSTMEM2(estoree, mhPage, EventStorage::PageEntry, Handleestorepage, 0);
 			NEXTMEM2(estoree, mMaxEventID, EventStorage::PageEntry, long, 0, mhPage);
 			ADD(estoree);
 
-			DEFINET2(estore, EventStorage);
+			DEFINET2(estore, EventStorage, "EventStorage");
 			EXT(estore, estore);
 			SERIALIZER(estore, EventStorage);
 			FIRSTMEM2(estore, mVersion, EventStorage, long, 0);
@@ -2017,16 +1914,15 @@ namespace MetaInit {
 			NEXTMEM2(estore, mEventStoragePageSize, EventStorage, long, 0, mLastEventID);
 			ADD(estore);
 
-			DEFINET2(pentry, PhonemeTable::PhonemeEntry);
+			DEFINET2(pentry, PhonemeTable::PhonemeEntry, "PhonemeTable::PhonemeEntry");
 			FIRSTMEM2(pentry, mAnimation, PhonemeTable::PhonemeEntry, animorchore, 0);
 			NEXTMEM2(pentry, mContributionScalar, PhonemeTable::PhonemeEntry, float, 0, mAnimation);
 			NEXTMEM2(pentry, mTimeScalar, PhonemeTable::PhonemeEntry, float, 0, mContributionScalar);
 			ADD(pentry);
 
-			DEFINEMAP2(Symbol, PhonemeTable::PhonemeEntry, symbol, pentry, Symbol::CompareCRC);
-			MKNAME(meta_Map_symbol_pentry, "Map<Symbol,PhonemeTable::PhonemeEntry,Less<Symbol>>");
+			DEFINEMAP2(Symbol, PhonemeTable::PhonemeEntry, symbol, pentry, Symbol::CompareCRC, "Map<Symbol,PhonemeTable::PhonemeEntry,Less<Symbol>>");
 
-			DEFINET2(ptable, PhonemeTable);
+			DEFINET2(ptable, PhonemeTable, "PhonemeTable");
 			EXT(ptable, ptable);
 			SERIALIZER(ptable, PhonemeTable);
 			FIRSTMEM2(ptable, mName, PhonemeTable, string, 0);
@@ -2034,8 +1930,8 @@ namespace MetaInit {
 			NEXTMEM2(ptable, mAnimations, PhonemeTable, Map_symbol_pentry, 0, mContributionScaler);
 			ADD(ptable);
 
-			DEFINET2(cstate, Procedural_LookAt::EnumLookAtComputeStage);
-			FIRSTMEM(cstate, "Baseclass_EnumBase", mVal, 
+			DEFINET2(cstate, Procedural_LookAt::EnumLookAtComputeStage, "Procedural_LookAt::EnumLookAtComputeStage");
+			FIRSTMEM(cstate, "Baseclass_EnumBase", mVal,
 				Procedural_LookAt::EnumLookAtComputeStage, enumbase, 0);
 			NEXTMEM1(cstate, "mVal", ALAIS,mVal,Procedural_LookAt::EnumLookAtComputeStage,
 				long, 0, mVal);
@@ -2044,7 +1940,7 @@ namespace MetaInit {
 			NEXTENUM2(cstate, ALAIS, "Final Look At", flook, 2, 0, dlglook);
 			ADD(cstate);
 
-			DEFINET2(lookat, Procedural_LookAt);
+			DEFINET2(lookat, Procedural_LookAt, "Procedural_LookAt");
 			ADDFLAGS(lookat, MetaFlag::MetaFlag_Memberless);
 			EXT(lookat, look);
 			FIRSTMEM2(lookat, mHostNode, Procedural_LookAt, string, 1);
@@ -2062,11 +1958,11 @@ namespace MetaInit {
 			NEXTMEM2(lookat, mLookAtComputeStage, Procedural_LookAt, cstate, 1,mLastUDWeight);
 			ADD(lookat);
 
-			DEFINET2(pbase, PathBase);
+			DEFINET2(pbase, PathBase, "PathBase");
 			ADDFLAGS(pbase, MetaFlag::MetaFlag_Memberless);
 			ADD(pbase);
 
-			DEFINET2(pseg, PathSegment);
+			DEFINET2(pseg, PathSegment, "PathSegment");
 			FIRSTMEM(pseg, "Baseclass_PathBase", mStart, PathSegment, pbase, 0x10);
 			NEXTMEM1(pseg, "mStart", ALAIS, mStart, PathSegment, vec3, 0, mStart);
 			NEXTMEM2(pseg, mEnd, PathSegment, vec3, 0, ALAIS);
@@ -2075,7 +1971,7 @@ namespace MetaInit {
 			SERIALIZER(pseg, PathSegment);
 			ADD(pseg);
 
-			DEFINET2(psegh, HermiteCurvePathSegment);
+			DEFINET2(psegh, HermiteCurvePathSegment, "HermiteCurvePathSegment");
 			FIRSTMEM(psegh, "Baseclass_PathBase", mStart, HermiteCurvePathSegment, pbase, 0x10);
 			NEXTMEM1(psegh, "mStart", ALAIS, mStart, HermiteCurvePathSegment, vec3, 0, mStart);
 			NEXTMEM2(psegh, mEnd, HermiteCurvePathSegment, vec3, 0, ALAIS);
@@ -2086,7 +1982,7 @@ namespace MetaInit {
 			SERIALIZER(psegh, HermiteCurvePathSegment);
 			ADD(psegh);
 
-			DEFINET2(cstate1, AnimationDrivenPathSegment::EnumAnimatedPathSegmentType);
+			DEFINET2(cstate1, AnimationDrivenPathSegment::EnumAnimatedPathSegmentType, "AnimationDrivenPathSegment::EnumAnimatedPathSegmentType");
 			FIRSTMEM(cstate1, "Baseclass_EnumBase", mVal,
 				AnimationDrivenPathSegment::EnumAnimatedPathSegmentType, enumbase, 0);
 			NEXTMEM1(cstate1, "mVal", ALAIS, mVal, AnimationDrivenPathSegment::EnumAnimatedPathSegmentType,
@@ -2096,7 +1992,7 @@ namespace MetaInit {
 			NEXTENUM2(cstate1, ALAIS, "eStopType", flook, 2, 0, dlglook);
 			ADD(cstate1);
 
-			DEFINET2(psegha, AnimationDrivenPathSegment);
+			DEFINET2(psegha, AnimationDrivenPathSegment, "AnimationDrivenPathSegment");
 			FIRSTMEM(psegha, "Baseclass_PathBase", mStart, AnimationDrivenPathSegment, pbase, 0x10);
 			NEXTMEM1(psegha, "mStart", ALAIS, mStart, AnimationDrivenPathSegment, vec3, 0, mStart);
 			NEXTMEM2(psegha, mEnd, AnimationDrivenPathSegment, vec3, 0, ALAIS);
@@ -2106,28 +2002,28 @@ namespace MetaInit {
 			SERIALIZER(psegha, AnimationDrivenPathSegment);
 			ADD(psegha);
 
-			DEFINET2(wpath, WalkPath);
+			DEFINET2(wpath, WalkPath, "WalkPath");
 			FIRSTMEM2(wpath, mName, WalkPath, string, 0);
 			SERIALIZER(wpath, WalkPath);
 			ADD(wpath);
 
-			DEFINET2(dloader, DependencyLoader<1>);
+			DEFINET2(dloader, DependencyLoader<1>, "DependencyLoader<1>");
 			SERIALIZER(dloader, DependencyLoader<1>);
 			ADDFLAGS(dloader, MetaFlag::MetaFlag_Memberless);
 			ADD(dloader);
 
-			DEFINET2(aas, AutoActStatus);
-			FIRSTMEM2(aas, m_Status, AutoActStatus, 
+			DEFINET2(aas, AutoActStatus, "AutoActStatus");
+			FIRSTMEM2(aas, m_Status, AutoActStatus,
 				long, MetaFlag::MetaFlag_EnumIntType);
 			ADD(aas);
 
-			DEFINET2(aab, ActorAgentBinding);
+			DEFINET2(aab, ActorAgentBinding, "ActorAgentBinding");
 			FIRSTMEM2(aab, mActorName, ActorAgentBinding, string, 0);
 			ADD(aab);
 
-			DEFINEMAP(Symbol, WalkPath, Symbol::CompareCRC);
+			DEFINEMAP(Symbol, WalkPath, Symbol::CompareCRC, "Map<Symbol,WalkPath,less<Symbol>>");
 
-			DEFINET2(chore, Chore);
+			DEFINET2(chore, Chore, "Chore");
 			EXT(chore, chore);
 			SERIALIZER(chore, Chore);
 			FIRSTMEM2(chore, mName, Chore, string, 0);
@@ -2135,7 +2031,7 @@ namespace MetaInit {
 			NEXTMEM2(chore, mLength, Chore, float, 0, mFlags);
 			NEXTMEM2(chore, mNumResources, Chore, long, 0, mLength);
 			NEXTMEM2(chore, mNumAgents, Chore, long, 0, mNumResources);
-			NEXTMEM2(chore, mEditorProps, Chore, prop, 
+			NEXTMEM2(chore, mEditorProps, Chore, prop,
 				MetaFlag::MetaFlag_SkipObjectState, mNumAgents);
 			NEXTMEM2(chore, mChoreSceneFile, Chore, string, 0, mEditorProps);
 			NEXTMEM2(chore, mRenderDelay, Chore, long, MetaFlag::MetaFlag_SkipObjectState,
@@ -2148,7 +2044,7 @@ namespace MetaInit {
 			NEXTMEM2(chore, mWalkPaths, Chore, Map_Symbol_WalkPath, 0, mToolProps);
 			ADD(chore);
 
-			DEFINET2(cattach, ChoreAgent::Attachment);
+			DEFINET2(cattach, ChoreAgent::Attachment, "ChoreAgent::Attachment");
 			FIRSTMEM2(cattach, mbDoAttach, ChoreAgent::Attachment, bool, 0);
 			NEXTMEM2(cattach, mAttachTo, ChoreAgent::Attachment, string, MetaFlag::MetaFlag_SelectAgentType,mbDoAttach);
 			NEXTMEM2(cattach, mAttachToNode, ChoreAgent::Attachment, string, 0, mAttachTo);
@@ -2158,7 +2054,7 @@ namespace MetaInit {
 			NEXTMEM2(cattach, mbLeaveAttachedWhenComplete, ChoreAgent::Attachment, bool, 0, mbAttachPreserveWorldPos);
 			ADD(cattach);
 
-			DEFINET2(cagent, ChoreAgent);
+			DEFINET2(cagent, ChoreAgent, "ChoreAgent");
 			SERIALIZER(cagent, ChoreAgent);
 			FIRSTMEM2(cagent, mpChore, ChoreAgent, ptrbase, 0);
 			NEXTMEM2(cagent, mAgentName, ChoreAgent, string, 0, mpChore);
@@ -2169,7 +2065,7 @@ namespace MetaInit {
 			NEXTMEM2(cagent, mAgentEnabledRule, ChoreAgent, rule, 0, mAABinding);
 			ADD(cagent);
 
-			DEFINET2(cblock, ChoreResource::Block);
+			DEFINET2(cblock, ChoreResource::Block, "ChoreResource::Block");
 			FIRSTMEM2(cblock, mStartTime, ChoreResource::Block, float, 0);
 			NEXTMEM2(cblock, mEndTime, ChoreResource::Block, float, 0, mStartTime);
 			NEXTMEM2(cblock, mbLoopingBlock, ChoreResource::Block, bool, 0, mEndTime);
@@ -2177,11 +2073,11 @@ namespace MetaInit {
 			NEXTMEM2(cblock, mbSelected, ChoreResource::Block, bool, 1, mScale);
 			ADD(cblock);
 
-			DEFINEDCARRAY2(ChoreResource::Block, choreblock);
+			DEFINEDCARRAY2(ChoreResource::Block, choreblock, "DCArray<ChoreResource::Block>");
 
-			DEFINEDCARRAY2(AnimationValueInterfaceBase*, anminterfacebase);
+			DEFINEDCARRAY2(AnimationValueInterfaceBase*, anminterfacebase, "DCArray<AnimationValueInterfaceBase*>");
 
-			DEFINET2(anm, Animation);
+			DEFINET2(anm, Animation, "Animation");
 			EXT(anm, anm);
 			SERIALIZER(anm, Animation);
 			FIRSTMEM2(anm, mVersion, Animation, long, 0);
@@ -2193,7 +2089,7 @@ namespace MetaInit {
 			NEXTMEM2(anm, mToolProps, Animation, tp, MetaFlag::MetaFlag_EditorHide | MetaFlag::MetaFlag_SkipObjectState, mValues);
 			ADD(anm);
 
-			DEFINET2(cres, ChoreResource);
+			DEFINET2(cres, ChoreResource, "ChoreResource");
 			SERIALIZER(cres, ChoreResource);
 			FIRSTMEM2(cres, mpChore, ChoreResource, ptrbase, 0);
 			NEXTMEM2(cres, mVersion, ChoreResource, long, 0, mpChore);
@@ -2218,19 +2114,19 @@ namespace MetaInit {
 			NEXTMEM2(cres, mAAStatus, ChoreResource, aas, 0, mResourceGroupInclude);
 			NEXTMEM1(cres, "mAAStatus", ALIAS, mAAStatus,
 				ChoreResource, long, 0, mAAStatus);
-			meta_cres_ALIAS.mGameIndexVersionRange.max = 
+			meta_cres_ALIAS.mGameIndexVersionRange.max =
 				TelltaleToolLib_GetGameKeyIndex("MCSM");
-			meta_cres_mAAStatus.mGameIndexVersionRange.min = 
+			meta_cres_mAAStatus.mGameIndexVersionRange.min =
 				TelltaleToolLib_GetGameKeyIndex("WDM");
 			ADD(cres);
 
-			DEFINET2(rsin, ResourceGroupInfo);
+			DEFINET2(rsin, ResourceGroupInfo, "ResourceGroupInfo");
 			ADDFLAGS(rsin, MetaFlag::MetaFlag_PlaceInAddPropMenu);
 			FIRSTMEM2(rsin, mColor, ResourceGroupInfo, color, 0);
 			NEXTMEM2(rsin, mPriority, ResourceGroupInfo, long, 0, mColor);
 			ADD(rsin);
 
-			DEFINET2(pkey, PhonemeKey);
+			DEFINET2(pkey, PhonemeKey, "PhonemeKey");
 			FIRSTMEM2(pkey, mPhoneme, PhonemeKey, symbol, 0);
 			NEXTMEM2(pkey, mFadeInTime, PhonemeKey, float, 0, mPhoneme);
 			NEXTMEM2(pkey, mHoldTime, PhonemeKey, float, 0, mFadeInTime);
@@ -2239,23 +2135,23 @@ namespace MetaInit {
 			SERIALIZER(pkey, PhonemeKey);
 			ADD(pkey);
 
-			
 
-			DEFINEKEYFRAMEDVALUE(Vector3,Vector3,vec3);
-			DEFINEKEYFRAMEDVALUE(Transform, Transform, transform);
-			DEFINEKEYFRAMEDVALUE(bool, bool, bool);
-			DEFINEKEYFRAMEDVALUE(String, String, string);
-			DEFINEKEYFRAMEDVALUE(PhonemeKey, PhonemeKey, pkey);
-			DEFINEKEYFRAMEDVALUE(HCHORE, Handle<Chore>, Handlehchore);
+
+			DEFINEKEYFRAMEDVALUE(Vector3, Vector3, vec3, "KeyframedValue<Vector3>::Sample", "DCArray<KeyframedValue<Vector3>::Sample>", "AnimatedValueInterface<Vector3>", "KeyframedValue<Vector3>");
+			DEFINEKEYFRAMEDVALUE(Transform, Transform, transform, "KeyframedValue<Transform>::Sample", "DCArray<KeyframedValue<Transform>::Sample>", "AnimatedValueInterface<Transform>", "KeyframedValue<Transform>");
+			DEFINEKEYFRAMEDVALUE(bool, bool, bool, "KeyframedValue<bool>::Sample", "DCArray<KeyframedValue<bool>::Sample>", "AnimatedValueInterface<bool>", "KeyframedValue<bool>");
+			DEFINEKEYFRAMEDVALUE(String, String, string, "KeyframedValue<String>::Sample", "DCArray<KeyframedValue<String>::Sample>", "AnimatedValueInterface<String>", "KeyframedValue<String>");
+			DEFINEKEYFRAMEDVALUE(PhonemeKey, PhonemeKey, pkey, "KeyframedValue<PhonemeKey>::Sample", "DCArray<KeyframedValue<PhonemeKey>::Sample>", "AnimatedValueInterface<PhonemeKey>", "KeyframedValue<PhonemeKey>");
+			DEFINEKEYFRAMEDVALUE(HCHORE, Handle<Chore>, Handlehchore, "KeyframedValue<Handle<Chore>>::Sample", "DCArray<KeyframedValue<Handle<Chore>>::Sample>", "AnimatedValueInterface<Handle<Chore>>", "KeyframedValue<Handle<Chore>>");
 
 			if (meta_kfv_String_sample.mbNameIsHeapAllocated) {
 				free((void*)meta_kfv_String_sample.mpTypeInfoName);
 				meta_kfv_String_sample.mbNameIsHeapAllocated = false;
 			}
 			meta_kfv_String_sample.mpTypeInfoName = "KeyframedValue<String>::Sample";//typedef string
-			meta_kfv_String_sample.mHash = CRC64_CaseInsensitive(0, 
+			meta_kfv_String_sample.mHash = CRC64_CaseInsensitive(0,
 				meta_kfv_String_sample.mpTypeInfoName);
-			
+
 			if (meta_anmi_String.mbNameIsHeapAllocated) {
 				free((void*)meta_anmi_String.mpTypeInfoName);
 				meta_anmi_String.mbNameIsHeapAllocated = false;
@@ -2270,31 +2166,31 @@ namespace MetaInit {
 			}
 			meta_kfv_String.mpTypeInfoName = "KeyframedValue<String>";//typedef string
 			meta_kfv_String.mHash = CRC64_CaseInsensitive(0, meta_kfv_String.mpTypeInfoName);
-			DEFINET2(spose, SkeletonPose);
+			DEFINET2(spose, SkeletonPose, "SkeletonPose");
 			ADD(spose);
 
-			DEFINET2(sklk, CompressedSkeletonPoseKeys);
-			FIRSTMEM(sklk, "Baseclass_AnimationValueInterfaceBase", mName, 
+			DEFINET2(sklk, CompressedSkeletonPoseKeys, "CompressedSkeletonPoseKeys");
+			FIRSTMEM(sklk, "Baseclass_AnimationValueInterfaceBase", mName,
 				CompressedSkeletonPoseKeys, anminterface, MetaFlag::MetaFlag_BaseClass);
 			meta_sklk_mName.mOffset = (i64)((AnimationValueInterfaceBase*)((CompressedSkeletonPoseKeys*)NULL));
 			NEXTMEM2(sklk, mDataSize, CompressedSkeletonPoseKeys, long, 0, mName);
 			ADD(sklk);
 
-			DEFINET2(sklk2, CompressedSkeletonPoseKeys2);
+			DEFINET2(sklk2, CompressedSkeletonPoseKeys2, "CompressedSkeletonPoseKeys2");
 			FIRSTMEM(sklk2, "Baseclass_AnimationValueInterfaceBase", mName,
 				CompressedSkeletonPoseKeys2, anminterface, MetaFlag::MetaFlag_BaseClass);
 			meta_sklk2_mName.mOffset = (i64)((AnimationValueInterfaceBase*)((CompressedSkeletonPoseKeys2*)NULL));
 			NEXTMEM2(sklk2, mDataSize, CompressedSkeletonPoseKeys2, long, 0, mName);
 			ADD(sklk2);
 
-			DEFINET2(sbentry, SkeletonPoseValue::BoneEntry);
+			DEFINET2(sbentry, SkeletonPoseValue::BoneEntry, "SkeletonPoseValue::BoneEntry");
 			FIRSTMEM2(sbentry, mName, SkeletonPoseValue::BoneEntry, symbol, 0);
 			NEXTMEM2(sbentry, mFlags, SkeletonPoseValue::BoneEntry, long, 0, mName);
 			ADD(sbentry);
-			
-			DEFINEDCARRAY(Transform);
 
-			DEFINET2(sample, SkeletonPoseValue::Sample);
+			DEFINEDCARRAY(Transform, "DCArray<Transform>");
+
+			DEFINET2(sample, SkeletonPoseValue::Sample, "SkeletonPoseValue::Sample");
 			FIRSTMEM2(sample, mTime, SkeletonPoseValue::Sample, float, 0);
 			NEXTMEM2(sample, mRecipTimeToNextSample, SkeletonPoseValue::Sample,
 				float, 0, mTime);
@@ -2304,10 +2200,10 @@ namespace MetaInit {
 				mValues);
 			ADD(sample);
 
-			DEFINEDCARRAY2(SkeletonPoseValue::Sample, sample);
-			DEFINEDCARRAY2(SkeletonPoseValue::BoneEntry, bentry);
+			DEFINEDCARRAY2(SkeletonPoseValue::Sample, sample, "DCArray<SkeletonPoseValue::Sample>");
+			DEFINEDCARRAY2(SkeletonPoseValue::BoneEntry, bentry, "DCArray<SkeletonPoseValue::BoneEntry>");
 
-			DEFINET2(pose, SkeletonPoseValue);
+			DEFINET2(pose, SkeletonPoseValue, "SkeletonPoseValue");
 			FIRSTMEM(pose, "Baseclass_AnimationValueInterfaceBase", mName,
 				SkeletonPoseValue , anminterface, MetaFlag::MetaFlag_BaseClass);
 			meta_pose_mName.mOffset = (i64)((AnimationValueInterfaceBase*)
@@ -2316,38 +2212,38 @@ namespace MetaInit {
 			NEXTMEM2(pose, mSamples, SkeletonPoseValue, DCArray_sample, 0, mBones);
 			ADD(pose);
 
-			DEFINET2(dlgidowner, DlgObjIDOwner);
+			DEFINET2(dlgidowner, DlgObjIDOwner, "DlgObjIDOwner");
 			FIRSTMEM2(dlgidowner, mDlgObjID, DlgObjIDOwner, dlgid, 0x20);
 			ADD(dlgidowner);
 
-			DEFINET2(dlgprops, DlgObjectProps);
+			DEFINET2(dlgprops, DlgObjectProps, "DlgObjectProps");
 			ADDFLAGS(dlgprops, MetaFlag::MetaFlag_NoPanelCaption);
 			SERIALIZER(dlgprops, DlgObjectProps);
 			FIRSTMEM2(dlgprops, mFlags, DlgObjectProps, flags, 0x20);
 			ADD(dlgprops);
 
-			DEFINET2(dlgpropo, DlgObjectPropsOwner);
+			DEFINET2(dlgpropo, DlgObjectPropsOwner, "DlgObjectPropsOwner");
 			FIRSTMEM2(dlgpropo, mDlgObjectProps, DlgObjectPropsOwner, dlgprops, 8);
 			ADD(dlgpropo);
 
-			DEFINET2(dlglink, DlgNodeLink);
+			DEFINET2(dlglink, DlgNodeLink, "DlgNodeLink");
 			FIRSTMEM(dlglink, "Baseclass_DlgObjIDOwner", mDlgObjID, DlgNodeLink, dlgidowner, 0x10);
 			meta_dlglink_mDlgObjID.mOffset = PARENT_OFFSET(DlgObjIDOwner, DlgNodeLink);
 			NEXTMEM2(dlglink, mRequiredCCType, DlgNodeLink, long, 0, mDlgObjID);
 			ADD(dlglink);
 
-			DEFINET2(dlghead, DlgChainHead);
+			DEFINET2(dlghead, DlgChainHead, "DlgChainHead");
 			FIRSTMEM(dlghead, "Baseclass_DlgObjIDOwner", mDlgObjID, DlgChainHead, dlgidowner, 0x10);
 			meta_dlghead_mDlgObjID.mOffset = PARENT_OFFSET(DlgObjIDOwner, DlgChainHead);
 			NEXTMEM2(dlghead, mLink, DlgChainHead, dlglink, 0, mDlgObjID);
 			ADD(dlghead);
 
-			DEFINET2(dlgdown, DlgDownstreamVisibilityConditions);
+			DEFINET2(dlgdown, DlgDownstreamVisibilityConditions, "DlgDownstreamVisibilityConditions");
 			FIRSTMEM2(dlgdown, mNodeTypeFlags, DlgDownstreamVisibilityConditions, flags, 0);
 			NEXTMEM2(dlgdown, mMaxNumNodeEvals, DlgDownstreamVisibilityConditions, long, 0, mNodeTypeFlags);
 			ADD(dlgdown);
 
-			DEFINET2(dlgvcond, DlgVisibilityConditions);
+			DEFINET2(dlgvcond, DlgVisibilityConditions, "DlgVisibilityConditions");
 			FIRSTMEM2(dlgvcond, mbDiesOff, DlgVisibilityConditions, bool, 0);
 			NEXTMEM2(dlgvcond, mFlags, DlgVisibilityConditions, flags, 0, mbDiesOff);
 			NEXTMEM2(dlgvcond, mDownstreamVisCond, DlgVisibilityConditions,dlgdown, 0, mFlags);
@@ -2355,33 +2251,33 @@ namespace MetaInit {
 			SERIALIZER(dlgvcond, DlgVisibilityConditions);
 			ADD(dlgvcond);
 
-			DEFINET2(dlgvowner, DlgVisibilityConditionsOwner);
+			DEFINET2(dlgvowner, DlgVisibilityConditionsOwner, "DlgVisibilityConditionsOwner");
 			ADDFLAGS(dlgvowner, 8);
 			FIRSTMEM2(dlgvowner, mVisCond, DlgVisibilityConditionsOwner, dlgvcond, 0);
 			ADD(dlgvowner);
 
-			DEFINET2(dlgchild, DlgChild);
+			DEFINET2(dlgchild, DlgChild, "DlgChild");
 			ADDFLAGS(dlgchild, 8);
 			FIRSTMEM(dlgchild, "Baseclass_DlgChainHead", mLink, DlgChainHead, dlghead, 0x10);
 			NEXTMEM2(dlgchild, mName, DlgChild, symbol, 0, mLink);
 			meta_dlgchild_mLink.mOffset = PARENT_OFFSET(DlgChainHead, DlgChild);
 			NEXTMEM(dlgchild, "Baseclass_DlgVisibilityConditionsOwner", mVisCond, DlgChild, dlgvowner, 0x10, mName);
-			NEXTMEM(dlgchild, "Baseclass_DlgObjectPropsOwner", 
+			NEXTMEM(dlgchild, "Baseclass_DlgObjectPropsOwner",
 				mDlgObjectProps, DlgChild, dlgpropo, 0x10, mVisCond);
 			meta_dlgchild_mVisCond.mOffset = PARENT_OFFSET(DlgVisibilityConditionsOwner, DlgChild);
 			meta_dlgchild_mDlgObjectProps.mOffset = PARENT_OFFSET(DlgObjectPropsOwner, DlgChild);
 			NEXTMEM2(dlgchild, mParent, DlgChild, dlglink, 0x20, mDlgObjectProps);
 			ADD(dlgchild);
 
-			DEFINEDCARRAY2(DlgChild*, childptr);
+			DEFINEDCARRAY2(DlgChild*, childptr, "DCArray<DlgChild*>");
 
-			DEFINET2(dlgchildset, DlgChildSet);
+			DEFINET2(dlgchildset, DlgChildSet, "DlgChildSet");
 			FIRSTMEM2(dlgchildset, mChildren, DlgChildSet, DCArray_childptr, 0x20);
 			NEXTMEM2(dlgchildset, mParent, DlgChildSet, dlglink, 0x20, mChildren);
 			SERIALIZER(dlgchildset, DlgChildSet);
 			ADD(dlgchildset);
 
-			DEFINET2(dfolder, DlgFolder);
+			DEFINET2(dfolder, DlgFolder, "DlgFolder");
 			ADDFLAGS(dfolder, 8);
 			FIRSTMEM(dfolder, "Baseclass_DlgObjIDOwner", mDlgObjID, DlgFolder, dlgidowner, 0x30);
 			meta_dfolder_mDlgObjID.mOffset = PARENT_OFFSET(DlgObjIDOwner, DlgFolder);
@@ -2397,7 +2293,7 @@ namespace MetaInit {
 			meta_dfolder_mProdReportProps.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("BORDERLANDS");
 			ADD(dfolder);
 
-			DEFINET2(dnode, DlgNode);
+			DEFINET2(dnode, DlgNode, "DlgNode");
 			ADDFLAGS(dnode, 8);
 			FIRSTMEM(dnode, "Baseclass_DlgObjIDOwner", mDlgObjID, DlgNode, dlgidowner, 0x30);
 			meta_dnode_mDlgObjID.mOffset = PARENT_OFFSET(DlgObjIDOwner, DlgNode);
@@ -2415,7 +2311,7 @@ namespace MetaInit {
 			NEXTMEM2(dnode, mChainContextTypeID, DlgNode, long, 0x20, mFlags);
 			ADD(dnode);
 
-			DEFINET2(date, DateStamp);
+			DEFINET2(date, DateStamp, "DateStamp");
 			FIRSTMEM2(date, mSec, DateStamp, __uint8, 0);
 			NEXTMEM2(date, mMin, DateStamp, __uint8, 0, mSec);
 			NEXTMEM2(date, mHour, DateStamp, __uint8, 0, mMin);
@@ -2427,7 +2323,7 @@ namespace MetaInit {
 			NEXTMEM2(date, mIsdst, DateStamp, __uint8, 0, mYday);
 			ADD(date);
 
-			DEFINET2(notee, Note::Entry);
+			DEFINET2(notee, Note::Entry, "Note::Entry");
 			FIRSTMEM(notee, "Baseclass_UID::Owner", miUniqueID, Note::Entry, uidowner, 0x10);
 			meta_notee_miUniqueID.mOffset = PARENT_OFFSET(UID::Owner, Note::Entry);
 			NEXTMEM(notee, "Baseclass_DlgObjIDOwner", mDlgObjID, Note::Entry, dlgidowner, 0x10, miUniqueID);
@@ -2438,25 +2334,25 @@ namespace MetaInit {
 			NEXTMEM2(notee, mText, Note::Entry, string, 0, mCategory);
 			ADD(notee);
 
-			DEFINEDCARRAY2(Note::Entry*, noteentryp);
+			DEFINEDCARRAY2(Note::Entry*, noteentryp, "DCArray<Note::Entry*>");
 
-			DEFINET2(note, Note);
+			DEFINET2(note, Note, "Note");
 			SERIALIZER(note, Note);
 			EXT(note, note);
 			FIRSTMEM2(note, mEntries, Note, DCArray_noteentryp, 1);
 			NEXTMEM2(note, mName, Note, string, 0, mEntries);
 			ADD(note);
 
-			DEFINEMAP2(int, Note*, int, notep, std::less<int>);
+			DEFINEMAP2(int, Note*, int, notep, std::less<int>, "Map<int,Note*,less<int>>");
 
-			DEFINET2(notec, NoteCollection);
+			DEFINET2(notec, NoteCollection, "NoteCollection");
 			FIRSTMEM(notec, "Baseclass_UID::Generator", miNextUniqueID, NoteCollection, uidgen, 0x10);
 			meta_notec_miNextUniqueID.mOffset = PARENT_OFFSET(UID::Generator, NoteCollection);
 			NEXTMEM2(notec, mNotes, NoteCollection, Map_int_notep, 1, miNextUniqueID);
 			SERIALIZER(notec, NoteCollection);
 			ADD(notec);
 
-			DEFINET2(navcamm, NavCam::EnumMode);
+			DEFINET2(navcamm, NavCam::EnumMode, "NavCam::EnumMode");
 			FIRSTMEM1(navcamm, "Baseclass_EnumBase", ALAIS, mVal,
 				NavCam::EnumMode, enumbase, 0x10);
 			NEXTMEM2(navcamm, mVal, NavCam::EnumMode, long, 0, ALAIS);
@@ -2471,7 +2367,7 @@ namespace MetaInit {
 			ADDFLAGS(navcamm, 0x8008);
 			ADD(navcamm);
 
-			DEFINET2(testt, DlgNodeCriteria::EnumTestT);
+			DEFINET2(testt, DlgNodeCriteria::EnumTestT, "DlgNodeCriteria::EnumTestT");
 			FIRSTMEM1(testt, "Baseclass_EnumBase", ALAIS, mVal,
 				DlgNodeCriteria::EnumTestT, enumbase, 0x10);
 			NEXTMEM2(testt, mVal, DlgNodeCriteria::EnumTestT, long, 0, ALAIS);
@@ -2480,7 +2376,7 @@ namespace MetaInit {
 			ADDFLAGS(testt, 0x8008);
 			ADD(testt);
 
-			DEFINET2(thresht, DlgNodeCriteria::EnumThresholdT);
+			DEFINET2(thresht, DlgNodeCriteria::EnumThresholdT, "DlgNodeCriteria::EnumThresholdT");
 			FIRSTMEM1(thresht, "Baseclass_EnumBase", ALAIS, mVal,
 				DlgNodeCriteria::EnumThresholdT, enumbase, 0x10);
 			NEXTMEM2(thresht, mVal, DlgNodeCriteria::EnumThresholdT, long, 0, ALAIS);
@@ -2489,7 +2385,7 @@ namespace MetaInit {
 			ADDFLAGS(thresht, 0x8008);
 			ADD(thresht);
 
-			DEFINET2(deft, DlgNodeCriteria::EnumDefaultResultT);
+			DEFINET2(deft, DlgNodeCriteria::EnumDefaultResultT, "DlgNodeCriteria::EnumDefaultResultT");
 			FIRSTMEM1(deft, "Baseclass_EnumBase", ALAIS, mVal,
 				DlgNodeCriteria::EnumDefaultResultT, enumbase, 0x10);
 			NEXTMEM2(deft, mVal, DlgNodeCriteria::EnumDefaultResultT, long, 0, ALAIS);
@@ -2499,7 +2395,7 @@ namespace MetaInit {
 			ADDFLAGS(deft, 0x8008);
 			ADD(deft);
 
-			DEFINET2(crit, DlgNodeCriteria);
+			DEFINET2(crit, DlgNodeCriteria, "DlgNodeCriteria");
 			FIRSTMEM2(crit, mTestType, DlgNodeCriteria, testt, 0);
 			NEXTMEM2(crit, mFlagsThreshold, DlgNodeCriteria, thresht, 0, mTestType);
 			NEXTMEM2(crit, mCriteriaThreshold, DlgNodeCriteria, thresht, 0, mFlagsThreshold);
@@ -2508,21 +2404,21 @@ namespace MetaInit {
 			NEXTMEM2(crit, mClassIDs, DlgNodeCriteria, Set_i32, 0, mClassFlags);
 			ADD(crit);
 
-			DEFINET2(res, LanguageResProxy);
+			DEFINET2(res, LanguageResProxy, "LanguageResProxy");
 			FIRSTMEM2(res, mID, LanguageResProxy, long, 0);
 			ADD(res);
 
-			DEFINET2(jrecord, JiraRecord);
+			DEFINET2(jrecord, JiraRecord, "JiraRecord");
 			ADD(jrecord);
 
-			DEFINEMAP2(String, JiraRecord*, String, jrecord, std::less<String>);
+			DEFINEMAP2(String, JiraRecord*, String, jrecord, std::less<String>, "Map<String,JiraRecord*,less<String>>");
 
-			DEFINET2(jira, JiraRecordManager);
+			DEFINET2(jira, JiraRecordManager, "JiraRecordManager");
 			SERIALIZER(jira, JiraRecordManager);
 			FIRSTMEM2(jira, mRecords, JiraRecordManager, Map_String_jrecord, MetaFlag_EditorHide);
 			ADD(jira);
 
-			DEFINET2(line, DlgLine);
+			DEFINET2(line, DlgLine, "DlgLine");
 			FIRSTMEM1(line, "Baseclass_UID::Owner", ALAISOWNER, miUniqueID,
 				DlgLine, uidowner, 0x10);
 			meta_line_ALAISOWNER.mOffset = PARENT_OFFSET(UID::Owner, DlgLine);
@@ -2533,10 +2429,9 @@ namespace MetaInit {
 			NEXTMEM2(line, mLangResProxy, DlgLine, res, 0, ALAISDLG);
 			ADD(line);
 
-			DEFINEMAP(int, DlgLine, std::less<int>);
-			MKNAME(meta_Map_int_DlgLine, "Map<int,DlgLine,less<int>>");
+			DEFINEMAP(int, DlgLine, std::less<int>, "Map<int,DlgLine,less<int>>");
 
-			DEFINET2(lcol, DlgLineCollection);
+			DEFINET2(lcol, DlgLineCollection, "DlgLineCollection");
 			FIRSTMEM1(lcol, "Baseclass_UID::Generator", ALAISGEN, miNextUniqueID,
 				DlgLineCollection, uidgen, 0x10);
 			meta_lcol_ALAISGEN.mOffset = PARENT_OFFSET(UID::Generator, DlgLineCollection);
@@ -2544,13 +2439,13 @@ namespace MetaInit {
 				ALAISGEN);
 			ADD(lcol);
 
-			DEFINET2(folderc, DlgFolderChild);
-			FIRSTMEM1(folderc, "Baseclass_DlgChild", CHILDALAIS,mName, 
+			DEFINET2(folderc, DlgFolderChild, "DlgFolderChild");
+			FIRSTMEM1(folderc, "Baseclass_DlgChild", CHILDALAIS,mName,
 				DlgChild, dlgchild, 0x10);
 			meta_folderc_CHILDALAIS.mOffset = PARENT_OFFSET(DlgChild, DlgFolderChild);
 			ADD(folderc);
 
-			DEFINET2(dlg, Dlg);
+			DEFINET2(dlg, Dlg, "Dlg");
 			SERIALIZER(dlg,Dlg);
 			FIRSTMEM1(dlg, "Baseclass_DlgObjIDOwner", BASE, mDlgObjID,
 				Dlg, dlgidowner, 0x10);
@@ -2558,7 +2453,7 @@ namespace MetaInit {
 			NEXTMEM1(dlg, "Baseclass_UID::Generator", BASE1,
 				miNextUniqueID, Dlg, uidgen, 0x10, BASE);
 			meta_dlg_BASE1.mOffset = PARENT_OFFSET(UID::Generator, Dlg);
-			meta_dlg_BASE1.mGameIndexVersionRange.max = 
+			meta_dlg_BASE1.mGameIndexVersionRange.max =
 				TelltaleToolLib_GetGameKeyIndex("BAT2");
 			NEXTMEM2(dlg, mName, Dlg, string, 0x20, BASE1);
 			NEXTMEM2(dlg, mVersion, Dlg, long, 0x20, mName);
@@ -2578,7 +2473,7 @@ namespace MetaInit {
 			EXT(dlg, dlog);
 			ADD(dlg);
 
-			DEFINET2(nstart, DlgNodeStart);
+			DEFINET2(nstart, DlgNodeStart, "DlgNodeStart");
 			FIRSTMEM1(nstart, "Baseclass_DlgNode", BASE, mName, DlgNodeStart, dnode, 0x10);
 			meta_nstart_BASE.mOffset = PARENT_OFFSET(DlgNode, DlgNodeStart);
 			ADDFLAGS(nstart, 8);
@@ -2586,35 +2481,35 @@ namespace MetaInit {
 			meta_nstart_mProdReportProps.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("BORDERLANDS");
 			ADD(nstart);
 
-			DEFINET2(eentry, DlgNodeExchange::Entry);
+			DEFINET2(eentry, DlgNodeExchange::Entry, "DlgNodeExchange::Entry");
 			FIRSTMEM2(eentry, mID, DlgNodeExchange::Entry, long, 0);
 			NEXTMEM2(eentry, mType, DlgNodeExchange::Entry, long, MetaFlag::MetaFlag_EnumIntType, mID);
 			ADD(eentry);
 
-			DEFINEDCARRAY2(DlgNodeExchange::Entry, eentry);
+			DEFINEDCARRAY2(DlgNodeExchange::Entry, eentry, "DCArray<DlgNodeExchange::Entry>");
 
-			DEFINESCRIPTENUM(ENUM_TEXT_COLOUR_STYLE);
-			DEFINESCRIPTENUM(ENUM_LIGHT_COMPOSER_NODE_LOCATION);
-			DEFINESCRIPTENUM(ENUM_GAMEPAD_BUTTON);
-			DEFINESCRIPTENUM(ENUM_LIGHT_COMPOSER_LIGHT_SOURCE_QUADRANT);
-			DEFINESCRIPTENUM(ENUM_LIGHT_COMPOSER_CAMERA_ZONE);
-			DEFINESCRIPTENUM(ENUM_AI_DUMMY_POSITION);
-			DEFINESCRIPTENUM(ENUM_BLEND_TYPE);
-			DEFINESCRIPTENUM(ENUM_RETICLE_ACTIONS);
-			DEFINESCRIPTENUM(ENUM_STRUGGLE_TYPE);
-			DEFINESCRIPTENUM(ENUM_AI_PATROL_TYPE);
-			DEFINESCRIPTENUM(ENUM_MENU_ALIGN);
-			DEFINESCRIPTENUM(ENUM_MENU_VERTICAL_ALIGN);
-			DEFINESCRIPTENUM(ENUM_UI_COLOUR);
-			DEFINESCRIPTENUM(ENUM_CHASE_FORWARD_VECTOR);
-			DEFINESCRIPTENUM(ENUM_RETICLE_DISPLAY_MODE);
-			DEFINESCRIPTENUM(ENUM_CONTROLLER_BUTTONS);
-			DEFINESCRIPTENUM(ENUM_DIALOG_MODE);
-			DEFINESCRIPTENUM(ENUM_USEABLE_TYPE);
-			DEFINESCRIPTENUM(ENUM_AI_AGENT_STATE);
-			DEFINESCRIPTENUM(ENUM_QUICK_TIME_EVENT_TYPE);
+			DEFINESCRIPTENUM(ENUM_TEXT_COLOUR_STYLE, "ScriptEnum::ENUM_TEXT_COLOUR_STYLE");
+			DEFINESCRIPTENUM(ENUM_LIGHT_COMPOSER_NODE_LOCATION, "ScriptEnum::ENUM_LIGHT_COMPOSER_NODE_LOCATION");
+			DEFINESCRIPTENUM(ENUM_GAMEPAD_BUTTON, "ScriptEnum::ENUM_GAMEPAD_BUTTON");
+			DEFINESCRIPTENUM(ENUM_LIGHT_COMPOSER_LIGHT_SOURCE_QUADRANT, "ScriptEnum::ENUM_LIGHT_COMPOSER_LIGHT_SOURCE_QUADRANT");
+			DEFINESCRIPTENUM(ENUM_LIGHT_COMPOSER_CAMERA_ZONE, "ScriptEnum::ENUM_LIGHT_COMPOSER_CAMERA_ZONE");
+			DEFINESCRIPTENUM(ENUM_AI_DUMMY_POSITION, "ScriptEnum::ENUM_AI_DUMMY_POSITION");
+			DEFINESCRIPTENUM(ENUM_BLEND_TYPE, "ScriptEnum::ENUM_BLEND_TYPE");
+			DEFINESCRIPTENUM(ENUM_RETICLE_ACTIONS, "ScriptEnum::ENUM_RETICLE_ACTIONS");
+			DEFINESCRIPTENUM(ENUM_STRUGGLE_TYPE, "ScriptEnum::ENUM_STRUGGLE_TYPE");
+			DEFINESCRIPTENUM(ENUM_AI_PATROL_TYPE, "ScriptEnum::ENUM_AI_PATROL_TYPE");
+			DEFINESCRIPTENUM(ENUM_MENU_ALIGN, "ScriptEnum::ENUM_MENU_ALIGN");
+			DEFINESCRIPTENUM(ENUM_MENU_VERTICAL_ALIGN, "ScriptEnum::ENUM_MENU_VERTICAL_ALIGN");
+			DEFINESCRIPTENUM(ENUM_UI_COLOUR, "ScriptEnum::ENUM_UI_COLOUR");
+			DEFINESCRIPTENUM(ENUM_CHASE_FORWARD_VECTOR, "ScriptEnum::ENUM_CHASE_FORWARD_VECTOR");
+			DEFINESCRIPTENUM(ENUM_RETICLE_DISPLAY_MODE, "ScriptEnum::ENUM_RETICLE_DISPLAY_MODE");
+			DEFINESCRIPTENUM(ENUM_CONTROLLER_BUTTONS, "ScriptEnum::ENUM_CONTROLLER_BUTTONS");
+			DEFINESCRIPTENUM(ENUM_DIALOG_MODE, "ScriptEnum::ENUM_DIALOG_MODE");
+			DEFINESCRIPTENUM(ENUM_USEABLE_TYPE, "ScriptEnum::ENUM_USEABLE_TYPE");
+			DEFINESCRIPTENUM(ENUM_AI_AGENT_STATE, "ScriptEnum::ENUM_AI_AGENT_STATE");
+			DEFINESCRIPTENUM(ENUM_QUICK_TIME_EVENT_TYPE, "ScriptEnum::ENUM_QUICK_TIME_EVENT_TYPE");
 
-			DEFINET2(dex, DlgNodeExchange);
+			DEFINET2(dex, DlgNodeExchange, "DlgNodeExchange");
 			SERIALIZER(dex, DlgNodeExchange);
 			ADDFLAGS(dex, 8);
 			FIRSTMEM2(dex, mPriority, DlgNodeExchange, float, 0);
@@ -2624,7 +2519,7 @@ namespace MetaInit {
 			NEXTMEM2(dex, mEntries, DlgNodeExchange, DCArray_eentry, 0x20, BASE);
 			ADD(dex);
 
-			DEFINET2(cohort, DlgNodeStats::DlgChildSetCohort);
+			DEFINET2(cohort, DlgNodeStats::DlgChildSetCohort, "DlgNodeStats::DlgChildSetCohort");
 			FIRSTMEM1(cohort, "Baseclass_DlgChildSet", BASE, mChildren,
 				DlgNodeStats::DlgChildSetCohort,
 				dlgchildset, 0x10);
@@ -2632,15 +2527,15 @@ namespace MetaInit {
 				DlgNodeStats::DlgChildSetCohort);
 			ADD(cohort);
 
-			DEFINET2(dccase, DlgChildSetConditionalCase);
-			FIRSTMEM1(dccase, "Baseclass_DlgChildSet", BASE, mChildren, 
+			DEFINET2(dccase, DlgChildSetConditionalCase, "DlgChildSetConditionalCase");
+			FIRSTMEM1(dccase, "Baseclass_DlgChildSet", BASE, mChildren,
 				DlgChildSetConditionalCase,
 				dlgchildset, 0x10);
 			meta_dccase_BASE.mOffset = PARENT_OFFSET(DlgChildSet,
 				DlgChildSetConditionalCase);
 			ADD(dccase);
 
-			DEFINET2(dcond, DlgNodeConditional);
+			DEFINET2(dcond, DlgNodeConditional, "DlgNodeConditional");
 			ADDFLAGS(dcond, 8);
 			FIRSTMEM1(dcond, "Baseclass_DlgNode", BASE, mName, DlgNodeConditional,
 				dnode, 0x10);
@@ -2648,14 +2543,14 @@ namespace MetaInit {
 			NEXTMEM2(dcond, mCases, DlgNodeConditional, dccase, 0x20, BASE);
 			ADD(dcond);
 
-			DEFINET2(dcase, DlgConditionalCase);
+			DEFINET2(dcase, DlgConditionalCase, "DlgConditionalCase");
 			ADDFLAGS(dcase, 8);
 			FIRSTMEM1(dcase, "Baseclass_DlgChild", BASE, mName, DlgConditionalCase,
 				dlgchild, 0x10);
 			meta_dcase_BASE.mOffset = PARENT_OFFSET(DlgChild,DlgConditionalCase);
 			ADD(dcase);
 
-			DEFINET2(ddcohorti, DlgNodeStats::Cohort);
+			DEFINET2(ddcohorti, DlgNodeStats::Cohort, "DlgNodeStats::Cohort");
 			ADDFLAGS(ddcohorti, 8);
 			FIRSTMEM1(ddcohorti, "Baseclass_DlgChild", BASE, mName, DlgNodeStats::Cohort,
 				dlgchild, 0x10);
@@ -2667,7 +2562,7 @@ namespace MetaInit {
 			NEXTMEM2(ddcohorti, mSummaryDisplayText, DlgNodeStats::Cohort, res, 0, mLayout);
 			ADD(ddcohorti);
 
-			DEFINET2(dccase3, DlgChildSetChoicesChildPost);
+			DEFINET2(dccase3, DlgChildSetChoicesChildPost, "DlgChildSetChoicesChildPost");
 			FIRSTMEM1(dccase3, "Baseclass_DlgChildSet", BASE, mChildren,
 				DlgChildSetChoicesChildPost,
 				dlgchildset, 0x10);
@@ -2675,7 +2570,7 @@ namespace MetaInit {
 				DlgChildSetChoicesChildPost);
 			ADD(dccase3);
 
-			DEFINET2(dccase2, DlgChildSetChoicesChildPre);
+			DEFINET2(dccase2, DlgChildSetChoicesChildPre, "DlgChildSetChoicesChildPre");
 			FIRSTMEM1(dccase2, "Baseclass_DlgChildSet", BASE, mChildren,
 				DlgChildSetChoicesChildPre,
 				dlgchildset, 0x10);
@@ -2683,7 +2578,7 @@ namespace MetaInit {
 				DlgChildSetChoicesChildPre);
 			ADD(dccase2);
 
-			DEFINET2(dccase1, DlgChildSetChoice);
+			DEFINET2(dccase1, DlgChildSetChoice, "DlgChildSetChoice");
 			FIRSTMEM1(dccase1, "Baseclass_DlgChildSet", BASE, mChildren,
 				DlgChildSetChoice,
 				dlgchildset, 0x10);
@@ -2691,7 +2586,7 @@ namespace MetaInit {
 				DlgChildSetChoice);
 			ADD(dccase1);
 
-			DEFINET2(dccase7, DlgNodeParallel::DlgChildSetElement);
+			DEFINET2(dccase7, DlgNodeParallel::DlgChildSetElement, "DlgNodeParallel::DlgChildSetElement");
 			FIRSTMEM1(dccase7, "Baseclass_DlgChildSet", BASE, mChildren,
 				DlgNodeParallel::DlgChildSetElement,
 				dlgchildset, 0x10);
@@ -2699,7 +2594,7 @@ namespace MetaInit {
 				DlgNodeParallel::DlgChildSetElement);
 			ADD(dccase7);
 
-			DEFINET2(dccase5, DlgNodeSequence::DlgChildSetElement);
+			DEFINET2(dccase5, DlgNodeSequence::DlgChildSetElement, "DlgNodeSequence::DlgChildSetElement");
 			FIRSTMEM1(dccase5, "Baseclass_DlgChildSet", BASE, mChildren,
 				DlgNodeSequence::DlgChildSetElement,
 				dlgchildset, 0x10);
@@ -2707,7 +2602,7 @@ namespace MetaInit {
 				DlgNodeSequence::DlgChildSetElement);
 			ADD(dccase5);
 
-			DEFINET2(dchoices, DlgNodeChoices);
+			DEFINET2(dchoices, DlgNodeChoices, "DlgNodeChoices");
 			ADDFLAGS(dchoices, 8);
 			FIRSTMEM1(dchoices, "Baseclass_DlgNode", BASE, mName, DlgNodeChoices,
 				dnode, 0x10);
@@ -2717,11 +2612,11 @@ namespace MetaInit {
 			NEXTMEM2(dchoices, mPostChoice, DlgNodeChoices, dccase3, 0x20, mPreChoice);
 			ADD(dchoices);
 
-			DEFINET2(dcondset, DlgConditionSet);
+			DEFINET2(dcondset, DlgConditionSet, "DlgConditionSet");
 			SERIALIZER(dcondset, DlgConditionSet);
 			ADD(dcondset);
 
-			DEFINET2(dscript, DlgNodeScript);
+			DEFINET2(dscript, DlgNodeScript, "DlgNodeScript");
 			ADDFLAGS(dscript, 8);
 			FIRSTMEM1(dscript, "Baseclass_DlgNode", BASE, mName, DlgNodeScript,
 				dnode, 0x10);
@@ -2731,7 +2626,7 @@ namespace MetaInit {
 			NEXTMEM2(dscript, mbExecuteOnInstanceRetire,DlgNodeScript, bool, 0, mbBlocking);
 			ADD(dscript);
 
-			DEFINET2(dlogic, DlgNodeLogic);
+			DEFINET2(dlogic, DlgNodeLogic, "DlgNodeLogic");
 			ADDFLAGS(dlogic, 8);
 			FIRSTMEM1(dlogic, "Baseclass_DlgNode", BASE, mName, DlgNodeLogic,
 				dnode, 0x10);
@@ -2739,7 +2634,7 @@ namespace MetaInit {
 			NEXTMEM2(dlogic, mRule, DlgNodeLogic, rule, 0, BASE);
 			ADD(dlogic);
 
-			DEFINET2(djump, DlgNodeJump);
+			DEFINET2(djump, DlgNodeJump, "DlgNodeJump");
 			ADDFLAGS(djump, 8);
 			FIRSTMEM1(djump, "Baseclass_DlgNode", BASE, mName, DlgNodeJump,
 				dnode, 0x10);
@@ -2762,7 +2657,7 @@ namespace MetaInit {
 			NEXTMEM2(djump, mhJumpToDlg, DlgNodeJump, Handledlg, 0, mVisibilityBehaviour);
 			ADD(djump);
 
-			DEFINET2(didle, DlgNodeIdle);
+			DEFINET2(didle, DlgNodeIdle, "DlgNodeIdle");
 			ADDFLAGS(didle, 8);
 			FIRSTMEM1(didle, "Baseclass_DlgNode", BASE, mName, DlgNodeIdle,
 				dnode, 0x10);
@@ -2779,14 +2674,14 @@ namespace MetaInit {
 			NEXTMEM2(didle, mIdleSlot, DlgNodeIdle, long, 0x20, mTransitionStyleOverride);
 			ADD(didle);
 
-			DEFINET2(dcase8, DlgNodeParallel::PElement);
+			DEFINET2(dcase8, DlgNodeParallel::PElement, "DlgNodeParallel::PElement");
 			ADDFLAGS(dcase8, 8);
 			FIRSTMEM1(dcase8, "Baseclass_DlgChild", BASE, mName, DlgNodeParallel::PElement,
 				dlgchild, 0x10);
 			meta_dcase8_BASE.mOffset = PARENT_OFFSET(DlgChild, DlgNodeParallel::PElement);
 			ADD(dcase8);
 
-			DEFINET2(dcase6, DlgNodeSequence::Element);
+			DEFINET2(dcase6, DlgNodeSequence::Element, "DlgNodeSequence::Element");
 			ADDFLAGS(dcase6, 8);
 			FIRSTMEM1(dcase6, "Baseclass_DlgChild", BASE, mName, DlgNodeSequence::Element,
 				dlgchild, 0x10);
@@ -2806,7 +2701,7 @@ namespace MetaInit {
 			NEXTENUM2(dcase6, mPlayPosition, "eUnspecified", c, 1, 0, b);
 			ADD(dcase6);
 
-			DEFINET2(dsequence, DlgNodeSequence);
+			DEFINET2(dsequence, DlgNodeSequence, "DlgNodeSequence");
 			ADDFLAGS(dsequence, 8);
 			FIRSTMEM1(dsequence, "Baseclass_DlgNode", BASE, mName, DlgNodeSequence,
 				dnode, 0x10);
@@ -2822,7 +2717,7 @@ namespace MetaInit {
 			NEXTMEM2(dsequence, mElemUseCriteria, DlgNodeSequence, crit, 0x20, mLifetimeMode);
 			ADD(dsequence);
 
-			DEFINET2(dparallel, DlgNodeParallel);
+			DEFINET2(dparallel, DlgNodeParallel, "DlgNodeParallel");
 			ADDFLAGS(dparallel, 8);
 			FIRSTMEM1(dparallel, "Baseclass_DlgNode", BASE, mName, DlgNodeParallel,
 				dnode, 0x10);
@@ -2831,7 +2726,7 @@ namespace MetaInit {
 			NEXTMEM2(dparallel, mElemUseCriteria, DlgNodeParallel, crit, 0x20, mPElements);
 			ADD(dparallel);
 
-			DEFINET2(dNote, DlgNodeNotes);
+			DEFINET2(dNote, DlgNodeNotes, "DlgNodeNotes");
 			ADDFLAGS(dNote, 8);
 			FIRSTMEM1(dNote, "Baseclass_DlgNode", BASE, mName, DlgNodeNotes,
 				dnode, 0x10);
@@ -2839,7 +2734,7 @@ namespace MetaInit {
 			NEXTMEM2(dNote, mNoteText, DlgNodeNotes, string, 0x20, BASE);
 			ADD(dNote);
 
-			DEFINET2(dtext, DlgNodeText);
+			DEFINET2(dtext, DlgNodeText, "DlgNodeText");
 			ADDFLAGS(dtext, 8);
 			FIRSTMEM1(dtext, "Baseclass_DlgNode", BASE, mName, DlgNodeText,
 				dnode, 0x10);
@@ -2847,7 +2742,7 @@ namespace MetaInit {
 			NEXTMEM2(dtext, mLangResProxy, DlgNodeText, res, 0x20, BASE);
 			ADD(dtext);
 
-			DEFINET2(dchore, DlgNodeChore);
+			DEFINET2(dchore, DlgNodeChore, "DlgNodeChore");
 			ADDFLAGS(dchore, 8);
 			FIRSTMEM2(dchore, mChore, DlgNodeChore, Handlehchore, 0);
 			NEXTMEM2(dchore, mPriority, DlgNodeChore, long, 0, mChore);
@@ -2857,14 +2752,14 @@ namespace MetaInit {
 			meta_dchore_BASE.mOffset = PARENT_OFFSET(DlgNode, DlgNodeChore);
 			ADD(dchore);
 
-			DEFINET2(dchoices4, DlgNodeMarker);
+			DEFINET2(dchoices4, DlgNodeMarker, "DlgNodeMarker");
 			ADDFLAGS(dchoices4, 8);
 			FIRSTMEM1(dchoices4, "Baseclass_DlgNode", BASE, mName, DlgNodeMarker,
 				dnode, 0x10);
 			meta_dchoices4_BASE.mOffset = PARENT_OFFSET(DlgNode, DlgNodeMarker);
 			ADD(dchoices4);
 
-			DEFINET2(dchoices3, DlgNodeWait);
+			DEFINET2(dchoices3, DlgNodeWait, "DlgNodeWait");
 			ADDFLAGS(dchoices3, 8);
 			FIRSTMEM1(dchoices3, "Baseclass_DlgNode", BASE, mName, DlgNodeWait,
 				dnode, 0x10);
@@ -2873,7 +2768,7 @@ namespace MetaInit {
 			meta_dchoices3_BASE1.mOffset = PARENT_OFFSET(DlgConditionSet, DlgNodeWait);
 			ADD(dchoices3);
 
-			DEFINET2(dcancel, DlgNodeCancelChoices);
+			DEFINET2(dcancel, DlgNodeCancelChoices, "DlgNodeCancelChoices");
 			ADDFLAGS(dcancel, 8);
 			FIRSTMEM1(dcancel, "Baseclass_DlgNode", BASE, mName, DlgNodeCancelChoices,
 				dnode, 0x10);
@@ -2881,7 +2776,7 @@ namespace MetaInit {
 			NEXTMEM2(dcancel, mCancelGroup, DlgNodeCancelChoices, long, 0x20, BASE);
 			ADD(dcancel);
 
-			DEFINET2(dboard, DlgNodeStoryBoard);
+			DEFINET2(dboard, DlgNodeStoryBoard, "DlgNodeStoryBoard");
 			ADDFLAGS(dboard, 8);
 			FIRSTMEM1(dboard, "Baseclass_DlgNode", BASE, mName, DlgNodeStoryBoard,
 				dnode, 0x10);
@@ -2889,7 +2784,7 @@ namespace MetaInit {
 			NEXTMEM2(dboard, mStoryBoardImage, DlgNodeStoryBoard, symbol, 0, BASE);
 			ADD(dboard);
 
-			DEFINET2(dstats, DlgNodeStats);
+			DEFINET2(dstats, DlgNodeStats, "DlgNodeStats");
 			ADDFLAGS(dstats, 8);
 			FIRSTMEM1(dstats, "Baseclass_DlgNode", BASE, mName, DlgNodeStats,
 				dnode, 0x10);
@@ -2904,21 +2799,21 @@ namespace MetaInit {
 			NEXTMEM2(dstats, mDisplayText, DlgNodeStats, res, 0, mhImage);
 			ADD(dstats);
 
-			DEFINET2(dExit, DlgNodeExit);
+			DEFINET2(dExit, DlgNodeExit, "DlgNodeExit");
 			ADDFLAGS(dExit, 8);
 			FIRSTMEM1(dExit, "Baseclass_DlgNode", BASE, mName, DlgNodeExit,
 				dnode, 0x10);
 			meta_dExit_BASE.mOffset = PARENT_OFFSET(DlgNode, DlgNodeExit);
 			ADD(dExit);
 
-			DEFINET2(dlgcond, DlgCondition);
+			DEFINET2(dlgcond, DlgCondition, "DlgCondition");
 			ADDFLAGS(dlgcond,8);
 			FIRSTMEM1(dlgcond, "Baseclass_DlgObjIDOwner", BASE, mDlgObjID, DlgCondition,
 				dlgidowner, 0x10);
 			meta_dlgcond_BASE.mOffset = PARENT_OFFSET(DlgObjIDOwner, DlgCondition);
 			ADD(dlgcond);
 
-			DEFINET2(dcase1, DlgChoice);
+			DEFINET2(dcase1, DlgChoice, "DlgChoice");
 			ADDFLAGS(dcase1, 8);
 			FIRSTMEM1(dcase1, "Baseclass_DlgChild", BASE, mName, DlgChoice,
 				dlgchild, 0x10);
@@ -2928,75 +2823,75 @@ namespace MetaInit {
 			meta_dcase1_BASE1.mOffset = PARENT_OFFSET(DlgConditionSet, DlgChoice);
 			ADD(dcase1);
 
-			DEFINET2(dcase3, DlgChoicesChildPost);
+			DEFINET2(dcase3, DlgChoicesChildPost, "DlgChoicesChildPost");
 			ADDFLAGS(dcase3, 8);
 			FIRSTMEM1(dcase3, "Baseclass_DlgChild", BASE, mName, DlgChoicesChildPost,
 				dlgchild, 0x10);
 			meta_dcase3_BASE.mOffset = PARENT_OFFSET(DlgChild, DlgChoicesChildPost);
 			ADD(dcase3);
 
-			DEFINET2(dcase2, DlgChoicesChildPre);
+			DEFINET2(dcase2, DlgChoicesChildPre, "DlgChoicesChildPre");
 			ADDFLAGS(dcase2, 8);
 			FIRSTMEM1(dcase2, "Baseclass_DlgChild", BASE, mName, DlgChoicesChildPre,
 				dlgchild, 0x10);
 			meta_dcase2_BASE.mOffset = PARENT_OFFSET(DlgChild, DlgChoicesChildPre);
 			ADD(dcase2);
 
-			DEFINET2(dtime, DlgConditionTime);
+			DEFINET2(dtime, DlgConditionTime, "DlgConditionTime");
 			FIRSTMEM1(dtime, "Baseclass_DlgCondition", BASE, mDlgObjID, DlgConditionTime, dlgcond, 0x10);
 			meta_dtime_BASE.mOffset = PARENT_OFFSET(DlgCondition, DlgConditionTime);
 			NEXTMEM2(dtime, mDurationClass, DlgConditionTime, long, 0x40, BASE);
 			NEXTMEM2(dtime, mSeconds, DlgConditionTime, float, 0x20, mDurationClass);
 			ADD(dtime);
 
-			DEFINET2(dinput1, DlgConditionRule);
+			DEFINET2(dinput1, DlgConditionRule, "DlgConditionRule");
 			FIRSTMEM1(dinput1, "Baseclass_DlgCondition", BASE, mDlgObjID, DlgConditionRule, dlgcond, 0x10);
 			meta_dinput1_BASE.mOffset = PARENT_OFFSET(DlgCondition, DlgConditionRule);
 			NEXTMEM2(dinput1, mRule, DlgConditionRule, rule, 0, BASE);
 			ADD(dinput1);
 
-			DEFINET2(dinput, DlgConditionInput);
+			DEFINET2(dinput, DlgConditionInput, "DlgConditionInput");
 			FIRSTMEM1(dinput, "Baseclass_DlgCondition", BASE, mDlgObjID, DlgConditionInput, dlgcond, 0x10);
 			meta_dinput_BASE.mOffset = PARENT_OFFSET(DlgCondition, DlgConditionInput);
 			ADD(dinput);
 
 			//all types with file extension handles that would be referenced (handle and handlelock)
-			DEFINEHANDLE(wbox, WalkBoxes);
-			DEFINEHANDLE(aam, ActorAgentMapper);
-			DEFINEHANDLE(amap, AgentMap);
-			DEFINEHANDLE(audiobus, SoundBusSystem::BusHolder);
-			DEFINEHANDLE(dss, DlgSystemSettings);
-			DEFINEHANDLE(enl, EnlightenData);
-			DEFINEHANDLE(imap, InputMapper);
-			DEFINEHANDLE(landb, LanguageDB);
-			DEFINEHANDLE(langdb, LanguageDatabase);
-			DEFINEHANDLE(llm, LanguageLookupMap);
-			DEFINEHANDLE(locreg, LocalizationRegistry);
-			DEFINEHANDLE(overlay, T3OverlayData);
-			DEFINEHANDLE(ppkgd, PreloadPackage::RuntimeDataDialog);
-			DEFINEHANDLE(ppkgs, PreloadPackage::RuntimeDataScene);
-			DEFINEHANDLE(probe, LightProbeData);
-			DEFINEHANDLE(ptable, PhonemeTable);
-			DEFINEHANDLE(rules, Rules);
-			DEFINEHANDLE(reverb, SoundReverbDefinition);
-			DEFINEHANDLE(skl, Skeleton);
-			DEFINEHANDLE(style, StyleGuide);
+			DEFINEHANDLE(wbox, WalkBoxes, "Handle<WalkBoxes>", "DCArray<Handle<WalkBoxes>>","HandleLock<WalkBoxes>","DCArray<HandleLock<WalkBoxes>>");
+			DEFINEHANDLE(aam, ActorAgentMapper, "Handle<ActorAgentMapper>", "DCArray<Handle<ActorAgentMapper>>","HandleLock<ActorAgentMapper>","DCArray<HandleLock<ActorAgentMapper>>");
+			DEFINEHANDLE(amap, AgentMap, "Handle<AgentMap>", "DCArray<Handle<AgentMap>>","HandleLock<AgentMap>","DCArray<HandleLock<AgentMap>>");
+			DEFINEHANDLE(audiobus, SoundBusSystem::BusHolder, "Handle<SoundBusSystem::BusHolder>", "DCArray<Handle<SoundBusSystem::BusHolder>>","HandleLock<SoundBusSystem::BusHolder>","DCArray<HandleLock<SoundBusSystem::BusHolder>>");
+			DEFINEHANDLE(dss, DlgSystemSettings, "Handle<DlgSystemSettings>", "DCArray<Handle<DlgSystemSettings>>","HandleLock<DlgSystemSettings>","DCArray<HandleLock<DlgSystemSettings>>");
+			DEFINEHANDLE(enl, EnlightenData, "Handle<EnlightenData>", "DCArray<Handle<EnlightenData>>","HandleLock<EnlightenData>","DCArray<HandleLock<EnlightenData>>");
+			DEFINEHANDLE(imap, InputMapper, "Handle<InputMapper>", "DCArray<Handle<InputMapper>>","HandleLock<InputMapper>","DCArray<HandleLock<InputMapper>>");
+			DEFINEHANDLE(landb, LanguageDB, "Handle<LanguageDB>", "DCArray<Handle<LanguageDB>>","HandleLock<LanguageDB>","DCArray<HandleLock<LanguageDB>>");
+			DEFINEHANDLE(langdb, LanguageDatabase, "Handle<LanguageDatabase>", "DCArray<Handle<LanguageDatabase>>","HandleLock<LanguageDatabase>","DCArray<HandleLock<LanguageDatabase>>");
+			DEFINEHANDLE(llm, LanguageLookupMap, "Handle<LanguageLookupMap>", "DCArray<Handle<LanguageLookupMap>>","HandleLock<LanguageLookupMap>","DCArray<HandleLock<LanguageLookupMap>>");
+			DEFINEHANDLE(locreg, LocalizationRegistry, "Handle<LocalizationRegistry>", "DCArray<Handle<LocalizationRegistry>>","HandleLock<LocalizationRegistry>","DCArray<HandleLock<LocalizationRegistry>>");
+			DEFINEHANDLE(overlay, T3OverlayData, "Handle<T3OverlayData>", "DCArray<Handle<T3OverlayData>>","HandleLock<T3OverlayData>","DCArray<HandleLock<T3OverlayData>>");
+			DEFINEHANDLE(ppkgd, PreloadPackage::RuntimeDataDialog, "Handle<PreloadPackage::RuntimeDataDialog>", "DCArray<Handle<PreloadPackage::RuntimeDataDialog>>","HandleLock<PreloadPackage::RuntimeDataDialog>","DCArray<HandleLock<PreloadPackage::RuntimeDataDialog>>");
+			DEFINEHANDLE(ppkgs, PreloadPackage::RuntimeDataScene, "Handle<PreloadPackage::RuntimeDataScene>", "DCArray<Handle<PreloadPackage::RuntimeDataScene>>","HandleLock<PreloadPackage::RuntimeDataScene>","DCArray<HandleLock<PreloadPackage::RuntimeDataScene>>");
+			DEFINEHANDLE(probe, LightProbeData, "Handle<LightProbeData>", "DCArray<Handle<LightProbeData>>","HandleLock<LightProbeData>","DCArray<HandleLock<LightProbeData>>");
+			DEFINEHANDLE(ptable, PhonemeTable, "Handle<PhonemeTable>", "DCArray<Handle<PhonemeTable>>","HandleLock<PhonemeTable>","DCArray<HandleLock<PhonemeTable>>");
+			DEFINEHANDLE(rules, Rules, "Handle<Rules>", "DCArray<Handle<Rules>>","HandleLock<Rules>","DCArray<HandleLock<Rules>>");
+			DEFINEHANDLE(reverb, SoundReverbDefinition, "Handle<SoundReverbDefinition>", "DCArray<Handle<SoundReverbDefinition>>","HandleLock<SoundReverbDefinition>","DCArray<HandleLock<SoundReverbDefinition>>");
+			DEFINEHANDLE(skl, Skeleton, "Handle<Skeleton>", "DCArray<Handle<Skeleton>>","HandleLock<Skeleton>","DCArray<HandleLock<Skeleton>>");
+			DEFINEHANDLE(style, StyleGuide, "Handle<StyleGuide>", "DCArray<Handle<StyleGuide>>","HandleLock<StyleGuide>","DCArray<HandleLock<StyleGuide>>");
 
-			DEFINET2(cp112, EnumRenderMaskWrite);
+			DEFINET2(cp112, EnumRenderMaskWrite, "EnumRenderMaskWrite");
 			FIRSTMEM2(cp112, mVal, EnumRenderMaskWrite, long, MetaFlag::MetaFlag_EnumWrapperClass | MetaFlag::MetaFlag_NoPanelCaption);
 			FIRSTENUM2(cp112, mVal, "eRenderMaskWrite_None", a, 1, 0);
 			NEXTENUM2(cp112, mVal, "eRenderMaskWrite_Set", b, 2, 0, a);
 			NEXTENUM2(cp112, mVal, "eRenderMaskWrite_Clear", c, 3, 0, b);
 			ADD(cp112);
 
-			DEFINET2(cp1123, EnumRenderMaskTest);
+			DEFINET2(cp1123, EnumRenderMaskTest, "EnumRenderMaskTest");
 			FIRSTMEM2(cp1123, mVal, EnumRenderMaskTest, long, MetaFlag::MetaFlag_EnumWrapperClass | MetaFlag::MetaFlag_NoPanelCaption);
 			FIRSTENUM2(cp1123, mVal, "eRenderMaskTest_None", a, 1, 0);
 			NEXTENUM2(cp1123, mVal, "eRenderMaskTest_Set", b, 2, 0, a);
 			NEXTENUM2(cp1123, mVal, "eRenderMaskTest_Clear", c, 3, 0, b);
 			ADD(cp1123);
 
-			DEFINET2(cp11, EnumT3LightEnvGroup);
+			DEFINET2(cp11, EnumT3LightEnvGroup, "EnumT3LightEnvGroup");
 			FIRSTMEM2(cp11, mVal, EnumT3LightEnvGroup, long, MetaFlag::MetaFlag_EnumWrapperClass | MetaFlag::MetaFlag_NoPanelCaption);
 			FIRSTENUM2(cp11, mVal, "eLightEnvGroup_None", a, -2, 0);
 			NEXTENUM2(cp11, mVal, "eLightEnvGroup_Default", b, -1, 0,a);
@@ -3014,7 +2909,7 @@ namespace MetaInit {
 			NEXTENUM2(cp11, mVal, "eLightEnvGroup_AmbientGroup3", n, 19, 0, m);
 			ADD(cp11);
 
-			DEFINET2(cp1, FlagsT3LightEnvGroupSet);
+			DEFINET2(cp1, FlagsT3LightEnvGroupSet, "FlagsT3LightEnvGroupSet");
 			FIRSTMEM2(cp1, mFlags, FlagsT3LightEnvGroupSet, flags, MetaFlag::MetaFlag_FlagType);
 			FIRSTFLAG(cp1, mFlags, "Group0", a, 1);
 			NEXTFLAG(cp1, mFlags, "Group1", b, 2, a);
@@ -3031,7 +2926,7 @@ namespace MetaInit {
 			ADD(cp1);
 
 
-			DEFINET2(cp, CorrespondencePoint);
+			DEFINET2(cp, CorrespondencePoint, "CorrespondencePoint");
 			FIRSTMEM2(cp, mFlags, CorrespondencePoint, flags, MetaFlag::MetaFlag_FlagType);
 			FIRSTFLAG(cp, mFlags, "Left Foot Down", a, 2);
 			NEXTFLAG(cp, mFlags, "Right Foot Down", b, 4, a);
@@ -3126,9 +3021,9 @@ namespace MetaInit {
 			NEXTMEM2(cp, mComment, CorrespondencePoint, string, 0, mfTime);
 			ADD(cp);
 
-			DEFINEDCARRAY(CorrespondencePoint);
+			DEFINEDCARRAY(CorrespondencePoint, "DCArray<CorrespondencePoint>");
 
-			DEFINET2(be, BlendEntry);
+			DEFINET2(be, BlendEntry, "BlendEntry");
 			FIRSTMEM2(be, mParameterValues, BlendEntry, vec3, 0);
 			NEXTMEM2(be, mAnimOrChore, BlendEntry, animorchore, 0, mParameterValues);
 			NEXTMEM2(be, mCorrespondencePoints, BlendEntry, DCArray_CorrespondencePoint, 0, mAnimOrChore);
@@ -3136,9 +3031,9 @@ namespace MetaInit {
 			NEXTMEM2(be, mComment, BlendEntry, string, 0, mfAnimOrChoreLength);
 			ADD(be);
 
-			DEFINEDCARRAY(BlendEntry);
+			DEFINEDCARRAY(BlendEntry, "DCArray<BlendEntry>");
 
-			DEFINET2(bgt, BlendGraph::EnumBlendGraphType);
+			DEFINET2(bgt, BlendGraph::EnumBlendGraphType, "BlendGraph::EnumBlendGraphType");
 			FIRSTMEM2(bgt, mVal, BlendGraph::EnumBlendGraphType, long, 0x40);
 			FIRSTENUM2(bgt, mVal, "eBlendgraph_Looping", a, 0, 0);
 			ADDFLAGS(bgt, 0x8008);
@@ -3146,14 +3041,11 @@ namespace MetaInit {
 			NEXTMEM1(bgt, "Baseclass_EnumBase", BASE, mVal, BlendGraph::EnumBlendGraphType, enumbase, 0x10,mVal);
 			ADD(bgt);
 
-			DEFINEKEYFRAMEDVALUE(int, int, long);
-			DEFINEMAP2(float, KeyframedValue<int>, float, kfvi, std::less<float>);
-			DEFINEMAP2(float, Map<float SEP KeyframedValue<int>>, float, map_f_kfv, std::less<float>);
-			MKNAME(meta_kfv_int, "KeyframedValue<int>");
-			MKNAME(meta_Map_float_kfvi, "Map<float,KeyframedValue<int>,less<float>>");
-			MKNAME(meta_Map_float_map_f_kfv, "Map<float,Map<float,KeyframedValue<int>,less<float>>,less<float>>");
+			DEFINEKEYFRAMEDVALUE(int, int, long, "KeyframedValue<int>::Sample", "DCArray<KeyframedValue<int>::Sample>", "AnimatedValueInterface<int>", "KeyframedValue<int>");
+			DEFINEMAP2(float, KeyframedValue<int>, float, kfvi, std::less<float>, "Map<float,KeyframedValue<int>,less<float>>");
+			DEFINEMAP2(float, Map<float SEP KeyframedValue<int>>, float, map_f_kfv, std::less<float>, "Map<float,Map<float,KeyframedValue<int>,less<float>>,less<float>>");
 
-			DEFINET2(bg, BlendGraph);
+			DEFINET2(bg, BlendGraph, "BlendGraph");
 			EXT(bg, bgh);
 			SERIALIZER(bg, BlendGraph);
 			FIRSTMEM1(bg, "mNumDimensions", ALAIS, mNumDimensions, BlendGraph, long, 0x20);
@@ -3182,7 +3074,7 @@ namespace MetaInit {
 			meta_bg_ALAIS2.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("WD4");
 			ADD(bg);
 
-			DEFINET2(bgm, BlendGraphManager);
+			DEFINET2(bgm, BlendGraphManager, "BlendGraphManager");
 			EXT(bgm, bgm);
 			FIRSTMEM2(bgm, mfTransitionTime, BlendGraphManager, float, 0);
 			NEXTMEM2(bgm, mIdleAnimOrChore, BlendGraphManager, animorchore, 0, mfTransitionTime);
@@ -3219,20 +3111,20 @@ namespace MetaInit {
 			meta_bgm_mbUseAlgorithmicHeadTurn.mSkipVersion = TelltaleToolLib_GetGameKeyIndex("WD3");
 			ADD(bgm);
 
-			DEFINET2(omesh, T3OcclusionMeshBatch);
+			DEFINET2(omesh, T3OcclusionMeshBatch, "T3OcclusionMeshBatch");
 			FIRSTMEM2(omesh, mFlags, T3OcclusionMeshBatch, long, 0);
 			NEXTMEM2(omesh, mStartIndex, T3OcclusionMeshBatch, long, 0, mFlags);
 			NEXTMEM2(omesh, mNumTriangles, T3OcclusionMeshBatch, long, 0, mStartIndex);
 			ADD(omesh);
 
-			DEFINET2(msed, MeshSceneEnlightenData);
+			DEFINET2(msed, MeshSceneEnlightenData, "MeshSceneEnlightenData");
 			FIRSTMEM2(msed, mSystemName, MeshSceneEnlightenData, symbol, 0);
 			NEXTMEM2(msed, mUVTransform, MeshSceneEnlightenData, vec4, MetaFlag::MetaFlag_MetaSerializeBlockingDisabled, mSystemName);
 			NEXTMEM2(msed, mFlags, MeshSceneEnlightenData, flags, MetaFlag::MetaFlag_FlagType, mUVTransform);
 			FIRSTFLAG(msed, mFlags, "eMeshSceneEnlightenFlag_ProbeLit", probe, 1);
 			ADD(msed);
 
-			DEFINET2(lmde, MeshSceneLightmapData::Entry);
+			DEFINET2(lmde, MeshSceneLightmapData::Entry, "MeshSceneLightmapData::Entry");
 			FIRSTMEM2(lmde, mMeshName, MeshSceneLightmapData::Entry, symbol, 0);
 			NEXTMEM2(lmde, mLODIndex, MeshSceneLightmapData::Entry, long, 0, mMeshName);
 			NEXTMEM2(lmde, mLightQuality, MeshSceneLightmapData::Entry, long, 0, mLODIndex);
@@ -3241,24 +3133,24 @@ namespace MetaInit {
 			NEXTMEM2(lmde, mTexturePage, MeshSceneLightmapData::Entry, long, 0, mTextureOffset);
 			ADD(lmde);
 
-			DEFINEDCARRAY2(MeshSceneLightmapData::Entry, lmde);
-			DEFINEDCARRAY2(unsigned short, ushort);
+			DEFINEDCARRAY2(MeshSceneLightmapData::Entry, lmde, "DCArray<MeshSceneLightmapData::Entry>");
+			DEFINEDCARRAY2(unsigned short, ushort, "DCArray<unsignedshort>");
 
-			DEFINET2(lmd, MeshSceneLightmapData);
+			DEFINET2(lmd, MeshSceneLightmapData, "MeshSceneLightmapData");
 			FIRSTMEM2(lmd, mEntries, MeshSceneLightmapData, DCArray_lmde, 0);
 			NEXTMEM2(lmd, mStationaryLightIndices, MeshSceneLightmapData, DCArray_ushort, 0, mEntries);
 			NEXTMEM2(lmd, mFlags, MeshSceneLightmapData, flags, 0, mStationaryLightIndices);
 			ADD(lmd);
 
-			DEFINEDCARRAY(T3OcclusionMeshBatch);
+			DEFINEDCARRAY(T3OcclusionMeshBatch, "DCArray<T3OcclusionMeshBatch>");
 
-			DEFINET2(bbox, BoundingBox);
+			DEFINET2(bbox, BoundingBox, "BoundingBox");
 			ADDFLAGS(bbox, MetaFlag::MetaFlag_MetaSerializeBlockingDisabled);
 			FIRSTMEM2(bbox, mMin, BoundingBox, vec3, 0);
 			NEXTMEM2(bbox, mMax, BoundingBox, vec3, 0, mMin);
 			ADD(bbox);
 
-			DEFINET2(mesho, T3OcclusionMeshData);
+			DEFINET2(mesho, T3OcclusionMeshData, "T3OcclusionMeshData");
 			SERIALIZER(mesho, T3OcclusionMeshData);
 			FIRSTMEM2(mesho, mData, T3OcclusionMeshData, bb, 0);
 			NEXTMEM2(mesho, mBoundingBox, T3OcclusionMeshData, bbox, 0, mData);
@@ -3267,11 +3159,11 @@ namespace MetaInit {
 			NEXTMEM2(mesho, mVertexCount, T3OcclusionMeshData, long, 0, mBatches);
 			ADD(mesho);
 
-			DEFINET2(texind, T3MeshTextureIndices);
+			DEFINET2(texind, T3MeshTextureIndices, "T3MeshTextureIndices");
 			SERIALIZER(texind, T3MeshTextureIndices);
 			ADD(texind);
 
-			DEFINET2(batch, T3MeshBatch);
+			DEFINET2(batch, T3MeshBatch, "T3MeshBatch");
 			FIRSTMEM2(batch, mBoundingBox, T3MeshBatch, bbox, 0);
 			NEXTMEM2(batch, mBoundingSphere, T3MeshBatch, sphere, 0, mBoundingBox);
 			NEXTMEM2(batch, mBatchUsage, T3MeshBatch, flags, 0, mBoundingSphere);
@@ -3293,9 +3185,9 @@ namespace MetaInit {
 			meta_batch_mNumIndices.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("GoG");
 			ADD(batch);
 
-			DEFINEDCARRAY(T3MeshBatch);
+			DEFINEDCARRAY(T3MeshBatch, "DCArray<T3MeshBatch>");
 
-			DEFINET2(lod, T3MeshLOD);
+			DEFINET2(lod, T3MeshLOD, "T3MeshLOD");
 			FIRSTMEM(lod, "mBatches[0]", mBatches, T3MeshLOD, DCArray_T3MeshBatch, 0);
 			NEXTMEM1(lod, "mBatches[1]", mBatches1, mBatches, T3MeshLOD, DCArray_T3MeshBatch, 0, mBatches);
 			meta_lod_mBatches.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("BAT");
@@ -3329,7 +3221,7 @@ namespace MetaInit {
 			meta_lod_mBones.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("BAT");
 			ADD(lod);
 
-			DEFINET2(mesht, T3MeshTexture);
+			DEFINET2(mesht, T3MeshTexture, "T3MeshTexture");
 			FIRSTMEM2(mesht, mTextureType, T3MeshTexture, long, 0);
 			NEXTMEM2(mesht, mhTexture, T3MeshTexture, Handletex, 0, mTextureType);
 			NEXTMEM2(mesht, mNameSymbol, T3MeshTexture, symbol, 0, mhTexture);
@@ -3339,7 +3231,7 @@ namespace MetaInit {
 			NEXTMEM2(mesht, mAverageObjAreaPerUVArea, T3MeshTexture, float, 0, mMaxObjAreaPerUVArea);
 			ADD(mesht);
 
-			DEFINET2(meshm, T3MeshMaterial);
+			DEFINET2(meshm, T3MeshMaterial, "T3MeshMaterial");
 			FIRSTMEM2(meshm, mhMaterial, T3MeshMaterial, Handlepropset, 0);
 			NEXTMEM2(meshm, mBaseMaterialName, T3MeshMaterial, symbol, 0, mhMaterial);
 			NEXTMEM2(meshm, mLegacyRenderTextureProperty, T3MeshMaterial, symbol, 0, mBaseMaterialName);
@@ -3349,31 +3241,31 @@ namespace MetaInit {
 			meta_meshm_mLegacyRenderTextureProperty.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("BAT");
 			ADD(meshm);
 
-			DEFINET2(over, T3MeshMaterialOverride);
+			DEFINET2(over, T3MeshMaterialOverride, "T3MeshMaterialOverride");
 			FIRSTMEM2(over, mhOverrideMaterial, T3MeshMaterialOverride, Handlepropset, 0);
 			NEXTMEM2(over, mMaterialIndex, T3MeshMaterialOverride, long, 0, mhOverrideMaterial);
 			ADD(over);
 
-			DEFINET2(bone, T3MeshBoneEntry);
+			DEFINET2(bone, T3MeshBoneEntry, "T3MeshBoneEntry");
 			FIRSTMEM2(bone, mBoneName, T3MeshBoneEntry, symbol, 0);
 			NEXTMEM2(bone, mBoundingBox, T3MeshBoneEntry, bbox, 0, mBoneName);
 			NEXTMEM2(bone, mBoundingSphere, T3MeshBoneEntry, sphere, 0, mBoundingBox);
 			NEXTMEM2(bone, mNumVerts, T3MeshBoneEntry,long, 0, mBoundingSphere);
 			ADD(bone);
 
-			DEFINET2(tle, T3MeshLocalTransformEntry);
+			DEFINET2(tle, T3MeshLocalTransformEntry, "T3MeshLocalTransformEntry");
 			FIRSTMEM2(tle, mTransform, T3MeshLocalTransformEntry, transform, 0);
 			NEXTMEM2(tle, mCameraFacingType, T3MeshLocalTransformEntry, long, 0, mTransform);
 			ADD(tle);
 
-			DEFINET2(df, T3MeshEffectPreloadDynamicFeatures);
+			DEFINET2(df, T3MeshEffectPreloadDynamicFeatures, "T3MeshEffectPreloadDynamicFeatures");
 			FIRSTMEM2(df, mDynamicFeatures, T3MeshEffectPreloadDynamicFeatures, bitsetbase1, 0);
 			NEXTMEM2(df, mPriority, T3MeshEffectPreloadDynamicFeatures, long, 0, mDynamicFeatures);
 			ADD(df);
 
-			DEFINEDCARRAY(T3MeshEffectPreloadDynamicFeatures);
+			DEFINEDCARRAY(T3MeshEffectPreloadDynamicFeatures, "DCArray<T3MeshEffectPreloadDynamicFeatures>");
 
-			DEFINET2(fxe, T3MeshEffectPreloadEntry);
+			DEFINET2(fxe, T3MeshEffectPreloadEntry, "T3MeshEffectPreloadEntry");
 			FIRSTMEM2(fxe, mEffectType, T3MeshEffectPreloadEntry, long, 0);
 			NEXTMEM2(fxe, mStaticEffectFeatures, T3MeshEffectPreloadEntry, bitsetbase3, 0, mEffectType);
 			NEXTMEM2(fxe, mMaterialCRC, T3MeshEffectPreloadEntry, __int64, 0, mStaticEffectFeatures);
@@ -3381,15 +3273,15 @@ namespace MetaInit {
 				DCArray_T3MeshEffectPreloadDynamicFeatures, 0, mMaterialCRC);
 			ADD(fxe);
 
-			DEFINEDCARRAY(T3MeshEffectPreloadEntry);
+			DEFINEDCARRAY(T3MeshEffectPreloadEntry, "DCArray<T3MeshEffectPreloadEntry>");
 
-			DEFINET2(fx, T3MeshEffectPreload);
+			DEFINET2(fx, T3MeshEffectPreload, "T3MeshEffectPreload");
 			FIRSTMEM2(fx, mEffectQuality, T3MeshEffectPreload, long, 0);
 			NEXTMEM2(fx, mEntries, T3MeshEffectPreload, DCArray_T3MeshEffectPreloadEntry, 0, mEffectQuality);
 			NEXTMEM2(fx, mTotalEffectCount, T3MeshEffectPreload, long, 0, mEntries);
 			ADD(fx);
 
-			DEFINET2(ct, T3MaterialChannelType);
+			DEFINET2(ct, T3MaterialChannelType, "T3MaterialChannelType");
 			static MetaMemberDescription meta_ct_ctm{};
 			meta_ct.mpFirstMember = &meta_ct_ctm;
 			meta_ct_ctm.mpName = "mVal";
@@ -3439,11 +3331,11 @@ namespace MetaInit {
 			NEXTENUM2(ct, ctm, "SecondarySpecularAlbedoColor", 39, 0x2D, 0, 38);
  			ADD(ct);
 
-			DEFINET2(bitsetreq, BitSet<enum T3MaterialChannelType SEP 46 SEP 0>);
+			DEFINET2(bitsetreq, BitSet<enum T3MaterialChannelType SEP 46 SEP 0>, "BitSet<T3MaterialChannelType,46,0>");
 			SERIALIZER(bitsetreq, BitSet<enum T3MaterialChannelType SEP 46 SEP 0>);
 			ADD(bitsetreq);
 
-			DEFINET2(reqs, T3MaterialRequirements);
+			DEFINET2(reqs, T3MaterialRequirements, "T3MaterialRequirements");
 			FIRSTMEM2(reqs, mPasses, T3MaterialRequirements, bitsetbase1, 0);
 			NEXTMEM2(reqs, mChannels, T3MaterialRequirements, bitsetreq, 0, mPasses);
 			NEXTMEM2(reqs, mChannels2, T3MaterialRequirements, bitsetbase1, 0, mChannels);
@@ -3459,7 +3351,7 @@ namespace MetaInit {
 			meta_reqs_mInputs2.mGameIndexVersionRange.max = TelltaleToolLib_GetGameKeyIndex("BAT2");
 			ADD(reqs);
 
-			DEFINET2(skin, T3MeshCPUSkinningData);
+			DEFINET2(skin, T3MeshCPUSkinningData, "T3MeshCPUSkinningData");
 			FIRSTMEM2(skin, mPositionFormat, T3MeshCPUSkinningData, long, 0);
 			NEXTMEM2(skin, mWeightFormat, T3MeshCPUSkinningData, long, 0, mPositionFormat);
 			NEXTMEM2(skin, mNormalFormat, T3MeshCPUSkinningData, long, 0, mWeightFormat);
@@ -3473,12 +3365,12 @@ namespace MetaInit {
 			meta_skin_mWeightSize.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("WD4");
 			ADD(skin);
 
-			DEFINET2(tct, T3MeshTexCoordTransform);
+			DEFINET2(tct, T3MeshTexCoordTransform, "T3MeshTexCoordTransform");
 			FIRSTMEM2(tct, mScale, T3MeshTexCoordTransform, vec2, 0);
 			NEXTMEM2(tct, mOffset, T3MeshTexCoordTransform, vec2, 0, mScale);
 			ADD(tct);
 
-			DEFINET2(lmtype, EnumRenderLightmapUVGenerationType);
+			DEFINET2(lmtype, EnumRenderLightmapUVGenerationType, "EnumRenderLightmapUVGenerationType");
 			ADDFLAGS(lmtype , MetaFlag::MetaFlag_MetaSerializeBlockingDisabled);
 			FIRSTMEM2(lmtype, mVal, EnumRenderLightmapUVGenerationType, long, 0x40);
 			FIRSTENUM2(lmtype, mVal, "eRenderLightmapUVGeneration_Default", a, 0, 0);
@@ -3490,7 +3382,7 @@ namespace MetaInit {
 			NEXTMEM1(lmtype, "Baseclass_EnumBase", ALAIS, mVal, EnumRenderLightmapUVGenerationType, enumbase, 0, mVal);
 			ADD(lmtype);
 
-			DEFINET2(mt, EnumT3MaterialLightModelType);
+			DEFINET2(mt, EnumT3MaterialLightModelType, "EnumT3MaterialLightModelType");
 			FIRSTMEM2(mt, mVal, EnumT3MaterialLightModelType, long, 0x40);
 			FIRSTENUM2(mt, mVal, "eMaterialLightModel_Default", a, -1, 0);
 			NEXTENUM2(mt, mVal, "eMaterialLightModel_Unlit", b, 0, 0, a);
@@ -3510,7 +3402,7 @@ namespace MetaInit {
 			NEXTMEM1(mt, "Baseclass_EnumBase", ALAIS, mVal, EnumT3MaterialLightModelType, enumbase, 0, mVal);
 			ADD(mt);
 
-			DEFINET2(state, T3GFXVertexState);
+			DEFINET2(state, T3GFXVertexState, "T3GFXVertexState");
 			SERIALIZER(state, T3GFXVertexState);
 			FIRSTMEM2(state, mVertexCountPerInstance, T3GFXVertexState, long, 0);
 			NEXTMEM2(state, mIndexBufferCount, T3GFXVertexState, long, 0, mVertexCountPerInstance);
@@ -3519,7 +3411,7 @@ namespace MetaInit {
 			meta_state_mIndexBufferCount.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("BAT");
 			ADD(state);
 
-			DEFINET2(params, GFXPlatformAttributeParams);
+			DEFINET2(params, GFXPlatformAttributeParams, "GFXPlatformAttributeParams");
 			FIRSTMEM2(params, mAttribute, GFXPlatformAttributeParams, long, 0);
 			NEXTMEM2(params, mFormat, GFXPlatformAttributeParams, long, 0, mAttribute);
 			NEXTMEM2(params, mAttributeIndex, GFXPlatformAttributeParams, long, 0, mFormat);
@@ -3527,7 +3419,7 @@ namespace MetaInit {
 			NEXTMEM2(params, mBufferOffset, GFXPlatformAttributeParams, long, 0, mBufferIndex);
 			ADD(params);
 
-			DEFINET2(buffer, T3GFXBuffer);
+			DEFINET2(buffer, T3GFXBuffer, "T3GFXBuffer");
 			SERIALIZER(buffer, T3GFXBuffer);
 			FIRSTMEM2(buffer, mResourceUsage, T3GFXBuffer, long, 0);
 			NEXTMEM2(buffer, mBufferFormat, T3GFXBuffer, long, 0, mResourceUsage);
@@ -3537,15 +3429,15 @@ namespace MetaInit {
 			KEYOVERRIDE(buffer, mResourceUsage, "Resource Usage");
 			ADD(buffer);
 
-			DEFINEDCARRAY(T3MeshLOD);
-			DEFINEDCARRAY(T3MeshMaterial);
-			DEFINEDCARRAY(T3MeshMaterialOverride);
-			DEFINEDCARRAY(T3MeshTexture);
-			DEFINEDCARRAY(T3MeshBoneEntry);
-			DEFINEDCARRAY(T3MeshLocalTransformEntry);
-			DEFINEDCARRAY(T3MeshEffectPreload);
+			DEFINEDCARRAY(T3MeshLOD, "DCArray<T3MeshLOD>");
+			DEFINEDCARRAY(T3MeshMaterial, "DCArray<T3MeshMaterial>");
+			DEFINEDCARRAY(T3MeshMaterialOverride, "DCArray<T3MeshMaterialOverride>");
+			DEFINEDCARRAY(T3MeshTexture, "DCArray<T3MeshTexture>");
+			DEFINEDCARRAY(T3MeshBoneEntry, "DCArray<T3MeshBoneEntry>");
+			DEFINEDCARRAY(T3MeshLocalTransformEntry, "DCArray<T3MeshLocalTransformEntry>");
+			DEFINEDCARRAY(T3MeshEffectPreload, "DCArray<T3MeshEffectPreload>");
 
-			DEFINET2(data, T3MeshData);
+			DEFINET2(data, T3MeshData, "T3MeshData");
 			SERIALIZER(data, T3MeshData);
 			FIRSTMEM2(data, mLODs, T3MeshData, DCArray_T3MeshLOD, 0);
 			NEXTMEM2(data, mTextures, T3MeshData, DCArray_T3MeshTexture, 0, mLODs);
@@ -3575,9 +3467,9 @@ namespace MetaInit {
 				TelltaleToolLib_GetGameKeyIndex("BAT");
 			ADD(data);
 
-			DEFINEDCARRAY(HandleBase);
+			DEFINEDCARRAY(HandleBase, "DCArray<HandleBase>");
 
-			DEFINET2(dbgt, EnumMeshDebugRenderType);
+			DEFINET2(dbgt, EnumMeshDebugRenderType, "EnumMeshDebugRenderType");
 			ADDFLAGS(dbgt, MetaFlag::MetaFlag_MetaSerializeBlockingDisabled);
 			FIRSTMEM2(dbgt, mVal, EnumMeshDebugRenderType, long, 0x40);
 			FIRSTENUM2(dbgt, mVal, "eMeshRender_Solid", a, 1, 0);
@@ -3585,7 +3477,7 @@ namespace MetaInit {
 			NEXTMEM1(dbgt, "Baseclass_EnumBase", ALAIS, mVal, EnumMeshDebugRenderType, enumbase, 0, mVal);
 			ADD(dbgt);
 
-			DEFINET2(mesh, D3DMesh);
+			DEFINET2(mesh, D3DMesh, "D3DMesh");
 			SERIALIZER(mesh, D3DMesh);
 			EXT(mesh, d3dmesh);
 			ADDFLAGS(mesh, MetaFlag::MetaFlag_RenderResource);
@@ -3614,14 +3506,14 @@ namespace MetaInit {
 			meta_mesh_mLODParamCRC.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("WD4");
 			ADD(mesh);
 
-			DEFINET2(runtp, T3MaterialRuntimeProperty);
+			DEFINET2(runtp, T3MaterialRuntimeProperty, "T3MaterialRuntimeProperty");
 			FIRSTMEM2(runtp, mName, T3MaterialRuntimeProperty, symbol, 0);
 			NEXTMEM2(runtp, mRuntimeName, T3MaterialRuntimeProperty, symbol, 0, mName);
 			ADD(runtp);
 
-			DEFINEDCARRAY(T3MaterialRuntimeProperty);
+			DEFINEDCARRAY(T3MaterialRuntimeProperty, "DCArray<T3MaterialRuntimeProperty>");
 
-			DEFINET2(matp, T3MaterialParameter);
+			DEFINET2(matp, T3MaterialParameter, "T3MaterialParameter");
 			FIRSTMEM2(matp, mName, T3MaterialParameter, symbol, 0);
 			NEXTMEM2(matp, mPropertyType, T3MaterialParameter, long, 0, mName);
 			NEXTMEM2(matp, mValueType, T3MaterialParameter, long, 0, mPropertyType);
@@ -3651,7 +3543,7 @@ namespace MetaInit {
 			meta_matp_OFF2.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("BAT");
 			meta_matp_OFF3.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("BAT");
 
-			DEFINET2(mapt, T3MaterialTransform2D);
+			DEFINET2(mapt, T3MaterialTransform2D, "T3MaterialTransform2D");
 			FIRSTMEM2(mapt, mParameterPrefix, T3MaterialTransform2D, symbol, 0);
 			NEXTMEM2(mapt, mFlags, T3MaterialTransform2D, flags, 0, mParameterPrefix);
 			NEXTMEM2(mapt, mScalarOffset0, T3MaterialTransform2D, long, 0, mFlags);
@@ -3691,7 +3583,7 @@ namespace MetaInit {
 			NEXTMEM2(mapt, mNestedMaterialIndex, T3MaterialTransform2D, long, 0, mPreShaderScalarOffset1);
 			ADD(mapt);
 
-			DEFINET2(matt, T3MaterialTextureParam);
+			DEFINET2(matt, T3MaterialTextureParam, "T3MaterialTextureParam");
 			FIRSTMEM2(matt, mParamType, T3MaterialTextureParam, long, 0);
 			NEXTMEM2(matt, mValueType, T3MaterialTextureParam, long, 0, mParamType);
 			FIRSTENUM2(matt, mValueType, "Float1", f1, 0, 0);
@@ -3704,12 +3596,12 @@ namespace MetaInit {
 			NEXTMEM2(matt, mScalarOffset, T3MaterialTextureParam, long, 0, mFlags);
 			ADD(matt);
 
-			DEFINET2(mats, T3MaterialStaticParameter);
+			DEFINET2(mats, T3MaterialStaticParameter, "T3MaterialStaticParameter");
 			FIRSTMEM2(mats, mName, T3MaterialStaticParameter, symbol, 0);
 			NEXTMEM2(mats, mNestedMaterialIndex, T3MaterialStaticParameter, long, 0, mName);
 			ADD(mats);
 
-			DEFINET2(matsh, T3MaterialPreShader);
+			DEFINET2(matsh, T3MaterialPreShader, "T3MaterialPreShader");
 			FIRSTMEM2(matsh, mValueType, T3MaterialPreShader, long, 0);
 			FIRSTENUM2(matsh, mValueType, "Float1", f1, 0, 0);
 			NEXTENUM2(matsh, mValueType, "Float2", f2, 1, 0, f1);
@@ -3738,7 +3630,7 @@ namespace MetaInit {
 			meta_matsh_OFF3.mOffset += 12;
 			ADD(matsh);
 
-			DEFINET2(matpass, T3MaterialPassData);
+			DEFINET2(matpass, T3MaterialPassData, "T3MaterialPassData");
 			FIRSTMEM2(matpass, mPassType, T3MaterialPassData, long, 0);
 			FIRSTENUM2(matpass, mPassType, "Main", a, 0, 0);
 			NEXTENUM2(matpass, mPassType, "PreZ", q, 1, 0, a);
@@ -3776,11 +3668,11 @@ namespace MetaInit {
 			NEXTMEM2(matpass, mMaterialCrc, T3MaterialPassData, u64, Internal_MetaFlag_ShowAsHex, mBlendMode);
 			ADD(matpass);
 
-			DEFINET2(matn, T3MaterialNestedMaterial);
+			DEFINET2(matn, T3MaterialNestedMaterial, "T3MaterialNestedMaterial");
 			FIRSTMEM2(matn, mhMaterial, T3MaterialNestedMaterial, Handlepropset, 0);
 			ADD(matn);
 
-			DEFINET2(mattex, T3MaterialTexture);
+			DEFINET2(mattex, T3MaterialTexture, "T3MaterialTexture");
 			FIRSTMEM2(mattex, mName, T3MaterialTexture, symbol, 0);
 			NEXTMEM2(mattex, mTextureName, T3MaterialTexture, symbol, 0, mName);
 			NEXTMEM2(mattex, mTextureNameWithoutExtension, T3MaterialTexture, symbol, 0, mTextureName);
@@ -3794,21 +3686,21 @@ namespace MetaInit {
 			NEXTMEM2(mattex, mNestedMaterialIndex, T3MaterialTexture, long, 0,mTextureIndex);
 			ADD(mattex);
 
-			DEFINET2(pcp, T3MaterialEnlightenPrecomputeParams);
+			DEFINET2(pcp, T3MaterialEnlightenPrecomputeParams, "T3MaterialEnlightenPrecomputeParams");
 			FIRSTMEM2(pcp, mIndirectReflectivity, T3MaterialEnlightenPrecomputeParams, float, 0);
 			NEXTMEM2(pcp, mIndirectTransparency, T3MaterialEnlightenPrecomputeParams, float, 0, mIndirectReflectivity);
 			ADD(pcp);
 
-			DEFINEDCARRAY(T3MaterialParameter);
-			DEFINEDCARRAY(T3MaterialTexture);
-			DEFINEDCARRAY(T3MaterialTransform2D);
-			DEFINEDCARRAY(T3MaterialNestedMaterial);
-			DEFINEDCARRAY(T3MaterialPreShader);
-			DEFINEDCARRAY(T3MaterialStaticParameter);
-			DEFINEDCARRAY(T3MaterialTextureParam);
-			DEFINEDCARRAY(T3MaterialPassData);
+			DEFINEDCARRAY(T3MaterialParameter, "DCArray<T3MaterialParameter>");
+			DEFINEDCARRAY(T3MaterialTexture, "DCArray<T3MaterialTexture>");
+			DEFINEDCARRAY(T3MaterialTransform2D, "DCArray<T3MaterialTransform2D>");
+			DEFINEDCARRAY(T3MaterialNestedMaterial, "DCArray<T3MaterialNestedMaterial>");
+			DEFINEDCARRAY(T3MaterialPreShader, "DCArray<T3MaterialPreShader>");
+			DEFINEDCARRAY(T3MaterialStaticParameter, "DCArray<T3MaterialStaticParameter>");
+			DEFINEDCARRAY(T3MaterialTextureParam, "DCArray<T3MaterialTextureParam>");
+			DEFINEDCARRAY(T3MaterialPassData, "DCArray<T3MaterialPassData>");
 
-			DEFINET2(com, T3MaterialCompiledData);
+			DEFINET2(com, T3MaterialCompiledData, "T3MaterialCompiledData");
 			FIRSTMEM2(com, mParameters, T3MaterialCompiledData, DCArray_T3MaterialParameter, 0);
 			NEXTMEM2(com, mTextures, T3MaterialCompiledData, DCArray_T3MaterialTexture, 0, mParameters);
 			NEXTMEM2(com, mTransforms, T3MaterialCompiledData, DCArray_T3MaterialTransform2D, 0, mTextures);
@@ -3857,9 +3749,9 @@ namespace MetaInit {
 			NEXTMEM2(com, mPreShaderParameterBufferScalarSize, T3MaterialCompiledData, long, 0, ALAIS2);
 			ADD(com);
 
-			DEFINEDCARRAY(T3MaterialCompiledData);
+			DEFINEDCARRAY(T3MaterialCompiledData, "DCArray<T3MaterialCompiledData>");
 
-			DEFINET2(lightt, LightType);
+			DEFINET2(lightt, LightType, "LightType");
 			ADDFLAGS(lightt, MetaFlag::MetaFlag_MetaSerializeBlockingDisabled);
 			FIRSTMEM2(lightt, mLightType, LightType, long, 0x40);
 			FIRSTENUM2(lightt, mLightType, "Directional", a, 0, 0);
@@ -3875,7 +3767,7 @@ namespace MetaInit {
 			NEXTENUM2(lightt, mLightType, "Lightmap Specular", b9, 10, 0, b8);
 			ADD(lightt);
 
-			DEFINET2(matdata, T3MaterialData);
+			DEFINET2(matdata, T3MaterialData, "T3MaterialData");
 			SERIALIZER(matdata, T3MaterialData);
 			ADDFLAGS(matdata, 0x20);
 			FIRSTMEM2(matdata, mMaterialName, T3MaterialData, symbol, 0);
@@ -3892,15 +3784,15 @@ namespace MetaInit {
 			meta_matdata_mCompiledData2.mGameIndexVersionRange.min = TelltaleToolLib_GetGameKeyIndex("WD4");
 			ADD(matdata);
 
-			DEFINET2(ldata, LocationInfo);
+			DEFINET2(ldata, LocationInfo, "LocationInfo");
 			FIRSTMEM2(ldata, mAttachedAgent, LocationInfo, string, 0);
 			NEXTMEM2(ldata, mAttachedNode, LocationInfo, symbol, 0, mAttachedAgent);
 			NEXTMEM2(ldata, mInitialLocalTransform, LocationInfo, transform, 0, mAttachedNode);
 			ADD(ldata);
 
-			DEFINEHANDLE(mesh, D3DMesh);
+			DEFINEHANDLE(mesh, D3DMesh, "Handle<D3DMesh>", "DCArray<Handle<D3DMesh>>","HandleLock<D3DMesh>","DCArray<HandleLock<D3DMesh>>");
 
-			DEFINET2(vtalign, EnumVTextAlignmentType);
+			DEFINET2(vtalign, EnumVTextAlignmentType, "EnumVTextAlignmentType");
 			ADDFLAGS(vtalign, MetaFlag_NoPanelCaption | MetaFlag_EnumWrapperClass);
 			FIRSTMEM2(vtalign, mVal, EnumVTextAlignmentType, long, MetaFlag_EnumIntType);
 			FIRSTENUM2(vtalign, mVal, "None", a, 0, 0);
@@ -3909,7 +3801,7 @@ namespace MetaInit {
 			NEXTENUM2(vtalign, mVal, "Bottom", d, 3, 0, c);
 			ADD(vtalign);
 
-			DEFINET2(htalign, EnumHTextAlignmentType);
+			DEFINET2(htalign, EnumHTextAlignmentType, "EnumHTextAlignmentType");
 			ADDFLAGS(htalign, MetaFlag_NoPanelCaption | MetaFlag_EnumWrapperClass);
 			FIRSTMEM2(htalign, mVal, EnumHTextAlignmentType, long, MetaFlag_EnumIntType);
 			FIRSTENUM2(htalign, mVal, "None", a, 0, 0);
@@ -3918,14 +3810,14 @@ namespace MetaInit {
 			NEXTENUM2(htalign, mVal, "Right Justified", d, 3, 0, c);
 			ADD(htalign);
 
-			DEFINET2(htttalign, EnumTonemapType);
+			DEFINET2(htttalign, EnumTonemapType, "EnumTonemapType");
 			ADDFLAGS(htttalign, MetaFlag_NoPanelCaption | MetaFlag_EnumWrapperClass);
 			FIRSTMEM2(htttalign, mVal, EnumTonemapType, long, MetaFlag_EnumIntType);
 			FIRSTENUM2(htttalign, mVal, "eTonemapType_Default", a, 1, 0);
 			NEXTENUM2(htttalign, mVal, "eTonemapType_Filmic", b, 2, 0, a);
 			ADD(htttalign);
 
-			DEFINET2(httt1align, CameraFacingTypes);
+			DEFINET2(httt1align, CameraFacingTypes, "CameraFacingTypes");
 			ADDFLAGS(httt1align, MetaFlag_NoPanelCaption | MetaFlag_EnumWrapperClass);
 			FIRSTMEM2(httt1align, mCameraFacingType, CameraFacingTypes, long, MetaFlag_EnumIntType);
 			FIRSTENUM2(httt1align, mCameraFacingType, "eFacing", a, 0, 0);
@@ -3933,7 +3825,7 @@ namespace MetaInit {
 			NEXTENUM2(httt1align, mCameraFacingType, "eFacingLocalY", c, 2, 0, b);
 			ADD(httt1align);
 
-			DEFINET2(ht1ttalign, EnumT3LightEnvType);
+			DEFINET2(ht1ttalign, EnumT3LightEnvType, "EnumT3LightEnvType");
 			ADDFLAGS(ht1ttalign, MetaFlag_NoPanelCaption | MetaFlag_EnumWrapperClass);
 			FIRSTMEM2(ht1ttalign, mVal, EnumTonemapType, long, MetaFlag_EnumIntType);
 			FIRSTENUM2(ht1ttalign, mVal, "eLightEnvType_Point", a, 0, 0);
@@ -3943,31 +3835,28 @@ namespace MetaInit {
 			NEXTENUM2(ht1ttalign, mVal, "eLightEnvType_DirectionalAmbient", e, 4, 0, d);
 			ADD(ht1ttalign);
 
-			DEFINEKEYFRAMEDVALUE(LocationInfo, LocationInfo, ldata);
-			DEFINEKEYFRAMEDVALUE(hPropertySet, Handle<PropertySet>, Handlepropset);
-			MKNAME(meta_kfv_hPropertySet, "KeyframedValue<Handle<PropertySet>>");
-			DEFINEKEYFRAMEDVALUE(ui64, unsigned __int64, u64);
-			MKNAME(meta_kfv_ui64, "KeyframedValue<unsigned__int64>");
+			DEFINEKEYFRAMEDVALUE(LocationInfo, LocationInfo, ldata, "KeyframedValue<LocationInfo>::Sample", "DCArray<KeyframedValue<LocationInfo>::Sample>", "AnimatedValueInterface<LocationInfo>", "KeyframedValue<LocationInfo>");
+			DEFINEKEYFRAMEDVALUE(hPropertySet, Handle<PropertySet>, Handlepropset, "KeyframedValue<Handle<PropertySet>>::Sample", "DCArray<KeyframedValue<Handle<PropertySet>>::Sample>", "AnimatedValueInterface<Handle<PropertySet>>", "KeyframedValue<Handle<PropertySet>>");
+			DEFINEKEYFRAMEDVALUE(ui64, uint64_t, u64, "KeyframedValue<unsigned__int64>::Sample", "DCArray<KeyframedValue<unsigned__int64>::Sample>", "AnimatedValueInterface<unsigned__int64>", "KeyframedValue<unsigned__int64>");
 
-			DEFINET2(senb, SoundEventNameBase);
+			DEFINET2(senb, SoundEventNameBase, "SoundEventNameBase");
 			FIRSTMEM2(senb, mEventGuid, SoundEventNameBase, symbol, 0);
 			NEXTMEM2(senb, mEventDisplayName, SoundEventNameBase, symbol, 0, mEventGuid);
 			ADD(senb);
 
-			DEFINET2(sen0, SoundEventName<SoundEventNameBase::NT_DEFAULT>);
+			DEFINET2(sen0, SoundEventName<SoundEventNameBase::NT_DEFAULT>, "SoundEventName<0>");
 			FIRSTMEM1(sen0, "Baseclass_SoundEventNameBase", ALIAS, mEventGuid, SoundEventName<SoundEventNameBase::NT_DEFAULT>, senb, 0);
 			ADD(sen0);
 
-			DEFINET2(sen1, SoundEventName<SoundEventNameBase::NT_SNAPSHOT>);
+			DEFINET2(sen1, SoundEventName<SoundEventNameBase::NT_SNAPSHOT>, "SoundEventName<1>");
 			FIRSTMEM1(sen1, "Baseclass_SoundEventNameBase", ALIAS, mEventGuid, SoundEventName<SoundEventNameBase::NT_SNAPSHOT>, senb, 0);
 			ADD(sen1);
 
-			DEFINET2(sen2, SoundEventName<SoundEventNameBase::NT_DIALOG>);
+			DEFINET2(sen2, SoundEventName<SoundEventNameBase::NT_DIALOG>, "SoundEventName<2>");
 			FIRSTMEM1(sen2, "Baseclass_SoundEventNameBase", ALIAS, mEventGuid, SoundEventName<SoundEventNameBase::NT_DIALOG>, senb, 0);
 			ADD(sen2);
 
-			DEFINET2(evctx, SoundAmbience::EventContext);
-			MKNAME(meta_evctx, "SoundAmbience::EventContext");
+			DEFINET2(evctx, SoundAmbience::EventContext, "SoundAmbience::EventContext");
 			FIRSTMEM1(evctx, "Baseclass_SoundEventNameBase", ALIAS, mEventGuid, SoundAmbience::EventContext, senb, 0);
 			NEXTMEM2(evctx, mEventname, SoundAmbience::EventContext, sen0, 0, ALIAS);
 			NEXTMEM2(evctx, mPlayChance, SoundAmbience::EventContext, float, 0, mEventname);
@@ -3977,17 +3866,17 @@ namespace MetaInit {
 			NEXTMEM2(evctx, mVolumeFadeTimeRange, SoundAmbience::EventContext, rangef, 0, mVolumeRangedB);
 			ADD(evctx);
 
-			DEFINEDCARRAY2(SoundAmbience::EventContext, ambiencectx);
+			DEFINEDCARRAY2(SoundAmbience::EventContext, ambiencectx, "DCArray<SoundAmbience::EventContext>");
 
-			DEFINET2(ambience, SoundAmbience::AmbienceDefinition);
+			DEFINET2(ambience, SoundAmbience::AmbienceDefinition, "SoundAmbience::AmbienceDefinition");
 			EXT(ambience, ambience);
 			FIRSTMEM2(ambience, mEvents, SoundAmbience::AmbienceDefinition, DCArray_ambiencectx, 0);
 			ADD(ambience);
 
-			DEFINEANMVALUEI(animorchore, AnimOrChore);
-			DEFINEKEYFRAMEDVALUE(kfvanc, AnimOrChore, animorchore);
+			DEFINEANMVALUEI(animorchore, AnimOrChore, "AnimatedValueInterface<AnimOrChore>");
+			DEFINEKEYFRAMEDVALUE(kfvanc, AnimOrChore, animorchore, "KeyframedValue<AnimOrChore>::Sample", "DCArray<KeyframedValue<AnimOrChore>::Sample>", "AnimatedValueInterface<AnimOrChore>", "KeyframedValue<AnimOrChore>");
 
-			DEFINET2(plk, Procedural_LookAt::Constraint);
+			DEFINET2(plk, Procedural_LookAt::Constraint, "Procedural_LookAt::Constraint");
 			FIRSTMEM2(plk, mMaxLeftRight, Procedural_LookAt::Constraint, float, 0);
 			NEXTMEM2(plk, mMinLeftRight, Procedural_LookAt::Constraint, float, 0, mMaxLeftRight);
 			NEXTMEM2(plk, mMaxUp, Procedural_LookAt::Constraint, float, 0, mMinLeftRight);
@@ -3995,28 +3884,28 @@ namespace MetaInit {
 			NEXTMEM2(plk, mLeftRightFixedOffsset, Procedural_LookAt::Constraint, float, 0, mMinUp);
 			NEXTMEM2(plk, mUpDownFixedOffsset, Procedural_LookAt::Constraint, float, 0, mLeftRightFixedOffsset);
 			ADD(plk);
-			
-			DEFINEDCARRAY2(Procedural_LookAt::Constraint, plk);
 
-			DEFINEHANDLELOCK(langr, LanguageRes);
-			DEFINEHANDLELOCK(langfres, LanguageResource);
+			DEFINEDCARRAY2(Procedural_LookAt::Constraint, plk, "DCArray<Procedural_LookAt::Constraint>");
 
-			DEFINET2(diid, DialogInstance::InstanceID);
+			DEFINEHANDLELOCK(langr, LanguageRes, "HandleLock<LanguageRes>", "DCArray<HandleLock<LanguageRes>>");
+			DEFINEHANDLELOCK(langfres, LanguageResource, "HandleLock<LanguageResource>", "DCArray<HandleLock<LanguageResource>>");
+
+			DEFINET2(diid, DialogInstance::InstanceID, "DialogInstance::InstanceID");
 			FIRSTMEM2(diid, mID, DialogInstance::InstanceID, int, 0);
 			ADD(diid);
 
-			DEFINEKEYFRAMEDVALUE(kcol, Color, color);
-			DEFINEANMVALUEI(kcoli, Color);
-			DEFINEKEYFRAMEDVALUE(hsound, Handle<SoundData>, Handlesound);
-			DEFINEKEYFRAMEDVALUE(htexx, Handle<T3Texture>, tex);
-			DEFINEANMVALUEI(hsoundi, Handle<SoundData>);
-			DEFINEANMVALUEI(htexxx, Handle<T3Texture>);
-			
-			DEFINEKEYFRAMEDVALUE(hphnt, Handle<PhonemeTable>, Handleptable);
-			DEFINEANMVALUEI(hptanm, Handle<PhonemeTable>);
-			DEFINEHANDLE(hambb, SoundAmbience::AmbienceDefinition);
+			DEFINEKEYFRAMEDVALUE(kcol, Color, color, "KeyframedValue<Color>::Sample", "DCArray<KeyframedValue<Color>::Sample>", "AnimatedValueInterface<Color>", "KeyframedValue<Color>");
+			DEFINEANMVALUEI(kcoli, Color,"AnimatedValueInterface<Color>");
+			DEFINEKEYFRAMEDVALUE(hsound, Handle<SoundData>, Handlesound, "KeyframedValue<Handle<SoundData>>::Sample", "DCArray<KeyframedValue<Handle<SoundData>>::Sample>", "AnimatedValueInterface<Handle<SoundData>>", "KeyframedValue<Handle<SoundData>>");
+			DEFINEKEYFRAMEDVALUE(htexx, Handle<T3Texture>, tex, "KeyframedValue<Handle<T3Texture>>::Sample", "DCArray<KeyframedValue<Handle<T3Texture>>::Sample>", "AnimatedValueInterface<Handle<T3Texture>>", "KeyframedValue<Handle<T3Texture>>");
+			DEFINEANMVALUEI(hsoundi, Handle<SoundData>, "AnimatedValueInterface<Handle<SoundData>>");
+			DEFINEANMVALUEI(htexxx, Handle<T3Texture>, "AnimatedValueInterface<Handle<T3Texture>>");
 
-			DEFINET2(pat1, EnumParticleGeometryType);
+			DEFINEKEYFRAMEDVALUE(hphnt, Handle<PhonemeTable>, Handleptable, "KeyframedValue<Handle<PhonemeTable>>::Sample", "DCArray<KeyframedValue<Handle<PhonemeTable>>::Sample>", "AnimatedValueInterface<Handle<PhonemeTable>>", "KeyframedValue<Handle<PhonemeTable>>");
+			DEFINEANMVALUEI(hptanm, Handle<PhonemeTable>, "AnimatedValueInterface<Handle<PhonemeTable>>");
+			DEFINEHANDLE(hambb, SoundAmbience::AmbienceDefinition, "Handle<SoundAmbience::AmbienceDefinition>", "DCArray<Handle<SoundAmbience::AmbienceDefinition>>","HandleLock<SoundAmbience::AmbienceDefinition>","DCArray<HandleLock<SoundAmbience::AmbienceDefinition>>");
+
+			DEFINET2(pat1, EnumParticleGeometryType, "EnumParticleGeometryType");
 			FIRSTMEM2(pat1, mVal, EnumParticleGeometryType, int, MetaFlag_EnumIntType);
 			NEXTMEM1(pat1, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumParticleGeometryType, enumbase, MetaFlag_BaseClass, mVal);
 			FIRSTENUM2(pat1, mVal, "eParticleGeometryType_Sprite", a, 1, 0);
@@ -4027,7 +3916,7 @@ namespace MetaInit {
 			NEXTENUM2(pat1, mVal, "eParticleGeometryType_None", f, 6, 0, e);
 			ADD(pat1);
 
-			DEFINET2(pat, EnumParticleAffectorType);
+			DEFINET2(pat, EnumParticleAffectorType, "EnumParticleAffectorType");
 			FIRSTMEM2(pat, mVal, EnumParticleAffectorType, int, MetaFlag_EnumIntType);
 			NEXTMEM1(pat, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumParticleAffectorType, enumbase, MetaFlag_BaseClass, mVal);
 			FIRSTENUM2(pat, mVal, "eParticleAffectorType_Force", a, 1, 0);
@@ -4040,29 +3929,29 @@ namespace MetaInit {
 			NEXTENUM2(pat, mVal, "eParticleAffectorType_CollisionCylinder", h, 8, 0, g);
 			ADD(pat);
 
-			DEFINET2(po1, PhysicsObject::EnumePhysicsCollisionType);
+			DEFINET2(po1, PhysicsObject::EnumePhysicsCollisionType, "PhysicsObject::EnumePhysicsCollisionType");
 			FIRSTMEM2(po1, mVal, PhysicsObject::EnumePhysicsCollisionType, int, MetaFlag_EnumIntType);
 			NEXTMEM1(po1, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, PhysicsObject::EnumePhysicsCollisionType, enumbase, MetaFlag_BaseClass, mVal);
 			FIRSTENUM2(po1, mVal, "PhysicsCollisionType_InterAgent", a, 0, 0);
 			NEXTENUM2(po1, mVal, "PhysicsCollisionType_Raycast", b, 1, 0, a);
 			ADD(po1);
 
-			DEFINET2(pos2, PhysicsObject::EnumePhysicsBoundingVolumeType);
+			DEFINET2(pos2, PhysicsObject::EnumePhysicsBoundingVolumeType, "PhysicsObject::EnumePhysicsBoundingVolumeType");
 			FIRSTMEM2(pos2, mVal, PhysicsObject::EnumePhysicsBoundingVolumeType, int, MetaFlag_EnumIntType);
 			NEXTMEM1(pos2, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, PhysicsObject::EnumePhysicsBoundingVolumeType, enumbase, MetaFlag_BaseClass, mVal);
 			FIRSTENUM2(pos2, mVal, "PhysicsBoundingVolumeType_Cylinder", a, 0, 0);
 			NEXTENUM2(pos2, mVal, "PhysicsBoundingVolumeType_Box", b, 1, 0, a);
 			NEXTENUM2(pos2, mVal, "PhysicsBoundingVolumeType_Sphere", c, 2, 0, b);
 			ADD(pos2);
-			
-			DEFINEMAP2(SoundFootsteps::EnumMaterial, SoundEventName<SoundEventNameBase::NT_DEFAULT>, soundmat, sen0, std::less<SoundFootsteps::EnumMaterial>);
 
-			DEFINET2(f2b, Footsteps2::FootstepBank);
+			DEFINEMAP2(SoundFootsteps::EnumMaterial, SoundEventName<SoundEventNameBase::NT_DEFAULT>, soundmat, sen0, std::less<SoundFootsteps::EnumMaterial>, "Map<SoundFootsteps::EnumMaterial,SoundEventName<SoundEventNameBase::NT_DEFAULT>,less<SoundFootsteps::EnumMaterial>>");
+
+			DEFINET2(f2b, Footsteps2::FootstepBank, "Footsteps2::FootstepBank");
 			FIRSTMEM2(f2b, mEventName, Footsteps2::FootstepBank, sen0, 0);
 			NEXTMEM2(f2b, mMaterialMap, Footsteps2::FootstepBank, Map_soundmat_sen0, 0, mEventName);
 			ADD(f2b);
 
-			DEFINET2(abb, EnumEmitterTriggerEnable);
+			DEFINET2(abb, EnumEmitterTriggerEnable, "EnumEmitterTriggerEnable");
 			FIRSTMEM2(abb, mVal, EnumEmitterTriggerEnable, int, MetaFlag_EnumIntType);
 			NEXTMEM1(abb, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumEmitterTriggerEnable, enumbase, MetaFlag_BaseClass, mVal);
 			FIRSTENUM2(abb, mVal, "eEmitterTriggerEnable_None", a, 1, 0);
@@ -4071,7 +3960,7 @@ namespace MetaInit {
 			NEXTENUM2(abb, mVal, "eEmitterTriggerEnable_Default", d, 4, 0, c);
 			ADD(abb);
 
-			DEFINET2(acc, EnumEmittersEnableType);
+			DEFINET2(acc, EnumEmittersEnableType, "EnumEmittersEnableType");
 			FIRSTMEM2(acc, mVal, EnumEmittersEnableType, int, MetaFlag_EnumIntType);
 			NEXTMEM1(acc, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumEmittersEnableType, enumbase, MetaFlag_BaseClass, mVal);
 			FIRSTENUM2(acc, mVal, "eEmittersEnableType_All", a, 1, 0);
@@ -4079,7 +3968,7 @@ namespace MetaInit {
 			NEXTENUM2(acc, mVal, "eEmittersEnableType_Sequential", c, 3, 0, b);
 			ADD(acc);
 
-			DEFINET2(rootk, RootKey);
+			DEFINET2(rootk, RootKey, "RootKey");
 			FIRSTMEM2(rootk, mTranslationConstraint__Enabled, RootKey, bool, 0);
 			NEXTMEM2(rootk, mTranslationConstraint_MaxVelocity, RootKey, float, 0, mTranslationConstraint__Enabled);
 			NEXTMEM2(rootk, mTranslationConstraint_MaxAcceleration, RootKey, float, 0, mTranslationConstraint_MaxVelocity);
@@ -4090,7 +3979,7 @@ namespace MetaInit {
 			NEXTMEM2(rootk, mRotationConstraint_MaxTwistAngularAcceleration, RootKey, float, 0, mRotationConstraint_MaxTwistAngularVelocity);
 			ADD(rootk);
 
-			DEFINET2(pivot, PivotJointKey);
+			DEFINET2(pivot, PivotJointKey, "PivotJointKey");
 			FIRSTMEM2(pivot, mBoneLengthConstraint__Enabled, PivotJointKey, bool, 0);
 			NEXTMEM2(pivot, mBoneLengthConstraint_RestRelative, PivotJointKey, bool, 0, mBoneLengthConstraint__Enabled);
 			NEXTMEM2(pivot, mBoneLengthConstraint_NodeMobility, PivotJointKey, float, 0, mBoneLengthConstraint_RestRelative);
@@ -4116,7 +4005,7 @@ namespace MetaInit {
 			NEXTMEM2(pivot, mRotationConstraint_MaxBendAngularAcceleration, PivotJointKey, float, 0, mRotationConstraint_MaxBendAngularVelocity);
 			ADD(pivot);
 
-			DEFINET2(ball, BallJointKey);
+			DEFINET2(ball, BallJointKey, "BallJointKey");
 			FIRSTMEM2(ball, mBoneLengthConstraint__Enabled, BallJointKey, bool, 0);
 			NEXTMEM2(ball, mBoneLengthConstraint_RestRelative, BallJointKey, bool, 0, mBoneLengthConstraint__Enabled);
 			NEXTMEM2(ball, mBoneLengthConstraint_NodeMobility, BallJointKey, float, 0, mBoneLengthConstraint_RestRelative);
@@ -4139,7 +4028,7 @@ namespace MetaInit {
 			NEXTMEM2(ball, mRotationConstraint_MaxBendAngularAcceleration, BallJointKey, float, 0, mRotationConstraint_MaxBendAngularVelocity);
 			ADD(ball);
 
-			DEFINET2(hinge, HingeJointKey);
+			DEFINET2(hinge, HingeJointKey, "HingeJointKey");
 			FIRSTMEM2(hinge, mBoneLengthConstraint__Enabled, HingeJointKey, bool, 0);
 			NEXTMEM2(hinge, mBoneLengthConstraint_RestRelative, HingeJointKey, bool, 0, mBoneLengthConstraint__Enabled);
 			NEXTMEM2(hinge, mBoneLengthConstraint_NodeMobility, HingeJointKey, float, 0, mBoneLengthConstraint_RestRelative);
@@ -4163,7 +4052,7 @@ namespace MetaInit {
 			NEXTMEM2(hinge, mRotationConstraint_MaxBendAngularAcceleration, HingeJointKey, float, 0, mRotationConstraint_MaxBendAngularVelocity);
 			ADD(hinge);
 
-			DEFINET2(balltwist, BallTwistJointKey);
+			DEFINET2(balltwist, BallTwistJointKey, "BallTwistJointKey");
 			FIRSTMEM2(balltwist, mBoneLengthConstraint__Enabled, BallTwistJointKey, bool, 0);
 			NEXTMEM2(balltwist, mBoneLengthConstraint_RestRelative, BallTwistJointKey, bool, 0, mBoneLengthConstraint__Enabled);
 			NEXTMEM2(balltwist, mBoneLengthConstraint_NodeMobility, BallTwistJointKey, float, 0, mBoneLengthConstraint_RestRelative);
@@ -4190,7 +4079,7 @@ namespace MetaInit {
 			NEXTMEM2(balltwist, mRotationConstraint_MaxTwistAngularAcceleration, BallTwistJointKey, float, 0, mRotationConstraint_MaxTwistAngularVelocity);
 			ADD(balltwist);
 
-			DEFINET2(pballtwist, PlaceableBallTwistJointKey);
+			DEFINET2(pballtwist, PlaceableBallTwistJointKey, "PlaceableBallTwistJointKey");
 			FIRSTMEM2(pballtwist, mBoneLengthConstraint__Enabled, PlaceableBallTwistJointKey, bool, 0);
 			NEXTMEM2(pballtwist, mBoneLengthConstraint_RestRelative, PlaceableBallTwistJointKey, bool, 0, mBoneLengthConstraint__Enabled);
 			NEXTMEM2(pballtwist, mBoneLengthConstraint_NodeMobility, PlaceableBallTwistJointKey, float, 0, mBoneLengthConstraint_RestRelative);
@@ -4284,7 +4173,7 @@ namespace MetaInit {
 			NEXTMEM2(pballtwist, mRotationConstraint_MaxTwistAngularAcceleration, PlaceableBallTwistJointKey, float, 0, mRotationConstraint_MaxTwistAngularVelocity);
 			ADD(pballtwist);
 
-			DEFINET2(lballtwist, LinkedBallTwistJointKey);
+			DEFINET2(lballtwist, LinkedBallTwistJointKey, "LinkedBallTwistJointKey");
 			FIRSTMEM2(lballtwist, mBoneLengthConstraint__Enabled, LinkedBallTwistJointKey, bool, 0);
 			NEXTMEM2(lballtwist, mBoneLengthConstraint_RestRelative, LinkedBallTwistJointKey, bool, 0, mBoneLengthConstraint__Enabled);
 			NEXTMEM2(lballtwist, mBoneLengthConstraint_NodeMobility, LinkedBallTwistJointKey, float, 0, mBoneLengthConstraint_RestRelative);
@@ -4317,12 +4206,12 @@ namespace MetaInit {
 			NEXTMEM2(lballtwist, mLinkTwistConstraint_EchoDelay, LinkedBallTwistJointKey, float, 0, mLinkTwistConstraint_Strength);
 			ADD(lballtwist);
 
-			DEFINET2(enlmcb, EnlightenModule::EnlightenCubemapSettings);
+			DEFINET2(enlmcb, EnlightenModule::EnlightenCubemapSettings, "EnlightenModule::EnlightenCubemapSettings");
 			FIRSTMEM2(enlmcb, mFaceWidth, EnlightenModule::EnlightenCubemapSettings, int, 0);
 			NEXTMEM2(enlmcb, mBoxOrigin, EnlightenModule::EnlightenCubemapSettings, vec3, 0, mFaceWidth);
 			ADD(enlmcb);
 
-			DEFINET2(enlq, EnlightenModule::EnumeQuality);
+			DEFINET2(enlq, EnlightenModule::EnumeQuality, "EnlightenModule::EnumeQuality");
 			FIRSTMEM2(enlq, mVal, EnlightenModule::EnumeQuality, int, MetaFlag_EnumIntType);
 			FIRSTENUM2(enlq, mVal, "Background", a, 0, 0);
 			NEXTENUM2(enlq, mVal, "Low", b, 1, 0, a);
@@ -4332,11 +4221,11 @@ namespace MetaInit {
 			NEXTMEM1(enlq, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnlightenModule::EnumeQuality, enumbase, MetaFlag_BaseClass, mVal);
 			ADD(enlq);
 
-			DEFINET2(qqq, EnlightenModule::EnlightenAdaptiveProbeVolumeSettings);
+			DEFINET2(qqq, EnlightenModule::EnlightenAdaptiveProbeVolumeSettings, "EnlightenModule::EnlightenAdaptiveProbeVolumeSettings");
 			FIRSTMEM2(qqq, mQuality, EnlightenModule::EnlightenAdaptiveProbeVolumeSettings, enlq, 0);
 			ADD(qqq);
 
-			DEFINET2(aaa, EnlightenModule::EnlightenAutoProbeVolumeSettings);
+			DEFINET2(aaa, EnlightenModule::EnlightenAutoProbeVolumeSettings, "EnlightenModule::EnlightenAutoProbeVolumeSettings");
 			FIRSTMEM2(aaa, mQuality, EnlightenModule::EnlightenAutoProbeVolumeSettings, enlq, 0);
 			NEXTMEM2(aaa, mMinProbeSetSize, EnlightenModule::EnlightenAutoProbeVolumeSettings, int, 0, mQuality);
 			NEXTMEM2(aaa, mMergingThreshold, EnlightenModule::EnlightenAutoProbeVolumeSettings, float, 0, mMinProbeSetSize);
@@ -4344,20 +4233,20 @@ namespace MetaInit {
 			NEXTMEM2(aaa, mMaxProbeSpacing, EnlightenModule::EnlightenAutoProbeVolumeSettings, int, 0, mMinProbeSpacing);
 			ADD(aaa);
 
-			DEFINET2(bbb, EnlightenModule::EnlightenProbeVolumeSettings);
+			DEFINET2(bbb, EnlightenModule::EnlightenProbeVolumeSettings, "EnlightenModule::EnlightenProbeVolumeSettings");
 			FIRSTMEM2(bbb, mQuality, EnlightenModule::EnlightenProbeVolumeSettings, enlq, 0);
 			NEXTMEM2(bbb, mLightmapType, EnlightenModule::EnlightenProbeVolumeSettings, string, 0, mQuality);
 			NEXTMEM2(bbb, mResolution, EnlightenModule::EnlightenProbeVolumeSettings, vec3, 0, mLightmapType);
 			ADD(bbb);
 
-			DEFINET2(ccc, T3LightEnvLOD);
+			DEFINET2(ccc, T3LightEnvLOD, "T3LightEnvLOD");
 			FIRSTMEM2(ccc, mFlags, T3LightEnvLOD, flags, MetaFlag_FlagType);
 			FIRSTFLAG(ccc, mFlags, "LOD on High Quality", a, 0x10000);
 			NEXTFLAG(ccc, mFlags, "LOD on Medium Quality", b, 0x20000, a);
 			NEXTFLAG(ccc, mFlags, "LOD on Low Quality", c, 0x40000, b);
 			ADD(ccc);
 
-			DEFINET2(ddd, EnumHBAOParticipationType);
+			DEFINET2(ddd, EnumHBAOParticipationType, "EnumHBAOParticipationType");
 			FIRSTMEM2(ddd, mVal, EnumHBAOParticipationType, int, MetaFlag_EnumIntType);
 			FIRSTENUM2(ddd, mVal, "eHBAOParticipationTypeAuto", a, 0, 0);
 			NEXTENUM2(ddd, mVal, "eHBAOParticipationTypeForceOn", b, 1, 0, a);
@@ -4365,7 +4254,7 @@ namespace MetaInit {
 			NEXTMEM1(ddd, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumHBAOParticipationType, enumbase, MetaFlag_BaseClass, mVal);
 			ADD(ddd);
 
-			DEFINET2(eee, EnumT3LightEnvMobility);
+			DEFINET2(eee, EnumT3LightEnvMobility, "EnumT3LightEnvMobility");
 			FIRSTMEM2(eee, mVal, EnumT3LightEnvMobility, int, MetaFlag_EnumIntType);
 			FIRSTENUM2(eee, mVal, "eLightEnvMobility_Static", a, 0, 0);
 			NEXTENUM2(eee, mVal, "eLightEnvMobility_Stationary", b, 1, 0, a);
@@ -4373,7 +4262,7 @@ namespace MetaInit {
 			NEXTMEM1(eee, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumT3LightEnvMobility, enumbase, MetaFlag_BaseClass, mVal);
 			ADD(eee);
 
-			DEFINET2(fff, EnumT3LightEnvShadowType);
+			DEFINET2(fff, EnumT3LightEnvShadowType, "EnumT3LightEnvShadowType");
 			FIRSTMEM2(fff, mVal, EnumT3LightEnvShadowType, int, MetaFlag_EnumIntType);
 			FIRSTENUM2(fff, mVal, "eLightEnvShadowType_None", a, 0, 0);
 			NEXTENUM2(fff, mVal, "eLightEnvShadowType_PerLight", b, 2, 0, a);
@@ -4381,7 +4270,7 @@ namespace MetaInit {
 			NEXTMEM1(fff, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumT3LightEnvShadowType, enumbase, MetaFlag_BaseClass, mVal);
 			ADD(fff);
 
-			DEFINET2(ggg, EnumT3LightEnvShadowQuality);
+			DEFINET2(ggg, EnumT3LightEnvShadowQuality, "EnumT3LightEnvShadowQuality");
 			FIRSTMEM2(ggg, mVal, EnumT3LightEnvShadowQuality, int, MetaFlag_EnumIntType);
 			FIRSTENUM2(ggg, mVal, "eLightEnvShadowQuality_Low", a, 0, 0);
 			NEXTENUM2(ggg, mVal, "eLightEnvShadowQuality_Medium", b, 1, 0, a);
@@ -4389,14 +4278,14 @@ namespace MetaInit {
 			NEXTMEM1(ggg, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumT3LightEnvShadowQuality, enumbase, MetaFlag_BaseClass, mVal);
 			ADD(ggg);
 
-			DEFINET2(M_3soLBPh71Y, ParticleLODKey);
+			DEFINET2(M_3soLBPh71Y, ParticleLODKey, "ParticleLODKey");
 			FIRSTMEM2(M_3soLBPh71Y, mCountScale, ParticleLODKey, float, 0x0);
 			NEXTMEM2(M_3soLBPh71Y, mStrideScale, ParticleLODKey, float, 0x0, mCountScale);
 			NEXTMEM2(M_3soLBPh71Y, mDivisionScale, ParticleLODKey, float, 0x0, mStrideScale);
 			NEXTMEM2(M_3soLBPh71Y, mLifeScale, ParticleLODKey, float, 0x0, mDivisionScale);
 			ADD(M_3soLBPh71Y);
 
-			DEFINET2(M_exuieaoEiI, EnumEmitterParticleCountType);
+			DEFINET2(M_exuieaoEiI, EnumEmitterParticleCountType, "EnumEmitterParticleCountType");
 			ADDFLAGS(M_exuieaoEiI, 0x8008);
 			FIRSTMEM2(M_exuieaoEiI, mVal, EnumEmitterParticleCountType, int, 0x40);
 			FIRSTENUM2(M_exuieaoEiI, mVal, "eEmitterParticleCountType_SpawnVolParticleCount", M_gxIX4a2dRE, 2, 0);
@@ -4405,7 +4294,7 @@ namespace MetaInit {
 			ADD(M_exuieaoEiI);
 
 
-			DEFINET2(M_IDCdJOyapn1, EnumEmitterConstraintType);
+			DEFINET2(M_IDCdJOyapn1, EnumEmitterConstraintType, "EnumEmitterConstraintType");
 			ADDFLAGS(M_IDCdJOyapn1, 0x8008);
 			FIRSTMEM2(M_IDCdJOyapn1, mVal, EnumEmitterConstraintType, int, 0x40);
 			FIRSTENUM2(M_IDCdJOyapn1, mVal, "eEmitterConstraintType_2Point", M_xrpMCARCr4, 4, 0);
@@ -4416,7 +4305,7 @@ namespace MetaInit {
 			ADD(M_IDCdJOyapn1);
 
 
-			DEFINET2(M_JBdT3hVOfo, EnumParticleSortMode);
+			DEFINET2(M_JBdT3hVOfo, EnumParticleSortMode, "EnumParticleSortMode");
 			ADDFLAGS(M_JBdT3hVOfo, 0x8008);
 			FIRSTMEM2(M_JBdT3hVOfo, mVal, EnumParticleSortMode, int, 0x40);
 			FIRSTENUM2(M_JBdT3hVOfo, mVal, "eParticleSortMode_OldestFirst", M_aMeAjSWfch, 4, 0);
@@ -4427,7 +4316,7 @@ namespace MetaInit {
 			ADD(M_JBdT3hVOfo);
 
 
-			DEFINET2(M_8DYdD3ojxS, EnumEmitterSpawnShape);
+			DEFINET2(M_8DYdD3ojxS, EnumEmitterSpawnShape, "EnumEmitterSpawnShape");
 			ADDFLAGS(M_8DYdD3ojxS, 0x8008);
 			FIRSTMEM2(M_8DYdD3ojxS, mVal, EnumEmitterSpawnShape, int, 0x40);
 			FIRSTENUM2(M_8DYdD3ojxS, mVal, "eEmitterSpawn_BoneBoxes", M_nqPTGfRyil, 8, 0);
@@ -4442,7 +4331,7 @@ namespace MetaInit {
 			ADD(M_8DYdD3ojxS);
 
 
-			DEFINET2(M_5u9t3tgj2t, EnumEmitterBoneSelection);
+			DEFINET2(M_5u9t3tgj2t, EnumEmitterBoneSelection, "EnumEmitterBoneSelection");
 			ADDFLAGS(M_5u9t3tgj2t, 0x8008);
 			FIRSTMEM2(M_5u9t3tgj2t, mVal, EnumEmitterBoneSelection, int, 0x40);
 			FIRSTENUM2(M_5u9t3tgj2t, mVal, "eEmitterBoneSelection_Children", M_usZBauFkrF, 2, 0);
@@ -4451,7 +4340,7 @@ namespace MetaInit {
 			ADD(M_5u9t3tgj2t);
 
 
-			DEFINET2(M_DIIXJNZI95, EnumEmitterColorType);
+			DEFINET2(M_DIIXJNZI95, EnumEmitterColorType, "EnumEmitterColorType");
 			ADDFLAGS(M_DIIXJNZI95, 0x8008);
 			FIRSTMEM2(M_DIIXJNZI95, mVal, EnumEmitterColorType, int, 0x40);
 			FIRSTENUM2(M_DIIXJNZI95, mVal, "eEmitterColorType_KeyControl01", M_hFQr77BIEl, 6, 0);
@@ -4464,7 +4353,7 @@ namespace MetaInit {
 			ADD(M_DIIXJNZI95);
 
 
-			DEFINET2(M_1leDYT3CEW, EnumEmitterSpriteAnimationType);
+			DEFINET2(M_1leDYT3CEW, EnumEmitterSpriteAnimationType, "EnumEmitterSpriteAnimationType");
 			ADDFLAGS(M_1leDYT3CEW, 0x8008);
 			FIRSTMEM2(M_1leDYT3CEW, mVal, EnumEmitterSpriteAnimationType, int, 0x40);
 			FIRSTENUM2(M_1leDYT3CEW, mVal, "eEmitterSpriteAnimationType_Random", M_8K69rklPGt, 2, 0);
@@ -4473,7 +4362,7 @@ namespace MetaInit {
 			ADD(M_1leDYT3CEW);
 
 
-			DEFINET2(M_S7NLt2nQfj, EnumEmitterSpriteAnimationSelection);
+			DEFINET2(M_S7NLt2nQfj, EnumEmitterSpriteAnimationSelection, "EnumEmitterSpriteAnimationSelection");
 			ADDFLAGS(M_S7NLt2nQfj, 0x8008);
 			FIRSTMEM2(M_S7NLt2nQfj, mVal, EnumEmitterSpriteAnimationSelection, int, 0x40);
 			FIRSTENUM2(M_S7NLt2nQfj, mVal, "eEmitterSpriteAnimationSelection_KeyControl01", M_3SL3XByImc, 4, 0);
@@ -4483,13 +4372,13 @@ namespace MetaInit {
 			NEXTMEM1(M_S7NLt2nQfj, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumEmitterSpriteAnimationSelection, enumbase, 0x10, mVal);
 			ADD(M_S7NLt2nQfj);
 
-			DEFINET2(M_h2Q6dQAjy4, Polar);
+			DEFINET2(M_h2Q6dQAjy4, Polar, "Polar");
 			FIRSTMEM2(M_h2Q6dQAjy4, mR, Polar, float, 0x0);
 			NEXTMEM2(M_h2Q6dQAjy4, mTheta, Polar, float, 0x0, mR);
 			NEXTMEM2(M_h2Q6dQAjy4, mPhi, Polar, float, 0x0, mTheta);
 			ADD(M_h2Q6dQAjy4);
 
-			DEFINET2(M_8arF3SLLny, EnlightenModule::EnumeProbeResolution);
+			DEFINET2(M_8arF3SLLny, EnlightenModule::EnumeProbeResolution, "EnlightenModule::EnumeProbeResolution");
 			ADDFLAGS(M_8arF3SLLny, 0x8008);
 			FIRSTMEM2(M_8arF3SLLny, mVal, EnlightenModule::EnumeProbeResolution, int, 0x40);
 			FIRSTENUM2(M_8arF3SLLny, mVal, "1/8", M_30KKziHtRb, 3, 0);
@@ -4499,18 +4388,18 @@ namespace MetaInit {
 			NEXTMEM1(M_8arF3SLLny, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnlightenModule::EnumeProbeResolution, enumbase, 0x10, mVal);
 			ADD(M_8arF3SLLny);
 
-			DEFINET2(M_KjsfSXF4YP, EnlightenModule::EnlightenSystemSettings);
+			DEFINET2(M_KjsfSXF4YP, EnlightenModule::EnlightenSystemSettings, "EnlightenModule::EnlightenSystemSettings");
 			FIRSTMEM2(M_KjsfSXF4YP, mDefaultQuality, EnlightenModule::EnlightenSystemSettings, enlq, 0x0);
 			NEXTMEM2(M_KjsfSXF4YP, mAdaptiveProbeResolution, EnlightenModule::EnlightenSystemSettings, M_8arF3SLLny, 0x0, mDefaultQuality);
 			NEXTMEM2(M_KjsfSXF4YP, mDisableEnlighten, EnlightenModule::EnlightenSystemSettings, bool, 0x0, mAdaptiveProbeResolution);
 			ADD(M_KjsfSXF4YP);
 
-			DEFINET2(M_PaoaKk5lQn, T3LightEnvInternalData::QualityEntry);
+			DEFINET2(M_PaoaKk5lQn, T3LightEnvInternalData::QualityEntry, "T3LightEnvInternalData::QualityEntry");
 			FIRSTMEM2(M_PaoaKk5lQn, mShadowLayer, T3LightEnvInternalData::QualityEntry, int, 0x0);
 			NEXTMEM2(M_PaoaKk5lQn, mFlags, T3LightEnvInternalData::QualityEntry, flags, 0x0, mShadowLayer);
 			ADD(M_PaoaKk5lQn);
 
-			DEFINET2(M_9oDUTOX7NY, T3LightEnvInternalData);
+			DEFINET2(M_9oDUTOX7NY, T3LightEnvInternalData, "T3LightEnvInternalData");
 			ADDFLAGS(M_9oDUTOX7NY, 0x20);
 			FIRSTMEM1(M_9oDUTOX7NY, "mEntryForQuality[0]", a,mEntryForQuality[0], T3LightEnvInternalData, M_PaoaKk5lQn, 0x0);
 			NEXTMEM1(M_9oDUTOX7NY, "mEntryForQuality[1]", b, mEntryForQuality[1],T3LightEnvInternalData, M_PaoaKk5lQn, 0x0, a);
@@ -4520,14 +4409,14 @@ namespace MetaInit {
 			NEXTMEM2(M_9oDUTOX7NY, mStationaryLightIndex, T3LightEnvInternalData, int, 0x0, d);
 			ADD(M_9oDUTOX7NY);
 
-			DEFINET2(M_EkZgzUny1s, T3LightCinematicRigLOD);
+			DEFINET2(M_EkZgzUny1s, T3LightCinematicRigLOD, "T3LightCinematicRigLOD");
 			FIRSTMEM2(M_EkZgzUny1s, mFlags, T3LightCinematicRigLOD, flags, 0x40000);
 			FIRSTFLAG(M_EkZgzUny1s, mFlags, "LOD Intensity on Low Quality", M_wObdYSEvWR, 0x40000);
 			FIRSTFLAG(M_EkZgzUny1s, mFlags, "LOD Intensity on Medium Quality", M_BLzZ02h67Y, 0x20000);
 			FIRSTFLAG(M_EkZgzUny1s, mFlags, "LOD Intensity on High Quality", M_rlvBndn4cX, 0x10000);
 			ADD(M_EkZgzUny1s);
 
-			DEFINET2(M_81nP7VxEE4, EnumT3MaterialNormalSpaceType);
+			DEFINET2(M_81nP7VxEE4, EnumT3MaterialNormalSpaceType, "EnumT3MaterialNormalSpaceType");
 			ADDFLAGS(M_81nP7VxEE4, 0x8008);
 			FIRSTMEM2(M_81nP7VxEE4, mVal, EnumT3MaterialNormalSpaceType, int, 0x40);
 			FIRSTENUM2(M_81nP7VxEE4, mVal, "eMaterialNormalSpace_World", M_FdgcL9fOPy, 1, 0);
@@ -4535,7 +4424,7 @@ namespace MetaInit {
 			NEXTMEM1(M_81nP7VxEE4, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumT3MaterialNormalSpaceType, enumbase, 0x10, mVal);
 			ADD(M_81nP7VxEE4);
 
-			DEFINET2(M_FtysL1Q4GT, EnumT3MaterialLODFullyRough);
+			DEFINET2(M_FtysL1Q4GT, EnumT3MaterialLODFullyRough, "EnumT3MaterialLODFullyRough");
 			ADDFLAGS(M_FtysL1Q4GT, 0x8008);
 			FIRSTMEM2(M_FtysL1Q4GT, mVal, EnumT3MaterialLODFullyRough, int, 0x40);
 			FIRSTENUM2(M_FtysL1Q4GT, mVal, "eMaterialFullyRough_Always", M_OPwD7kkqPq, 3, 0);
@@ -4545,7 +4434,7 @@ namespace MetaInit {
 			NEXTMEM1(M_FtysL1Q4GT, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumT3MaterialLODFullyRough, enumbase, 0x10, mVal);
 			ADD(M_FtysL1Q4GT);
 
-			DEFINET2(M_qiwdo3Hrdt, PathTo);
+			DEFINET2(M_qiwdo3Hrdt, PathTo, "PathTo");
 			FIRSTMEM2(M_qiwdo3Hrdt, mEnablePathing, PathTo, bool, 0x0);
 			NEXTMEM2(M_qiwdo3Hrdt, mDistanceTraveled, PathTo, float, 0x0, mEnablePathing);
 			NEXTMEM2(M_qiwdo3Hrdt, mMaxPathLength, PathTo, float, 0x0, mDistanceTraveled);
@@ -4555,7 +4444,7 @@ namespace MetaInit {
 			NEXTMEM2(M_qiwdo3Hrdt, mUseDir, PathTo, vec3, 0x0, mRadius_Dup);
 			ADD(M_qiwdo3Hrdt);
 
-			DEFINET2(M_RpRVcwo6HM, PlaybackController);
+			DEFINET2(M_RpRVcwo6HM, PlaybackController, "PlaybackController");
 			FIRSTMEM2(M_RpRVcwo6HM, mName, PlaybackController, symbol, 0x0);
 			NEXTMEM2(M_RpRVcwo6HM, mLength, PlaybackController, float, 0x0, mName);
 			NEXTMEM2(M_RpRVcwo6HM, mTime, PlaybackController, float, 0x0, mLength);
@@ -4568,7 +4457,7 @@ namespace MetaInit {
 			NEXTMEM2(M_RpRVcwo6HM, mPriority, PlaybackController, int, 0x0, mLoops);
 			ADD(M_RpRVcwo6HM);
 
-			DEFINET2(M_ubpCzI71MR, EnumLightCellBlendMode);
+			DEFINET2(M_ubpCzI71MR, EnumLightCellBlendMode, "EnumLightCellBlendMode");
 			ADDFLAGS(M_ubpCzI71MR, 0x8008);
 			FIRSTMEM2(M_ubpCzI71MR, mVal, EnumLightCellBlendMode, int, 0x40);
 			FIRSTENUM2(M_ubpCzI71MR, mVal, "Overlay", M_VOgDko8fnP, 4, 0);
@@ -4579,19 +4468,19 @@ namespace MetaInit {
 			NEXTMEM1(M_ubpCzI71MR, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumLightCellBlendMode, enumbase, 0x10, mVal);
 			ADD(M_ubpCzI71MR);
 
-			DEFINET2(M_wWR2uaAtZV, EnlightenModule::EnlightenLightSettings);
+			DEFINET2(M_wWR2uaAtZV, EnlightenModule::EnlightenLightSettings, "EnlightenModule::EnlightenLightSettings");
 			FIRSTMEM2(M_wWR2uaAtZV, mEnlightenSaturation, EnlightenModule::EnlightenLightSettings, float, 0x0);
 			NEXTMEM2(M_wWR2uaAtZV, mEnlightenOnly, EnlightenModule::EnlightenLightSettings, bool, 0x0, mEnlightenSaturation);
 			NEXTMEM2(M_wWR2uaAtZV, mCastDynamicEnlightenShadows, EnlightenModule::EnlightenLightSettings, bool, 0x0, mEnlightenOnly);
 			ADD(M_wWR2uaAtZV);
 
-			DEFINET2(M_BQjgnZSCe8, Selectable);
+			DEFINET2(M_BQjgnZSCe8, Selectable, "Selectable");
 			FIRSTMEM2(M_BQjgnZSCe8, mbGameSelectable, Selectable, bool, 0x0);
 			NEXTMEM2(M_BQjgnZSCe8, mSelectionOrder, Selectable, int, 0x0, mbGameSelectable);
 			NEXTMEM2(M_BQjgnZSCe8, mBoundingBox, Selectable, bbox, 0x0, mSelectionOrder);
 			ADD(M_BQjgnZSCe8);
 
-			DEFINET2(M_M9T0ci76Ro, EnumTextOrientationType);
+			DEFINET2(M_M9T0ci76Ro, EnumTextOrientationType, "EnumTextOrientationType");
 			ADDFLAGS(M_M9T0ci76Ro, 0x8008);
 			FIRSTMEM2(M_M9T0ci76Ro, mVal, EnumTextOrientationType, int, 0x40);
 			FIRSTENUM2(M_M9T0ci76Ro, mVal, "WorldXYZ", M_jHkpC99IR3, 2, 0);
@@ -4600,7 +4489,7 @@ namespace MetaInit {
 			NEXTMEM1(M_M9T0ci76Ro, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumTextOrientationType, enumbase, 0x10, mVal);
 			ADD(M_M9T0ci76Ro);
 
-			DEFINET2(M_pyZdABIGpA, EnlightenModule::EnumeQualityWithDefault);
+			DEFINET2(M_pyZdABIGpA, EnlightenModule::EnumeQualityWithDefault, "EnlightenModule::EnumeQualityWithDefault");
 			ADDFLAGS(M_pyZdABIGpA, 0x8008);
 			FIRSTMEM2(M_pyZdABIGpA, mVal, EnlightenModule::EnumeQualityWithDefault, int, 0x40);
 			FIRSTENUM2(M_pyZdABIGpA, mVal, "Use Default", M_SsMZ6uUeHJ, 5, 0);
@@ -4613,7 +4502,7 @@ namespace MetaInit {
 			ADD(M_pyZdABIGpA);
 
 
-			DEFINET2(M_pfr6SkbeR8, EnlightenModule::EnumeUpdateMethod);
+			DEFINET2(M_pfr6SkbeR8, EnlightenModule::EnumeUpdateMethod, "EnlightenModule::EnumeUpdateMethod");
 			ADDFLAGS(M_pfr6SkbeR8, 0x8008);
 			FIRSTMEM2(M_pfr6SkbeR8, mVal, EnlightenModule::EnumeUpdateMethod, int, 0x40);
 			FIRSTENUM2(M_pfr6SkbeR8, mVal, "Auto", M_PKPlKtGBly, 2, 0);
@@ -4623,7 +4512,7 @@ namespace MetaInit {
 			ADD(M_pfr6SkbeR8);
 
 
-			DEFINET2(M_zHcL8AII08, EnlightenModule::EnumeInstanceType);
+			DEFINET2(M_zHcL8AII08, EnlightenModule::EnumeInstanceType, "EnlightenModule::EnumeInstanceType");
 			ADDFLAGS(M_zHcL8AII08, 0x8008);
 			FIRSTMEM2(M_zHcL8AII08, mVal, EnlightenModule::EnumeInstanceType, int, 0x40);
 			FIRSTENUM2(M_zHcL8AII08, mVal, "Disabled", M_n8YXDzJFnl, 5, 0);
@@ -4634,14 +4523,14 @@ namespace MetaInit {
 			NEXTMEM1(M_zHcL8AII08, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnlightenModule::EnumeInstanceType, enumbase, 0x10, mVal);
 			ADD(M_zHcL8AII08);
 
-			DEFINET2(M_E0pAli9Mk6, EnlightenModule::EnlightenPrimitiveSettings);
+			DEFINET2(M_E0pAli9Mk6, EnlightenModule::EnlightenPrimitiveSettings, "EnlightenModule::EnlightenPrimitiveSettings");
 			FIRSTMEM2(M_E0pAli9Mk6, mSystemId, EnlightenModule::EnlightenPrimitiveSettings, string, 0x0);
 			NEXTMEM2(M_E0pAli9Mk6, mEnlightenLightingMode, EnlightenModule::EnlightenPrimitiveSettings, M_zHcL8AII08, 0x0, mSystemId);
 			NEXTMEM2(M_E0pAli9Mk6, mEnlightenUpdateMethod, EnlightenModule::EnlightenPrimitiveSettings, M_pfr6SkbeR8, 0x0, mEnlightenLightingMode);
 			NEXTMEM2(M_E0pAli9Mk6, mEnlightenQuality, EnlightenModule::EnlightenPrimitiveSettings, M_pyZdABIGpA, 0x0, mEnlightenUpdateMethod);
 			ADD(M_E0pAli9Mk6);
 
-			DEFINET2(M_K31tz14EbA, EnumT3LightEnvBakeOnStatic);
+			DEFINET2(M_K31tz14EbA, EnumT3LightEnvBakeOnStatic, "EnumT3LightEnvBakeOnStatic");
 			ADDFLAGS(M_K31tz14EbA, 0x8008);
 			FIRSTMEM2(M_K31tz14EbA, mVal, EnumT3LightEnvBakeOnStatic, int, 0x40);
 			FIRSTENUM2(M_K31tz14EbA, mVal, "eLightEnvBakeOnStatic_NeverAllow", M_1KG3aMSFgD, 2, 0);
@@ -4651,7 +4540,7 @@ namespace MetaInit {
 			ADD(M_K31tz14EbA);
 
 
-			DEFINET2(M_tw5K1eD28K, EnumT3LightEnvLODBehavior);
+			DEFINET2(M_tw5K1eD28K, EnumT3LightEnvLODBehavior, "EnumT3LightEnvLODBehavior");
 			ADDFLAGS(M_tw5K1eD28K, 0x8008);
 			FIRSTMEM2(M_tw5K1eD28K, mVal, EnumT3LightEnvLODBehavior, int, 0x40);
 			FIRSTENUM2(M_tw5K1eD28K, mVal, "eLightEnvLOD_BakeOnly", M_in4mMxkcNZ, 1, 0);
@@ -4660,7 +4549,7 @@ namespace MetaInit {
 			ADD(M_tw5K1eD28K);
 
 
-			DEFINET2(M_czX4fr0RMt, EnumT3LightEnvEnlightenBakeBehavior);
+			DEFINET2(M_czX4fr0RMt, EnumT3LightEnvEnlightenBakeBehavior, "EnumT3LightEnvEnlightenBakeBehavior");
 			ADDFLAGS(M_czX4fr0RMt, 0x8008);
 			FIRSTMEM2(M_czX4fr0RMt, mVal, EnumT3LightEnvEnlightenBakeBehavior, int, 0x40);
 			FIRSTENUM2(M_czX4fr0RMt, mVal, "eLightEnvEnlightenBake_Disable", M_ivVlvkI3S1, 2, 0);
@@ -4670,7 +4559,7 @@ namespace MetaInit {
 			ADD(M_czX4fr0RMt);
 
 
-			DEFINET2(M_aJ5P1fJXE0, EnumDepthOfFieldType);
+			DEFINET2(M_aJ5P1fJXE0, EnumDepthOfFieldType, "EnumDepthOfFieldType");
 			ADDFLAGS(M_aJ5P1fJXE0, 0x8008);
 			FIRSTMEM2(M_aJ5P1fJXE0, mVal, EnumDepthOfFieldType, int, 0x40);
 			FIRSTENUM2(M_aJ5P1fJXE0, mVal, "eDepthOfFieldType_Brush", M_YMq1we9QL2, 2, 0);
@@ -4678,12 +4567,12 @@ namespace MetaInit {
 			NEXTMEM1(M_aJ5P1fJXE0, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumDepthOfFieldType, enumbase, 0x10, mVal);
 			ADD(M_aJ5P1fJXE0);
 
-			DEFINET2(M_Lq080gXW8z, IdleTransitionSettings);
+			DEFINET2(M_Lq080gXW8z, IdleTransitionSettings, "IdleTransitionSettings");
 			FIRSTMEM2(M_Lq080gXW8z, mTransitionTime, IdleTransitionSettings, float, 0x0);
 			NEXTMEM2(M_Lq080gXW8z, mTransitionStyleDummy, IdleTransitionSettings, int, 0x0, mTransitionTime);
 			ADD(M_Lq080gXW8z);
 
-			DEFINET2(M_NKb4LTfLMM, IdleSlotDefaults);
+			DEFINET2(M_NKb4LTfLMM, IdleSlotDefaults, "IdleSlotDefaults");
 			FIRSTMEM2(M_NKb4LTfLMM, mTransitionInDefault, IdleSlotDefaults, M_Lq080gXW8z, 0x0);
 			NEXTMEM2(M_NKb4LTfLMM, mTransitionDefault, IdleSlotDefaults, M_Lq080gXW8z, 0x0, mTransitionInDefault);
 			NEXTMEM2(M_NKb4LTfLMM, mTransitionOutDefault, IdleSlotDefaults, M_Lq080gXW8z, 0x0, mTransitionDefault);
@@ -4691,14 +4580,14 @@ namespace MetaInit {
 			NEXTMEM2(M_NKb4LTfLMM, mSlotFriendlyName, IdleSlotDefaults, symbol, 0x0, mBasePriority);
 			ADD(M_NKb4LTfLMM);
 
-			DEFINET2(M_W5v6qCQNwW, T3MeshPropertyEntry);
+			DEFINET2(M_W5v6qCQNwW, T3MeshPropertyEntry, "T3MeshPropertyEntry");
 			FIRSTMEM2(M_W5v6qCQNwW, mIncludeFilter, T3MeshPropertyEntry,string, 0x0);
 			NEXTMEM2(M_W5v6qCQNwW, mExcludeFilter, T3MeshPropertyEntry,string, 0x0, mIncludeFilter);
 			NEXTMEM2(M_W5v6qCQNwW, mhProperties, T3MeshPropertyEntry, Handlepropset, 0x0, mExcludeFilter);
 			NEXTMEM2(M_W5v6qCQNwW, mPriority, T3MeshPropertyEntry, int, 0x0, mhProperties);
 			ADD(M_W5v6qCQNwW);
 
-			DEFINET2(M_aErAnGePtx, EnumHBAOPreset);
+			DEFINET2(M_aErAnGePtx, EnumHBAOPreset, "EnumHBAOPreset");
 			ADDFLAGS(M_aErAnGePtx, 0x8008);
 			FIRSTMEM2(M_aErAnGePtx, mVal, EnumHBAOPreset, int, 0x40);
 			FIRSTENUM2(M_aErAnGePtx, mVal, "eHBAOPresetUltra", M_5v3gYKbBkp, 7, 0);
@@ -4713,7 +4602,7 @@ namespace MetaInit {
 			ADD(M_aErAnGePtx);
 
 
-			DEFINET2(M_EUWDutAgMV, EnumHBAODeinterleaving);
+			DEFINET2(M_EUWDutAgMV, EnumHBAODeinterleaving, "EnumHBAODeinterleaving");
 			ADDFLAGS(M_EUWDutAgMV, 0x8008);
 			FIRSTMEM2(M_EUWDutAgMV, mVal, EnumHBAODeinterleaving, int, 0x40);
 			FIRSTENUM2(M_EUWDutAgMV, mVal, "eHBAODeinterleaving_4x", M_svmUM03Ymj, 2, 0);
@@ -4723,7 +4612,7 @@ namespace MetaInit {
 			ADD(M_EUWDutAgMV);
 
 
-			DEFINET2(M_PJC0d543tU, EnumHBAOQualityLevel);
+			DEFINET2(M_PJC0d543tU, EnumHBAOQualityLevel, "EnumHBAOQualityLevel");
 			ADDFLAGS(M_PJC0d543tU, 0x8008);
 			FIRSTMEM2(M_PJC0d543tU, mVal, EnumHBAOQualityLevel, int, 0x40);
 			FIRSTENUM2(M_PJC0d543tU, mVal, "eHBAOQualityLevelHighest", M_YLjC0XVLuq, 4, 0);
@@ -4735,7 +4624,7 @@ namespace MetaInit {
 			ADD(M_PJC0d543tU);
 
 
-			DEFINET2(M_RkTZCBldIk, EnumHBAOResolution);
+			DEFINET2(M_RkTZCBldIk, EnumHBAOResolution, "EnumHBAOResolution");
 			ADDFLAGS(M_RkTZCBldIk, 0x8008);
 			FIRSTMEM2(M_RkTZCBldIk, mVal, EnumHBAOResolution, int, 0x40);
 			FIRSTENUM2(M_RkTZCBldIk, mVal, "eHBAOResolutionQuarter", M_bSUz2k4XdH, 2, 0);
@@ -4745,7 +4634,7 @@ namespace MetaInit {
 			ADD(M_RkTZCBldIk);
 
 
-			DEFINET2(M_cfBn4tzYAB, EnumRenderAntialiasType);
+			DEFINET2(M_cfBn4tzYAB, EnumRenderAntialiasType, "EnumRenderAntialiasType");
 			ADDFLAGS(M_cfBn4tzYAB, 0x8008);
 			FIRSTMEM2(M_cfBn4tzYAB, mVal, EnumRenderAntialiasType, int, 0x40);
 			FIRSTENUM2(M_cfBn4tzYAB, mVal, "eRenderAntialias_TAA", M_ythRDUSLUc, 9, 0);
@@ -4762,7 +4651,7 @@ namespace MetaInit {
 			ADD(M_cfBn4tzYAB);
 
 
-			DEFINET2(M_TDHqyzKXoJ, EnumRenderTAAJitterType);
+			DEFINET2(M_TDHqyzKXoJ, EnumRenderTAAJitterType, "EnumRenderTAAJitterType");
 			ADDFLAGS(M_TDHqyzKXoJ, 0x8008);
 			FIRSTMEM2(M_TDHqyzKXoJ, mVal, EnumRenderTAAJitterType, int, 0x40);
 			FIRSTENUM2(M_TDHqyzKXoJ, mVal, "eRenderTAAJitter_Hammersley8x", M_MFchjR1wTY, 4, 0);
@@ -4773,7 +4662,7 @@ namespace MetaInit {
 			ADD(M_TDHqyzKXoJ);
 
 
-			DEFINET2(M_akyvPmMoLB, EnumDOFQualityLevel);
+			DEFINET2(M_akyvPmMoLB, EnumDOFQualityLevel, "EnumDOFQualityLevel");
 			ADDFLAGS(M_akyvPmMoLB, 0x8008);
 			FIRSTMEM2(M_akyvPmMoLB, mVal, EnumDOFQualityLevel, int, 0x40);
 			FIRSTENUM2(M_akyvPmMoLB, mVal, "eDOFQualityLevelHigh", M_CRyp0qZbXH, 3, 0);
@@ -4784,7 +4673,7 @@ namespace MetaInit {
 			ADD(M_akyvPmMoLB);
 
 
-			DEFINET2(M_8m6xqqEZ1E, EnumBokehQualityLevel);
+			DEFINET2(M_8m6xqqEZ1E, EnumBokehQualityLevel, "EnumBokehQualityLevel");
 			ADDFLAGS(M_8m6xqqEZ1E, 0x8008);
 			FIRSTMEM2(M_8m6xqqEZ1E, mVal, EnumBokehQualityLevel, int, 0x40);
 			FIRSTENUM2(M_8m6xqqEZ1E, mVal, "eBokehQualityLevelHigh", M_NaQPFKnSJu, 3, 0);
@@ -4795,7 +4684,7 @@ namespace MetaInit {
 			ADD(M_8m6xqqEZ1E);
 
 
-			DEFINET2(M_z1uBdbraRv, EnumGlowQualityLevel);
+			DEFINET2(M_z1uBdbraRv, EnumGlowQualityLevel, "EnumGlowQualityLevel");
 			ADDFLAGS(M_z1uBdbraRv, 0x8008);
 			FIRSTMEM2(M_z1uBdbraRv, mVal, EnumGlowQualityLevel, int, 0x40);
 			FIRSTENUM2(M_z1uBdbraRv, mVal, "eGlowQualityLevelHigh", M_C4iU1b6GvS, 3, 0);
@@ -4806,7 +4695,7 @@ namespace MetaInit {
 			ADD(M_z1uBdbraRv);
 
 
-			DEFINET2(M_xYctR9RF3Y, EnumBokehOcclusionType);
+			DEFINET2(M_xYctR9RF3Y, EnumBokehOcclusionType, "EnumBokehOcclusionType");
 			ADDFLAGS(M_xYctR9RF3Y, 0x8008);
 			FIRSTMEM2(M_xYctR9RF3Y, mVal, EnumBokehOcclusionType, int, 0x40);
 			FIRSTENUM2(M_xYctR9RF3Y, mVal, "eBokehOcclusionZTest", M_xVeBJKYQu7, 3, 0);
@@ -4816,9 +4705,9 @@ namespace MetaInit {
 			NEXTMEM1(M_xYctR9RF3Y, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumBokehOcclusionType, enumbase, 0x10, mVal);
 			ADD(M_xYctR9RF3Y);
 
-			DEFINEMAP2(String, Map<String SEP String SEP std::less<String>>, str, mss, std::less<String>);
+			DEFINEMAP2(String, Map<String SEP String SEP std::less<String>>, str, mss, std::less<String>, "Map<String,Map<String,String,less<String>>,less<String>>");
 
-			DEFINET2(M_w6eX3aKWTS, Localization::Language);
+			DEFINET2(M_w6eX3aKWTS, Localization::Language, "Localization::Language");
 			FIRSTMEM2(M_w6eX3aKWTS, mName, Localization::Language, string, 0x0);
 			NEXTMEM2(M_w6eX3aKWTS, mDisplayText, Localization::Language, string, 0x0, mName);
 			NEXTMEM2(M_w6eX3aKWTS, mPlatformToSyncFSLocation, Localization::Language, Map_String_String, 0x0, mDisplayText);
@@ -4834,10 +4723,10 @@ namespace MetaInit {
 			FIRSTFLAG(M_w6eX3aKWTS, mFlags, "NOT USED", M_n3VsamFkqU, 2);
 			FIRSTFLAG(M_w6eX3aKWTS, mFlags, "Installed", M_1BcDuG07mj, 4);
 			ADD(M_w6eX3aKWTS);
-			
-			DEFINESET_(String SEP StringCompareCaseInsensitive, stri);
 
-			DEFINET2(M_jq873tLM70, ChorecorderParameters);
+			DEFINESET_(String SEP StringCompareCaseInsensitive, stri, "Set<String,StringCompareCaseInsensitive>");
+
+			DEFINET2(M_jq873tLM70, ChorecorderParameters, "ChorecorderParameters");
 			FIRSTMEM2(M_jq873tLM70, mFlags, ChorecorderParameters, flags, 0x40000);
 			FIRSTFLAG(M_jq873tLM70, mFlags, "Allow look-At animation", M_Rm3tBHYf2F, 8000000);
 			FIRSTFLAG(M_jq873tLM70, mFlags, "Allow phoneme animation", M_pMSsvHgod6, 4000000);
@@ -4874,13 +4763,11 @@ namespace MetaInit {
 			NEXTMEM2(M_jq873tLM70, mChorecordingName, ChorecorderParameters, string, 0x0, mAgentsToChorecord);
 			ADD(M_jq873tLM70);
 
-			DEFINEDCARRAY2(int, darray_int);
-			MKNAME(meta_DCArray_darray_int, "DArray<int>");
+			DEFINEDCARRAY2(int, darray_int, "DArray<int>");
 
-			DEFINEDCARRAY2(bool, darray_bool);
-			MKNAME(meta_DCArray_darray_bool, "DArray<bool>");
+			DEFINEDCARRAY2(bool, darray_bool, "DArray<bool>");
 
-			DEFINET2(M_R0FvWCDz06, VoiceData);
+			DEFINET2(M_R0FvWCDz06, VoiceData, "VoiceData");
 			EXT(M_R0FvWCDz06, vox);
 			FIRSTMEM2(M_R0FvWCDz06, mbEncrypted, VoiceData, bool, 0x0);
 			NEXTMEM2(M_R0FvWCDz06, mLength, VoiceData, float, 0x0, mbEncrypted);
@@ -4891,7 +4778,7 @@ namespace MetaInit {
 			NEXTMEM2(M_R0FvWCDz06, mPacketPositions, VoiceData, DCArray_darray_int, 0x0, mMode);
 			ADD(M_R0FvWCDz06);
 
-			DEFINET2(M_yo4opxOK84, StyleGuideRef);
+			DEFINET2(M_yo4opxOK84, StyleGuideRef, "StyleGuideRef");
 			FIRSTMEM2(M_yo4opxOK84, mhStyleGuide, StyleGuideRef, Handlestyle, 0x0);
 			NEXTMEM2(M_yo4opxOK84, mPaletteClassUID, StyleGuideRef, int, 0x0, mhStyleGuide);
 			NEXTMEM2(M_yo4opxOK84, mPaletteClassGroupUID, StyleGuideRef, int, 0x0, mPaletteClassUID);
@@ -4900,12 +4787,12 @@ namespace MetaInit {
 			NEXTMEM2(M_yo4opxOK84, mPalettesUsed, StyleGuideRef, DCArray_darray_bool, 0x20, mPaletteClassIndex);
 			ADD(M_yo4opxOK84);
 
-			DEFINET2(M_fta7oiKuQl, SoundEventBankDummy);
+			DEFINET2(M_fta7oiKuQl, SoundEventBankDummy, "SoundEventBankDummy");
 			ADDFLAGS(M_fta7oiKuQl, 0x6000000);/*is not meta file, dont async load*/
 			EXT(M_fta7oiKuQl, bank);
 			ADD(M_fta7oiKuQl);
 
-			DEFINET2(agi, SaveGame::AgentInfo);
+			DEFINET2(agi, SaveGame::AgentInfo, "SaveGame::AgentInfo");
 			FIRSTMEM2(agi, mAgentName, SaveGame::AgentInfo, symbol, 0);
 			NEXTMEM2(agi, mSceneName, SaveGame::AgentInfo, symbol, 0, mAgentName);
 			NEXTMEM2(agi, mPosition, SaveGame::AgentInfo, vec3, 0, mSceneName);
@@ -4915,9 +4802,9 @@ namespace MetaInit {
 			NEXTMEM2(agi, mAttachedToNode, SaveGame::AgentInfo, symbol, 0, mAttachedToAgent);
 			ADD(agi);
 
-			DEFINEDCARRAY2(SaveGame::AgentInfo, savegameagi);
+			DEFINEDCARRAY2(SaveGame::AgentInfo, savegameagi, "DCArray<SaveGame::AgentInfo>");
 
-			DEFINET2(M_KNVH7Wfi1z, SaveGame);
+			DEFINET2(M_KNVH7Wfi1z, SaveGame, "SaveGame");
 			EXT(M_KNVH7Wfi1z, save);
 			FIRSTMEM2(M_KNVH7Wfi1z, mLuaDoFile, SaveGame, string, 0x0);
 			NEXTMEM2(M_KNVH7Wfi1z, mAgentInfo, SaveGame, DCArray_savegameagi, 0x0, mLuaDoFile);
@@ -4925,22 +4812,22 @@ namespace MetaInit {
 			NEXTMEM2(M_KNVH7Wfi1z, mEnabledDynamicSets, SaveGame, Set_symbol, 0x0, mRuntimePropNames);
 			ADD(M_KNVH7Wfi1z);
 
-			DEFINET2(M_oV5Y4fYPkS, PointOfInterestBlocking);
+			DEFINET2(M_oV5Y4fYPkS, PointOfInterestBlocking, "PointOfInterestBlocking");
 			ADDFLAGS(M_oV5Y4fYPkS, 0x100000);//memberless
 			EXT(M_oV5Y4fYPkS, poiblocking);
 			ADD(M_oV5Y4fYPkS);
 
-			DEFINET2(M_4jF7ZYNRVd, BlendCameraResource);
+			DEFINET2(M_4jF7ZYNRVd, BlendCameraResource, "BlendCameraResource");
 			ADDFLAGS(M_4jF7ZYNRVd, 0x100000);//memberless
 			EXT(M_4jF7ZYNRVd, blendcameraresource);
 			ADD(M_4jF7ZYNRVd);
 
-			DEFINET2(M_crqCQMsVUX, CameraSelect);
+			DEFINET2(M_crqCQMsVUX, CameraSelect, "CameraSelect");
 			EXT(M_crqCQMsVUX, cameraselectresource);
 			FIRSTMEM2(M_crqCQMsVUX, mCameraNames, CameraSelect, DCArray_Symbol, 0x0);
 			ADD(M_crqCQMsVUX);
 
-			DEFINET2(M_eGjxoXjAGx, EnumHBAOPerPixelNormals);
+			DEFINET2(M_eGjxoXjAGx, EnumHBAOPerPixelNormals, "EnumHBAOPerPixelNormals");
 			ADDFLAGS(M_eGjxoXjAGx, 0x8008);
 			FIRSTMEM2(M_eGjxoXjAGx, mVal, EnumHBAOPerPixelNormals, int, 0x40);
 			FIRSTENUM2(M_eGjxoXjAGx, mVal, "eHBAOPerPixelNormalsReconstructed", M_tI8m19vmCZ, 1, 0);
@@ -4949,7 +4836,7 @@ namespace MetaInit {
 			ADD(M_eGjxoXjAGx);
 
 
-			DEFINET2(M_1H1JyHaoYL, EnumHBAOBlurQuality);
+			DEFINET2(M_1H1JyHaoYL, EnumHBAOBlurQuality, "EnumHBAOBlurQuality");
 			ADDFLAGS(M_1H1JyHaoYL, 0x8008);
 			FIRSTMEM2(M_1H1JyHaoYL, mVal, EnumHBAOBlurQuality, int, 0x40);
 			FIRSTENUM2(M_1H1JyHaoYL, mVal, "eHBAOBlurQualityExtraWide", M_HGNfzs4hiV, 4, 0);
@@ -4960,7 +4847,7 @@ namespace MetaInit {
 			NEXTMEM1(M_1H1JyHaoYL, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumHBAOBlurQuality, enumbase, 0x10, mVal);
 			ADD(M_1H1JyHaoYL);
 
-			DEFINET2(M_9exXT5bbbv, TextAlignmentType);
+			DEFINET2(M_9exXT5bbbv, TextAlignmentType, "TextAlignmentType");
 			FIRSTMEM2(M_9exXT5bbbv, mAlignmentType, TextAlignmentType, int, 0x40);
 			FIRSTENUM2(M_9exXT5bbbv, mAlignmentType, "Bottom", M_HYEMyEWq1n, 32, 0);
 			NEXTENUM2(M_9exXT5bbbv, mAlignmentType, "Middle", M_8pIK3y8Peb, 16, 0, M_HYEMyEWq1n);
@@ -4971,11 +4858,11 @@ namespace MetaInit {
 			NEXTENUM2(M_9exXT5bbbv, mAlignmentType, "None", M_APnUt1fm1j, 0, 0, M_FFc8Ah5Qrf);
 			ADD(M_9exXT5bbbv);
 
-			DEFINET2(M_omYqLMlfqg, T3RenderStateBlock);
+			DEFINET2(M_omYqLMlfqg, T3RenderStateBlock, "T3RenderStateBlock");
 			FIRSTMEM2(M_omYqLMlfqg, mData, T3RenderStateBlock, sarray_u32_3, 0x0);
 			ADD(M_omYqLMlfqg);
 
-			DEFINET2(M_zwzAENDGJV, EnumT3MaterialSwizzleType);
+			DEFINET2(M_zwzAENDGJV, EnumT3MaterialSwizzleType, "EnumT3MaterialSwizzleType");
 			ADDFLAGS(M_zwzAENDGJV, 0x8008);
 			FIRSTMEM2(M_zwzAENDGJV, mVal, EnumT3MaterialSwizzleType, int, 0x40);
 			FIRSTENUM2(M_zwzAENDGJV, mVal, "eMaterialSwizzle_One", M_m9kFydOVVq, 6, 0);
@@ -4988,61 +4875,61 @@ namespace MetaInit {
 			NEXTMEM1(M_zwzAENDGJV, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumT3MaterialSwizzleType,enumbase, 0x10, mVal);
 			ADD(M_zwzAENDGJV);
 
-			DEFINET2(M_oTPRr0e6FA, T3MaterialSwizzleParams);
+			DEFINET2(M_oTPRr0e6FA, T3MaterialSwizzleParams, "T3MaterialSwizzleParams");
 			FIRSTMEM1(M_oTPRr0e6FA, "mSwizzle[0]", mSwizzle0, __reserve, T3MaterialSwizzleParams, M_zwzAENDGJV, 0x0);
 			NEXTMEM1(M_oTPRr0e6FA, "mSwizzle[1]", mSwizzle1, __reserve, T3MaterialSwizzleParams, M_zwzAENDGJV, 0x0, mSwizzle0);
 			NEXTMEM1(M_oTPRr0e6FA, "mSwizzle[2]", mSwizzle2, __reserve, T3MaterialSwizzleParams, M_zwzAENDGJV, 0x0, mSwizzle1);
 			NEXTMEM1(M_oTPRr0e6FA, "mSwizzle[3]", mSwizzle3, __reserve, T3MaterialSwizzleParams, M_zwzAENDGJV, 0x0, mSwizzle2);
 			ADD(M_oTPRr0e6FA);
 
-			DEFINET2(M_FHZl1F6yKW, StyleIdleTransitionsRes);
+			DEFINET2(M_FHZl1F6yKW, StyleIdleTransitionsRes, "StyleIdleTransitionsRes");
 			EXT(M_FHZl1F6yKW, trans);
 			FIRSTMEM2(M_FHZl1F6yKW, mOwningAgent, StyleIdleTransitionsRes, string, 0x1);
 			NEXTMEM2(M_FHZl1F6yKW, mGuideName, StyleIdleTransitionsRes, string, 0x0, mOwningAgent);
 			ADD(M_FHZl1F6yKW);
 
-			DEFINET2(M_N9wGTC2s6a, Scene::AgentQualitySettings);
+			DEFINET2(M_N9wGTC2s6a, Scene::AgentQualitySettings, "Scene::AgentQualitySettings");
 			FIRSTMEM2(M_N9wGTC2s6a, mFlags, Scene::AgentQualitySettings, flags, 0x40000);
 			FIRSTFLAG(M_N9wGTC2s6a, mFlags, "Exclude from Low Quality Builds", M_atIYHgVdPe, 1);
 			ADD(M_N9wGTC2s6a);
 
-			DEFINET2(M_dIoA7DDHLh, StringFilter);
+			DEFINET2(M_dIoA7DDHLh, StringFilter, "StringFilter");
 			FIRSTMEM2(M_dIoA7DDHLh, mFilterStrings, StringFilter, Set_String, 0x0);
 			ADD(M_dIoA7DDHLh);
 
-			DEFINET2(sbe, SoundBankWaveMapEntry);
+			DEFINET2(sbe, SoundBankWaveMapEntry, "SoundBankWaveMapEntry");
 			FIRSTMEM2(sbe, fLengthSeconds, SoundBankWaveMapEntry, float, 0);
 			NEXTMEM2(sbe, strFileName, SoundBankWaveMapEntry, string, 0, fLengthSeconds);
 			ADD(sbe);
 
-			DEFINEMAP(Symbol, SoundBankWaveMapEntry, std::less<Symbol>);
+			DEFINEMAP(Symbol, SoundBankWaveMapEntry, std::less<Symbol>, "Map<Symbol,SoundBankWaveMapEntry,less<Symbol>>");
 
-			DEFINET2(M_S46TFudBBK, SoundBankWaveMap);
+			DEFINET2(M_S46TFudBBK, SoundBankWaveMap, "SoundBankWaveMap");
 			EXT(M_S46TFudBBK, bankwavemap);
 			FIRSTMEM2(M_S46TFudBBK, mWaveMap, SoundBankWaveMap, Map_Symbol_SoundBankWaveMapEntry, 0x0);
 			ADD(M_S46TFudBBK);
 
-			DEFINET2(M_zHOTJcJwef, SoundBusSnapshot::Snapshot);
+			DEFINET2(M_zHOTJcJwef, SoundBusSnapshot::Snapshot, "SoundBusSnapshot::Snapshot");
 			EXT(M_zHOTJcJwef, bussnapshot);
 			FIRSTMEM2(M_zHOTJcJwef, mfFadeTime, SoundBusSnapshot::Snapshot, float, 0x0);
 			NEXTMEM2(M_zHOTJcJwef, mBusVolumes, SoundBusSnapshot::Snapshot, Map_Symbol_float, 0x0, mfFadeTime);
 			ADD(M_zHOTJcJwef);
 
-			DEFINEMAP2(Symbol, Handle<SoundBusSnapshot::Snapshot>, Symbol, Hsnap, std::less<Symbol>);
+			DEFINEMAP2(Symbol, Handle<SoundBusSnapshot::Snapshot>, Symbol, Hsnap, std::less<Symbol>, "Map<Symbol,Handle<SoundBusSnapshot::Snapshot>,less<Symbol>>");
 
-			DEFINET2(M_a5jiZPnCED, SoundBusSnapshot::SnapshotSuite);
+			DEFINET2(M_a5jiZPnCED, SoundBusSnapshot::SnapshotSuite, "SoundBusSnapshot::SnapshotSuite");
 			EXT(M_a5jiZPnCED, snapshotsuite);
 			FIRSTMEM2(M_a5jiZPnCED, mSnapshotMap, SoundBusSnapshot::SnapshotSuite, Map_Symbol_Hsnap, 0x0);
 			ADD(M_a5jiZPnCED);
 
-			DEFINEHANDLE(snapss, SoundBusSnapshot::Snapshot);
+			DEFINEHANDLE(snapss, SoundBusSnapshot::Snapshot, "Handle<SoundBusSnapshot::Snapshot>", "DCArray<Handle<SoundBusSnapshot::Snapshot>>","HandleLock<SoundBusSnapshot::Snapshot>","DCArray<HandleLock<SoundBusSnapshot::Snapshot>>");
 
-			DEFINET2(M_PBkwzFeaKQ, ProceduralEyes);
+			DEFINET2(M_PBkwzFeaKQ, ProceduralEyes, "ProceduralEyes");
 			EXT(M_PBkwzFeaKQ, eyes);
 			FIRSTMEM1(M_PBkwzFeaKQ, "Baseclass_Animation", Baseclass_Animation, __reserve, ProceduralEyes, anm, 0x10);
 			ADD(M_PBkwzFeaKQ);
 
-			DEFINET2(M_MEwGusP3Sj, PhysicsObject);
+			DEFINET2(M_MEwGusP3Sj, PhysicsObject, "PhysicsObject");
 			FIRSTMEM2(M_MEwGusP3Sj, mbEnabledPropertyOn, PhysicsObject, bool, 0x0);
 			NEXTMEM2(M_MEwGusP3Sj, mCollisionType, PhysicsObject, int, 0x40, mbEnabledPropertyOn);
 			FIRSTENUM2(M_MEwGusP3Sj, mCollisionType, "Raycast", M_wgyDrgY9Tc, 1, 0);
@@ -5054,25 +4941,25 @@ namespace MetaInit {
 			NEXTMEM2(M_MEwGusP3Sj, mfBoundingVolumeScalingFactor, PhysicsObject, float, 0x0, mBoundingVolumeType);
 			ADD(M_MEwGusP3Sj);
 
-			DEFINET2(M_7uR5QwN3gc, PhysicsData);
+			DEFINET2(M_7uR5QwN3gc, PhysicsData, "PhysicsData");
 			EXT(M_7uR5QwN3gc, t3bullet);
 			FIRSTMEM2(M_7uR5QwN3gc, mDataBuffer, PhysicsData, bb, 0x0);
 			ADD(M_7uR5QwN3gc);
 
-			DEFINET2(crf, ClipResourceFilter);
+			DEFINET2(crf, ClipResourceFilter, "ClipResourceFilter");
 			FIRSTMEM2(crf, mResources, ClipResourceFilter, Set_symbol, 0);
 			NEXTMEM2(crf, mbExclusiveMode, ClipResourceFilter, bool, 0, mResources);
 			ADD(crf);
-	
-			DEFINEMAP(String, ClipResourceFilter, StringCompareCaseInsensitive);
-			
-			DEFINET2(M_ifOpKg0RM3, PerAgentClipResourceFilter);
+
+			DEFINEMAP(String, ClipResourceFilter, StringCompareCaseInsensitive, "Map<String,ClipResourceFilter,StringCompareCaseInsensitive>");
+
+			DEFINET2(M_ifOpKg0RM3, PerAgentClipResourceFilter, "PerAgentClipResourceFilter");
 			FIRSTMEM2(M_ifOpKg0RM3, mIncludedAgents, PerAgentClipResourceFilter, Map_String_ClipResourceFilter, 0x0);
 			NEXTMEM2(M_ifOpKg0RM3, mExcludedAgents, PerAgentClipResourceFilter, Set_stri, 0x0, mIncludedAgents);
 			NEXTMEM2(M_ifOpKg0RM3, mbExclusiveMode, PerAgentClipResourceFilter, bool, 0x0, mExcludedAgents);
 			ADD(M_ifOpKg0RM3);
 
-			DEFINET2(M_RXuN3aKtr6, ParticlePropConnect);
+			DEFINET2(M_RXuN3aKtr6, ParticlePropConnect, "ParticlePropConnect");
 			FIRSTMEM2(M_RXuN3aKtr6, mDriveType, ParticlePropConnect, int, 0x40);
 			FIRSTENUM2(M_RXuN3aKtr6, mDriveType, "ePartPropDriver_DistanceToCamera", M_0OvEXdaEYS, 9, 0);
 			NEXTENUM2(M_RXuN3aKtr6, mDriveType, "ePartPropDriver_KeyControl04", M_8fsa4aLEli, 8, 0, M_0OvEXdaEYS);
@@ -5120,7 +5007,7 @@ namespace MetaInit {
 			NEXTMEM2(M_RXuN3aKtr6, mInvert, ParticlePropConnect, bool, 0x0, mModMax);
 			ADD(M_RXuN3aKtr6);
 
-			DEFINET2(M_PRW0M25Q8A, MovieCaptureInfo::EnumCompressorType);
+			DEFINET2(M_PRW0M25Q8A, MovieCaptureInfo::EnumCompressorType, "MovieCaptureInfo::EnumCompressorType");
 			ADDFLAGS(M_PRW0M25Q8A, 0x8008);
 			FIRSTMEM2(M_PRW0M25Q8A, mVal, MovieCaptureInfo::EnumCompressorType, int, 0x40);
 			FIRSTENUM2(M_PRW0M25Q8A, mVal, "IV50", M_WyfdiFwB4s, 5, 0);
@@ -5131,59 +5018,59 @@ namespace MetaInit {
 			NEXTMEM1(M_PRW0M25Q8A, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, MovieCaptureInfo::EnumCompressorType, enumbase, 0x10, mVal);
 			ADD(M_PRW0M25Q8A);
 
-			DEFINET2(M_pNpLPnVhxS, MovieCaptureInfo);
+			DEFINET2(M_pNpLPnVhxS, MovieCaptureInfo, "MovieCaptureInfo");
 			FIRSTMEM2(M_pNpLPnVhxS, mFPS, MovieCaptureInfo, int, 0x0);
 			NEXTMEM2(M_pNpLPnVhxS, mCType, MovieCaptureInfo, M_PRW0M25Q8A, 0x0, mFPS);
 			ADD(M_pNpLPnVhxS);
 
-			DEFINET2(M_WozXys0QpZ, InverseKinematicsBase);
+			DEFINET2(M_WozXys0QpZ, InverseKinematicsBase, "InverseKinematicsBase");
 			ADDFLAGS(M_WozXys0QpZ, 0x1);
 			ADD(M_WozXys0QpZ);
 
-			DEFINET2(M_3rnPGGKZPb, InverseKinematicsDerived);
+			DEFINET2(M_3rnPGGKZPb, InverseKinematicsDerived, "InverseKinematicsDerived");
 			ADDFLAGS(M_3rnPGGKZPb, 0x1);
 			ADD(M_3rnPGGKZPb);
 
-			DEFINET2(M_G9Uv54oGDD, InverseKinematicsAttach);
-			FIRSTMEM1(M_G9Uv54oGDD, "Baseclass_InverseKinematicsDerived", Baseclass_InverseKinematicsDerived, 
+			DEFINET2(M_G9Uv54oGDD, InverseKinematicsAttach, "InverseKinematicsAttach");
+			FIRSTMEM1(M_G9Uv54oGDD, "Baseclass_InverseKinematicsDerived", Baseclass_InverseKinematicsDerived,
 				__reserve, InverseKinematicsAttach, M_3rnPGGKZPb, 0x10);
 			ADD(M_G9Uv54oGDD);
 
-			DEFINET2(M_ujLwzo8X96, ParticleInverseKinematics);
+			DEFINET2(M_ujLwzo8X96, ParticleInverseKinematics, "ParticleInverseKinematics");
 			EXT(M_ujLwzo8X96, ik);
 			FIRSTMEM1(M_ujLwzo8X96, "Baseclass_InverseKinematicsBase", Baseclass_InverseKinematicsBase,
 				__reserve, ParticleInverseKinematics, M_WozXys0QpZ, 0x10);
 			ADD(M_ujLwzo8X96);
 
-			DEFINET2(M_U5Qe8dZhX6, InverseKinematics);
+			DEFINET2(M_U5Qe8dZhX6, InverseKinematics, "InverseKinematics");
 			EXT(M_U5Qe8dZhX6, ik);
 			FIRSTMEM1(M_U5Qe8dZhX6, "Baseclass_InverseKinematicsDerived", Baseclass_InverseKinematicsDerived,
 				mhTargetAnimation, InverseKinematics, M_3rnPGGKZPb, 0x10);
 			NEXTMEM2(M_U5Qe8dZhX6, mhTargetAnimation, InverseKinematics, HandleLockhanm, 0x0, Baseclass_InverseKinematicsDerived);
 			ADD(M_U5Qe8dZhX6);
 
-			DEFINEDCARRAY2(Handle<SoundData>, HSoundData);
-			DEFINEMAP2(SoundFootsteps::EnumMaterial, DCArray<Handle<SoundData>>, enummat, arrayhsound, std::less<SoundFootsteps::EnumMaterial>);
+			DEFINEDCARRAY2(Handle<SoundData>, HSoundData, "DCArray<Handle<SoundData>>");
+			DEFINEMAP2(SoundFootsteps::EnumMaterial, DCArray<Handle<SoundData>>, enummat, arrayhsound, std::less<SoundFootsteps::EnumMaterial>, "Map<SoundFootsteps::EnumMaterial,DCArray<Handle<SoundData>>,less<SoundFootsteps::EnumMaterial>>");
 
-			DEFINET2(M_8jpgBfQtNR, FootSteps::FootstepBank);
+			DEFINET2(M_8jpgBfQtNR, FootSteps::FootstepBank, "FootSteps::FootstepBank");
 			FIRSTMEM2(M_8jpgBfQtNR, mSounds, FootSteps::FootstepBank, DCArray_HSoundData, 0x0);
 			NEXTMEM2(M_8jpgBfQtNR, mMaterialFootsteps, FootSteps::FootstepBank, Map_enummat_arrayhsound, 0x0, mSounds);
 			ADD(M_8jpgBfQtNR);
 
-			DEFINET2(M_RxJ7Gc2dwP, FilterArea);
+			DEFINET2(M_RxJ7Gc2dwP, FilterArea, "FilterArea");
 			FIRSTMEM2(M_RxJ7Gc2dwP, mText, FilterArea, string, 0x0);
 			ADD(M_RxJ7Gc2dwP);
 
-			DEFINET2(M_0at2jVEr6i, FileNameBase);
+			DEFINET2(M_0at2jVEr6i, FileNameBase, "FileNameBase");
 			FIRSTMEM2(M_0at2jVEr6i, mFileName, FileNameBase, symbol, 0x0);
 			ADD(M_0at2jVEr6i);
 
-			DEFINET2(M_MY20H08Xwi, FileName<SoundEventBankDummy>);
-			FIRSTMEM1(M_MY20H08Xwi, "Baseclass_FileNameBase", Baseclass_FileNameBase, 
+			DEFINET2(M_MY20H08Xwi, FileName<SoundEventBankDummy>, "FileName<SoundEventBankDummy>");
+			FIRSTMEM1(M_MY20H08Xwi, "Baseclass_FileNameBase", Baseclass_FileNameBase,
 				mFileName, FileName<SoundEventBankDummy>, M_0at2jVEr6i, 0x10);
 			ADD(M_MY20H08Xwi);
 
-			DEFINET2(M_hUPEYYFiiH, EnumRenderTextureResolution);
+			DEFINET2(M_hUPEYYFiiH, EnumRenderTextureResolution, "EnumRenderTextureResolution");
 			ADDFLAGS(M_hUPEYYFiiH, 0x8008);
 			FIRSTMEM2(M_hUPEYYFiiH, mVal, EnumRenderTextureResolution, int, 0x40);
 			FIRSTENUM2(M_hUPEYYFiiH, mVal, "eRenderTextureResolution_Ultra", M_S6HDN1kvhy, 4, 0);
@@ -5193,19 +5080,19 @@ namespace MetaInit {
 			NEXTMEM1(M_hUPEYYFiiH, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumRenderTextureResolution, enumbase, 0x10, mVal);
 			ADD(M_hUPEYYFiiH);
 
-			DEFINET2(lmp, T3LightSceneInternalData::LightmapPage);
+			DEFINET2(lmp, T3LightSceneInternalData::LightmapPage, "T3LightSceneInternalData::LightmapPage");
 			FIRSTMEM2(lmp, mhTextureAtlas, T3LightSceneInternalData::LightmapPage, Handletex, 0);
 			NEXTMEM2(lmp, mFlags, T3LightSceneInternalData::LightmapPage, flags, 0, mhTextureAtlas);
 			ADD(lmp);
 
-			DEFINEDCARRAY2(T3LightSceneInternalData::LightmapPage, lmp);
+			DEFINEDCARRAY2(T3LightSceneInternalData::LightmapPage, lmp, "DCArray<T3LightSceneInternalData::LightmapPage>");
 
-			DEFINET2(M_4BG5xMLLGy, T3LightSceneInternalData::QualityEntry);
+			DEFINET2(M_4BG5xMLLGy, T3LightSceneInternalData::QualityEntry, "T3LightSceneInternalData::QualityEntry");
 			FIRSTMEM2(M_4BG5xMLLGy, mLightmapPages, T3LightSceneInternalData::QualityEntry, DCArray_lmp, 0x0);
 			NEXTMEM2(M_4BG5xMLLGy, mhStaticShadowVolumeTexture, T3LightSceneInternalData::QualityEntry, Handletex, 0x0, mLightmapPages);
 			ADD(M_4BG5xMLLGy);
 
-			DEFINET2(M_rf58Tp9dlF, T3LightSceneInternalData);
+			DEFINET2(M_rf58Tp9dlF, T3LightSceneInternalData, "T3LightSceneInternalData");
 			ADDFLAGS(M_rf58Tp9dlF, 0x20);
 			FIRSTMEM1(M_rf58Tp9dlF, "mEntryForQuality[0]", e0, mEntryForQuality[0], T3LightSceneInternalData, M_4BG5xMLLGy, 0x0);
 			NEXTMEM1(M_rf58Tp9dlF, "mEntryForQuality[1]", e1, mEntryForQuality[1], T3LightSceneInternalData, M_4BG5xMLLGy, 0x0, e0);
@@ -5216,7 +5103,7 @@ namespace MetaInit {
 			NEXTMEM2(M_rf58Tp9dlF, mBakeVersion, T3LightSceneInternalData, int, 0x0, mStationaryLightCount);
 			ADD(M_rf58Tp9dlF);
 
-			DEFINET2(M_bR4bVrNFVC, EnumT3NPRSpecularType);
+			DEFINET2(M_bR4bVrNFVC, EnumT3NPRSpecularType, "EnumT3NPRSpecularType");
 			ADDFLAGS(M_bR4bVrNFVC, 0x8008);
 			FIRSTMEM2(M_bR4bVrNFVC, mVal, EnumT3NPRSpecularType, int, 0x40);
 			FIRSTENUM2(M_bR4bVrNFVC, mVal, "T3NPRSpecularType_Anisotropic", M_YsA4K3Z6qe, 2, 0);
@@ -5226,7 +5113,7 @@ namespace MetaInit {
 			ADD(M_bR4bVrNFVC);
 
 
-			DEFINET2(M_oSptqXhGNF, EnumT3DetailShadingType);
+			DEFINET2(M_oSptqXhGNF, EnumT3DetailShadingType, "EnumT3DetailShadingType");
 			ADDFLAGS(M_oSptqXhGNF, 0x8008);
 			FIRSTMEM2(M_oSptqXhGNF, mVal, EnumT3DetailShadingType, int, 0x40);
 			FIRSTENUM2(M_oSptqXhGNF, mVal, "T3DetailShadingType_Animated_Detail", M_ohRDz6vZVD, 6, 0);
@@ -5240,7 +5127,7 @@ namespace MetaInit {
 			ADD(M_oSptqXhGNF);
 
 
-			DEFINET2(M_jkS8taguJg, EnumParticlePropModifier);
+			DEFINET2(M_jkS8taguJg, EnumParticlePropModifier, "EnumParticlePropModifier");
 			ADDFLAGS(M_jkS8taguJg, 0x8008);
 			FIRSTMEM2(M_jkS8taguJg, mVal, EnumParticlePropModifier, int, 0x40);
 			FIRSTENUM2(M_jkS8taguJg, mVal, "ePartPropModifier_Enable", M_NakyOO9TJX, 28, 0);
@@ -5275,7 +5162,7 @@ namespace MetaInit {
 			ADD(M_jkS8taguJg);
 
 
-			DEFINET2(M_bIRxxEqm7G, EnumParticlePropDriver);
+			DEFINET2(M_bIRxxEqm7G, EnumParticlePropDriver, "EnumParticlePropDriver");
 			ADDFLAGS(M_bIRxxEqm7G, 0x8008);
 			FIRSTMEM2(M_bIRxxEqm7G, mVal, EnumParticlePropDriver, int, 0x40);
 			FIRSTENUM2(M_bIRxxEqm7G, mVal, "ePartPropDriver_DistanceToCamera", M_YOpb2ewRo8, 9, 0);
@@ -5290,7 +5177,7 @@ namespace MetaInit {
 			NEXTMEM1(M_bIRxxEqm7G, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnumParticlePropDriver, enumbase, 0x10, mVal);
 			ADD(M_bIRxxEqm7G);
 
-			DEFINET2(M_E2HxsdX1Kl, EnlightenModule::EnumeDistributedBuildSystem);
+			DEFINET2(M_E2HxsdX1Kl, EnlightenModule::EnumeDistributedBuildSystem, "EnlightenModule::EnumeDistributedBuildSystem");
 			ADDFLAGS(M_E2HxsdX1Kl, 0x8008);
 			FIRSTMEM2(M_E2HxsdX1Kl, mVal, EnlightenModule::EnumeDistributedBuildSystem, int, 0x40);
 			FIRSTENUM2(M_E2HxsdX1Kl, mVal, "Incredibuild", M_WXtqtyKwsZ, 2, 0);
@@ -5300,7 +5187,7 @@ namespace MetaInit {
 			ADD(M_E2HxsdX1Kl);
 
 
-			DEFINET2(M_NGl6WXVW0i, EnlightenModule::EnumeSceneOptimisationMode);
+			DEFINET2(M_NGl6WXVW0i, EnlightenModule::EnumeSceneOptimisationMode, "EnlightenModule::EnumeSceneOptimisationMode");
 			ADDFLAGS(M_NGl6WXVW0i, 0x8008);
 			FIRSTMEM2(M_NGl6WXVW0i, mVal, EnlightenModule::EnumeSceneOptimisationMode, int, 0x40);
 			FIRSTENUM2(M_NGl6WXVW0i, mVal, "Voxelisation", M_dt8Zaj95Sz, 2, 0);
@@ -5310,7 +5197,7 @@ namespace MetaInit {
 			ADD(M_NGl6WXVW0i);
 
 
-			DEFINET2(M_0FlcbtqyiC, EnlightenModule::EnumeBackfaceType);
+			DEFINET2(M_0FlcbtqyiC, EnlightenModule::EnumeBackfaceType, "EnlightenModule::EnumeBackfaceType");
 			ADDFLAGS(M_0FlcbtqyiC, 0x8008);
 			FIRSTMEM2(M_0FlcbtqyiC, mVal, EnlightenModule::EnumeBackfaceType, int, 0x40);
 			FIRSTENUM2(M_0FlcbtqyiC, mVal, "doubleSided", M_vQEAVXHGUE, 4, 0);
@@ -5322,7 +5209,7 @@ namespace MetaInit {
 			ADD(M_0FlcbtqyiC);
 
 
-			DEFINET2(M_PZXdphPRP5, EnlightenModule::EnumeAutoUVSimplificationMode);
+			DEFINET2(M_PZXdphPRP5, EnlightenModule::EnumeAutoUVSimplificationMode, "EnlightenModule::EnumeAutoUVSimplificationMode");
 			ADDFLAGS(M_PZXdphPRP5, 0x8008);
 			FIRSTMEM2(M_PZXdphPRP5, mVal, EnlightenModule::EnumeAutoUVSimplificationMode, int, 0x40);
 			FIRSTENUM2(M_PZXdphPRP5, mVal, "EAUM Disable", M_Ylz86bsQem, 2, 0);
@@ -5332,7 +5219,7 @@ namespace MetaInit {
 			ADD(M_PZXdphPRP5);
 
 
-			DEFINET2(M_EldWDBwkev, EnlightenModule::EnumeProbeSampleMethod);
+			DEFINET2(M_EldWDBwkev, EnlightenModule::EnumeProbeSampleMethod, "EnlightenModule::EnumeProbeSampleMethod");
 			ADDFLAGS(M_EldWDBwkev, 0x8008);
 			FIRSTMEM2(M_EldWDBwkev, mVal, EnlightenModule::EnumeProbeSampleMethod, int, 0x40);
 			FIRSTENUM2(M_EldWDBwkev, mVal, "Force Multiple", M_QR4yfm8dE4, 2, 0);
@@ -5342,7 +5229,7 @@ namespace MetaInit {
 			ADD(M_EldWDBwkev);
 
 
-			DEFINET2(M_IAQI66y2qt, EnlightenModule::EnumeDisplayQuality);
+			DEFINET2(M_IAQI66y2qt, EnlightenModule::EnumeDisplayQuality, "EnlightenModule::EnumeDisplayQuality");
 			ADDFLAGS(M_IAQI66y2qt, 0x8008);
 			FIRSTMEM2(M_IAQI66y2qt, mVal, EnlightenModule::EnumeDisplayQuality, int, 0x40);
 			FIRSTENUM2(M_IAQI66y2qt, mVal, "High", M_uF65y5qC32, 2, 0);
@@ -5352,7 +5239,7 @@ namespace MetaInit {
 			ADD(M_IAQI66y2qt);
 
 
-			DEFINET2(M_XsC6Pt0GIs, EnlightenModule::EnumeRadiositySampleRate);
+			DEFINET2(M_XsC6Pt0GIs, EnlightenModule::EnumeRadiositySampleRate, "EnlightenModule::EnumeRadiositySampleRate");
 			ADDFLAGS(M_XsC6Pt0GIs, 0x8008);
 			FIRSTMEM2(M_XsC6Pt0GIs, mVal, EnlightenModule::EnumeRadiositySampleRate, int, 0x40);
 			FIRSTENUM2(M_XsC6Pt0GIs, mVal, "VeryHigh", M_FTnTZSg06V, 3, 0);
@@ -5363,7 +5250,7 @@ namespace MetaInit {
 			ADD(M_XsC6Pt0GIs);
 
 
-			DEFINET2(M_zCgWm0oojR, EnlightenModule::EnumeUpdateMethodWithDefault);
+			DEFINET2(M_zCgWm0oojR, EnlightenModule::EnumeUpdateMethodWithDefault, "EnlightenModule::EnumeUpdateMethodWithDefault");
 			ADDFLAGS(M_zCgWm0oojR, 0x8008);
 			FIRSTMEM2(M_zCgWm0oojR, mVal, EnlightenModule::EnumeUpdateMethodWithDefault, int, 0x40);
 			FIRSTENUM2(M_zCgWm0oojR, mVal, "Use Level Default", M_Zf5LDFzwJs, 2, 0);
@@ -5373,7 +5260,7 @@ namespace MetaInit {
 			ADD(M_zCgWm0oojR);
 
 
-			DEFINET2(M_WtxsrDzQOU, EnlightenModule::EnumeProbeResolutionWithDefault);
+			DEFINET2(M_WtxsrDzQOU, EnlightenModule::EnumeProbeResolutionWithDefault, "EnlightenModule::EnumeProbeResolutionWithDefault");
 			ADDFLAGS(M_WtxsrDzQOU, 0x8008);
 			FIRSTMEM2(M_WtxsrDzQOU, mVal, EnlightenModule::EnumeProbeResolutionWithDefault, int, 0x40);
 			FIRSTENUM2(M_WtxsrDzQOU, mVal, "Use Level Default", M_2vYTHHoJCD, 4, 0);
@@ -5385,7 +5272,7 @@ namespace MetaInit {
 			ADD(M_WtxsrDzQOU);
 
 
-			DEFINET2(M_tYWmFGzuR3, EnlightenModule::EnumeAgentUsage);
+			DEFINET2(M_tYWmFGzuR3, EnlightenModule::EnumeAgentUsage, "EnlightenModule::EnumeAgentUsage");
 			ADDFLAGS(M_tYWmFGzuR3, 0x8008);
 			FIRSTMEM2(M_tYWmFGzuR3, mVal, EnlightenModule::EnumeAgentUsage, int, 0x40);
 			FIRSTENUM2(M_tYWmFGzuR3, mVal, "Conservative", M_cRjrXkzmQa, 2, 0);
@@ -5395,7 +5282,7 @@ namespace MetaInit {
 			ADD(M_tYWmFGzuR3);
 
 
-			DEFINET2(M_0qZFUD7BQv, EnlightenModule::EnumeSimplifyMode);
+			DEFINET2(M_0qZFUD7BQv, EnlightenModule::EnumeSimplifyMode, "EnlightenModule::EnumeSimplifyMode");
 			ADDFLAGS(M_0qZFUD7BQv, 0x8008);
 			FIRSTMEM2(M_0qZFUD7BQv, mVal, EnlightenModule::EnumeSimplifyMode, int, 0x40);
 			FIRSTENUM2(M_0qZFUD7BQv, mVal, "simplifyUsingUvs", M_0TPW4sVCdF, 2, 0);
@@ -5404,7 +5291,7 @@ namespace MetaInit {
 			NEXTMEM1(M_0qZFUD7BQv, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, EnlightenModule::EnumeSimplifyMode, enumbase, 0x10, mVal);
 			ADD(M_0qZFUD7BQv);
 
-			DEFINET2(M_0YKI4JSgVS, EnlightenModule::EnlightenMeshSettings::AutoUVSettings);
+			DEFINET2(M_0YKI4JSgVS, EnlightenModule::EnlightenMeshSettings::AutoUVSettings, "EnlightenModule::EnlightenMeshSettings::AutoUVSettings");
 			FIRSTMEM2(M_0YKI4JSgVS, mSimplificationMode, EnlightenModule::EnlightenMeshSettings::AutoUVSettings, M_0qZFUD7BQv, 0x0);
 			NEXTMEM2(M_0YKI4JSgVS, mMaxDistance, EnlightenModule::EnlightenMeshSettings::AutoUVSettings, float, 0x0, mSimplificationMode);
 			NEXTMEM2(M_0YKI4JSgVS, mMaxInitialNormalDeviation, EnlightenModule::EnlightenMeshSettings::AutoUVSettings, float, 0x0, mMaxDistance);
@@ -5413,13 +5300,13 @@ namespace MetaInit {
 			NEXTMEM2(M_0YKI4JSgVS, mSignificantAreaRatio, EnlightenModule::EnlightenMeshSettings::AutoUVSettings, float, 0x0, mExpansionFactor);
 			ADD(M_0YKI4JSgVS);
 
-			DEFINET2(M_DsE9G4Pxx5, EnlightenModule::EnlightenMeshSettings);
+			DEFINET2(M_DsE9G4Pxx5, EnlightenModule::EnlightenMeshSettings, "EnlightenModule::EnlightenMeshSettings");
 			FIRSTMEM2(M_DsE9G4Pxx5, mEnlightenLightingMode, EnlightenModule::EnlightenMeshSettings, M_zHcL8AII08, 0x0);
 			NEXTMEM2(M_DsE9G4Pxx5, mAutoUVSettings, EnlightenModule::EnlightenMeshSettings, M_0YKI4JSgVS, 0x0, mEnlightenLightingMode);
 			NEXTMEM2(M_DsE9G4Pxx5, mEnlightenQuality, EnlightenModule::EnlightenMeshSettings, enlq, 0x0, mAutoUVSettings);
 			ADD(M_DsE9G4Pxx5);
 
-			DEFINET2(M_HDPQPeQ8Hz, DialogItem::EnumPlaybackMode);
+			DEFINET2(M_HDPQPeQ8Hz, DialogItem::EnumPlaybackMode, "DialogItem::EnumPlaybackMode");
 			ADDFLAGS(M_HDPQPeQ8Hz, 0x8008);
 			FIRSTMEM2(M_HDPQPeQ8Hz, mVal, DialogItem::EnumPlaybackMode, int, 0x40);
 			FIRSTENUM2(M_HDPQPeQ8Hz, mVal, "first_then_shuffle_repeat_remaining", M_ynx6mMA0N7, 6, 0);
@@ -5432,7 +5319,7 @@ namespace MetaInit {
 			NEXTMEM1(M_HDPQPeQ8Hz, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, DialogItem::EnumPlaybackMode, enumbase, 0x10, mVal);
 			ADD(M_HDPQPeQ8Hz);
 
-			DEFINET2(M_rOHYmmgZ0T, ColorHDR);
+			DEFINET2(M_rOHYmmgZ0T, ColorHDR, "ColorHDR");
 			ADDFLAGS(M_rOHYmmgZ0T, 0x2);
 			FIRSTMEM2(M_rOHYmmgZ0T, r, ColorHDR, float, 0x0);
 			NEXTMEM2(M_rOHYmmgZ0T, g, ColorHDR, float, 0x0, r);
@@ -5440,7 +5327,7 @@ namespace MetaInit {
 			NEXTMEM2(M_rOHYmmgZ0T, intensity, ColorHDR, float, 0x0, b);
 			ADD(M_rOHYmmgZ0T);
 
-			DEFINET2(M_of9VjztUg5, Chore::EnumExtentsMode);
+			DEFINET2(M_of9VjztUg5, Chore::EnumExtentsMode, "Chore::EnumExtentsMode");
 			ADDFLAGS(M_of9VjztUg5, 0x8008);
 			FIRSTMEM2(M_of9VjztUg5, mVal, Chore::EnumExtentsMode, int, 0x40);
 			FIRSTENUM2(M_of9VjztUg5, mVal, "eSpillout", M_Wq0L8hVnUs, 2, 0);
@@ -5448,7 +5335,7 @@ namespace MetaInit {
 			NEXTMEM1(M_of9VjztUg5, "Baseclass_EnumBase", Baseclass_EnumBase, mVal, Chore::EnumExtentsMode, enumbase, 0x10, mVal);
 			ADD(M_of9VjztUg5);
 
-			DEFINET2(M_SQmAsorh9h, AnimationConstraintParameters);
+			DEFINET2(M_SQmAsorh9h, AnimationConstraintParameters, "AnimationConstraintParameters");
 			FIRSTMEM2(M_SQmAsorh9h, mUseAnimationConstraints, AnimationConstraintParameters, float, 0x0);
 			NEXTMEM2(M_SQmAsorh9h, mUseSpineEcho, AnimationConstraintParameters, float, 0x0, mUseAnimationConstraints);
 			NEXTMEM2(M_SQmAsorh9h, mLockToAnimLeftWrist, AnimationConstraintParameters, float, 0x0, mUseSpineEcho);
@@ -5464,198 +5351,177 @@ namespace MetaInit {
 			NEXTMEM2(M_SQmAsorh9h, mpAgent, AnimationConstraintParameters, ptrbase, 0x0, mUseBoneLengthConstraints);
 			ADD(M_SQmAsorh9h);
 
-			DEFINET2(M_wp5rVitT7q, DebugString);
+			DEFINET2(M_wp5rVitT7q, DebugString, "DebugString");
 			SERIALIZER(M_wp5rVitT7q, DebugString);
 			ADD(M_wp5rVitT7q);
 
-			DEFINEKEYFRAMEDVALUE(hmsh, Handle<D3DMesh>, mesh);
-			DEFINEANMVALUEI(hmshs, Handle<D3DMesh>);
-			DEFINESET_(FileName<SoundEventBankDummy>, fnsebd);
-			DEFINEHANDLE(hpart, ParticleProperties);
-			DEFINESET(Color);
-			DEFINEDCARRAY(ParticlePropConnect);
-			DEFINEMAP2(Symbol, Footsteps2::FootstepBank, sym, fb2, std::less<Symbol>);
-			DEFINEHANDLE(hdlgr, DialogResource);
-			DEFINEDCARRAY(Vector2);
-			DEFINEHANDLE(snap, SoundBusSnapshot::Snapshot);
-			DEFINEMAP(String, bool, std::less<String>);
-			DEFINEMAP2(Symbol, FootSteps::FootstepBank, sym, fb, std::less<Symbol>);
-			DEFINEDCARRAY2(FileName<SoundEventBankDummy>, fnseb);
-			DEFINEHANDLE(PhysicsData, PhysicsData);
-			DEFINEHANDLE(sbss, SoundBusSnapshot::SnapshotSuite);
-			DEFINEHANDLE(bggG, BlendGraphManager);
-			DEFINEDCARRAY2(Map<String SEP String SEP std::less<String>>, Map_Str_Str);
-			DEFINEDCARRAY(T3MeshPropertyEntry);
-			DEFINEMAP2(Symbol, Localization::Language, Symbol, loclang, std::less<Symbol>);
-			DEFINEMAP(String, ChorecorderParameters, std::less<String>);
-			DEFINEMAP2(String, Set<Symbol SEP std::less<Symbol>>, str, setstr, StringCompareCaseInsensitive);
-			DEFINEMAP2(Symbol, Map < Symbol SEP Set<Symbol SEP std::less<Symbol>> SEP std::less<Symbol>>, sym, Map_Sym_Setstr, std::less<Symbol>);
-			DEFINEMAP2(Symbol, Map<Symbol SEP int SEP std::less<Symbol>>, sym, Map_Sym_Int, std::less<Symbol>);
-			DEFINEMAP2(Symbol, PreloadPackage::ResourceSeenTimes, sym, pprst, std::less<Symbol>);
-			DEFINEMAP2(PreloadPackage::ResourceKey, PreloadPackage::ResourceSeenTimes, pprk, pprst, std::less<PreloadPackage::ResourceKey>);
+			DEFINEKEYFRAMEDVALUE(hmsh, Handle<D3DMesh>, mesh, "KeyframedValue<Handle<D3DMesh>>::Sample", "DCArray<KeyframedValue<Handle<D3DMesh>>::Sample>", "AnimatedValueInterface<Handle<D3DMesh>>", "KeyframedValue<Handle<D3DMesh>>");
+			DEFINEANMVALUEI(hmshs, Handle<D3DMesh>, "AnimatedValueInterface<Handle<D3DMesh>>");
+			DEFINESET_(FileName<SoundEventBankDummy>, fnsebd, "Set<FileName<SoundEventBankDummy>,less<FileName<SoundEventBankDummy>>>");
+			DEFINEHANDLE(hpart, ParticleProperties, "Handle<ParticleProperties>", "DCArray<Handle<ParticleProperties>>","HandleLock<ParticleProperties>","DCArray<HandleLock<ParticleProperties>>");
+			DEFINESET(Color,"Set<Color,less<Color>>");
+			DEFINEDCARRAY(ParticlePropConnect, "DCArray<ParticlePropConnect>");
+			DEFINEMAP2(Symbol, Footsteps2::FootstepBank, sym, fb2, std::less<Symbol>, "Map<Symbol,Footsteps2::FootstepBank,less<Symbol>>");
+			DEFINEHANDLE(hdlgr, DialogResource, "Handle<DialogResource>", "DCArray<Handle<DialogResource>>","HandleLock<DialogResource>","DCArray<HandleLock<DialogResource>>");
+			DEFINEDCARRAY(Vector2, "DCArray<Vector2>");
+			DEFINEHANDLE(snap, SoundBusSnapshot::Snapshot, "Handle<SoundBusSnapshot::Snapshot>", "DCArray<Handle<SoundBusSnapshot::Snapshot>>","HandleLock<SoundBusSnapshot::Snapshot>","DCArray<HandleLock<SoundBusSnapshot::Snapshot>>");
+			DEFINEMAP(String, bool, std::less<String>, "Map<String,bool,less<String>>");
+			DEFINEMAP2(Symbol, FootSteps::FootstepBank, sym, fb, std::less<Symbol>, "Map<Symbol,FootSteps::FootstepBank,less<Symbol>>");
+			DEFINEDCARRAY2(FileName<SoundEventBankDummy>, fnseb, "DCArray<FileName<SoundEventBankDummy>>");
+			DEFINEHANDLE(PhysicsData, PhysicsData, "Handle<PhysicsData>", "DCArray<Handle<PhysicsData>>","HandleLock<PhysicsData>","DCArray<HandleLock<PhysicsData>>");
+			DEFINEHANDLE(sbss, SoundBusSnapshot::SnapshotSuite, "Handle<SoundBusSnapshot::SnapshotSuite>", "DCArray<Handle<SoundBusSnapshot::SnapshotSuite>>","HandleLock<SoundBusSnapshot::SnapshotSuite>","DCArray<HandleLock<SoundBusSnapshot::SnapshotSuite>>");
+			DEFINEHANDLE(bggG, BlendGraphManager, "Handle<BlendGraphManager>", "DCArray<Handle<BlendGraphManager>>","HandleLock<BlendGraphManager>","DCArray<HandleLock<BlendGraphManager>>");
+			DEFINEDCARRAY2(Map<String SEP String SEP std::less<String>>, Map_Str_Str, "DCArray<Map<String,String,less<String>>>");
+			DEFINEDCARRAY(T3MeshPropertyEntry, "DCArray<T3MeshPropertyEntry>");
+			DEFINEMAP2(Symbol, Localization::Language, Symbol, loclang, std::less<Symbol>, "Map<Symbol,Localization::Language,less<Symbol>>");
+			DEFINEMAP(String, ChorecorderParameters, std::less<String>, "Map<String,ChorecorderParameters,less<String>>");
+			DEFINEMAP2(String, Set<Symbol SEP std::less<Symbol>>, str, setstr, StringCompareCaseInsensitive, "Map<String,Set<Symbol,less<Symbol>>,StringCompareCaseInsensitive>");
+			DEFINEMAP2(Symbol, Map < Symbol SEP Set<Symbol SEP std::less<Symbol>> SEP std::less<Symbol>>, sym, Map_Sym_Setstr, std::less<Symbol>, "Map<Symbol,Map<Symbol,Set<Symbol,less<Symbol>>,less<Symbol>>,less<Symbol>>");
+			DEFINEMAP2(Symbol, Map<Symbol SEP int SEP std::less<Symbol>>, sym, Map_Sym_Int, std::less<Symbol>, "Map<Symbol,Map<Symbol,int,less<Symbol>>,less<Symbol>>");
+			DEFINEMAP2(Symbol, PreloadPackage::ResourceSeenTimes, sym, pprst, std::less<Symbol>, "Map<Symbol,PreloadPackage::ResourceSeenTimes,less<Symbol>>");
+			DEFINEMAP2(PreloadPackage::ResourceKey, PreloadPackage::ResourceSeenTimes, pprk, pprst, std::less<PreloadPackage::ResourceKey>, "Map<PreloadPackage::ResourceKey,PreloadPackage::ResourceSeenTimes,less<PreloadPackage::ResourceKey>>");
 
-			DEFINEMAP2(unsigned int, Set<Symbol SEP std::less<Symbol>>, uint, Set_Sym, std::less<unsigned int>);
-			DEFINEMAP2(unsigned long, Font::GlyphInfo, uLong, fontglyinf, std::less<unsigned long>);
-			DEFINEMAP2(unsigned long, LanguageResource, uLong, langres, std::less<unsigned long>);
-			MKNAME(meta_Map_uint_Set_Sym, "Map<unsignedint,Set<Symbol,less<Symbol>>,less<unsignedint>>");
-			MKNAME(meta_Map_uLong_fontglyinf, "Map<unsignedlong,Font::GlyphInfo,less<unsignedlong>>");
-			MKNAME(meta_Map_uLong_langres, "Map<unsignedlong,LanguageRes,less<unsignedlong>>");
+			DEFINEMAP2(unsigned int, Set<Symbol SEP std::less<Symbol>>, uint, Set_Sym, std::less<unsigned int>, "Map<unsignedint,Set<Symbol,less<Symbol>>,less<unsignedint>>");
+			DEFINEMAP2(unsigned long, Font::GlyphInfo, uLong, fontglyinf, std::less<unsigned long>, "Map<unsignedlong,Font::GlyphInfo,less<unsignedlong>>");
+			DEFINEMAP2(unsigned long, LanguageResource, uLong, langres, std::less<unsigned long>, "Map<unsignedlong,LanguageRes,less<unsignedlong>>");
 
-			DEFINEMAP2(String, Handle<PropertySet>, str, hprop, std::less < String>);
-			DEFINEMAP(String, Vector3, std::less<String>);
-			DEFINEMAP2(Symbol, DCArray<LanguageResLocal>, sym, array_langresloc, std::less<Symbol>);
-			DEFINEMAP(String, StyleGuideRef, std::less<String>);
-			DEFINEMAP2(String, Set<Symbol SEP std::less<Symbol>>, str, Set_Sym, std::less<String>);
-			DEFINEMAP2(String, Set<String SEP std::less<String>>, str, Set_Str, std::less<String>);
-			DEFINEMAP2(String, PhonemeTable::PhonemeEntry, str, ptableentry, std::less<String>);
-			DEFINEMAP2(String, Map<String SEP DCArray<String> SEP std::less<String>>, str, Map_Str_Array_String, std::less<String>);
-			DEFINEMAP(String, float, std::less<String>);
-			DEFINEMAP(String, AnimOrChore, std::less<String>);
-			DEFINEMAP(int, PropertySet, std::less<int>);
-			DEFINEMAP(DlgObjID, int, DlgObjIDLess);
+			DEFINEMAP2(String, Handle<PropertySet>, str, hprop, std::less<String>, "Map<String,Handle<PropertySet>,less<String>>");
+			DEFINEMAP(String, Vector3, std::less<String>, "Map<String,Vector3,less<String>>");
+			DEFINEMAP2(Symbol, DCArray<LanguageResLocal>, sym, array_langresloc, std::less<Symbol>, "Map<Symbol,DCArray<LanguageResLocal>,less<Symbol>>");
+			DEFINEMAP(String, StyleGuideRef, std::less<String>, "Map<String,StyleGuideRef,less<String>>");
+			DEFINEMAP2(String, Set<Symbol SEP std::less<Symbol>>, str, Set_Sym, std::less<String>, "Map<String,Set<Symbol,less<Symbol>>,less<String>>");
+			DEFINEMAP2(String, Set<String SEP std::less<String>>, str, Set_Str, std::less<String>, "Map<String,Set<String,less<String>>,less<String>>");
+			DEFINEMAP2(String, PhonemeTable::PhonemeEntry, str, ptableentry, std::less<String>, "Map<String,PhonemeTable::PhonemeEntry,less<String>>");
+			DEFINEMAP2(String, Map<String SEP DCArray<String> SEP std::less<String>>, str, Map_Str_Array_String, std::less<String>, "Map<String,Map<String,DCArray<String>,less<String>>,less<String>>");
+			DEFINEMAP(String, float, std::less<String>, "Map<String,float,less<String>>");
+			DEFINEMAP(String, AnimOrChore, std::less<String>, "Map<String,AnimOrChore,less<String>>");
+			DEFINEMAP(int, PropertySet, std::less<int>, "Map<int,PropertySet,less<int>>");
+			DEFINEMAP(DlgObjID, int, DlgObjIDLess, "Map<DlgObjID,int,DlgObjIDLess>");
 
-			DEFINEMAP2(String, DCArray<unsigned char>, str, array_uchar, std::less<String>);
-			MKNAME(meta_Map_str_array_uchar, "Map<String,DCArray<unsignedchar>,less<String>>");
+			DEFINEMAP2(String, DCArray<unsigned char>, str, array_uchar, std::less<String>, "Map<String,DCArray<unsignedchar>,less<String>>");
 
-			DEFINELIST(Vector3);
-			DEFINELIST_(unsigned int, uint);
-			MKNAME(meta_List_uint, "List<unsignedint>");
+			DEFINELIST(Vector3, "List<Vector3>");
+			DEFINELIST_(unsigned int, uint, "List<unsignedint>");
 
-			DEFINELIST(T3ToonGradientRegion);
-			DEFINELIST_(Map<String SEP String SEP std::less<String>>, Map_Str_Str);
-			DEFINELIST_(List<PropertySet>, List_Prop);
-			DEFINELIST_(HandleLock<Scene>, hlockscene);
-			DEFINELIST_(Handle<T3Texture>, htex);
-			DEFINELIST_(Handle<Scene>, hscene);
-			DEFINELIST_(Handle<Rules>, hrules);
-			DEFINELIST_(Handle<PropertySet>, hprop);
-			DEFINELIST_(Handle<Chore>, hchore);
-			DEFINELIST_(Handle<D3DMesh>, hmesh);
-			DEFINELIST_(Handle<SoundData>, hsound);
-			DEFINELIST_(Handle<AudioData>, haud);
-			DEFINELIST_(Handle<AnimOrChore> ,hanorch);
-			DEFINELIST(float);
-			DEFINELIST_(List < Symbol>, List_Sym);
-			DEFINELIST_(DCArray<String>, Array_String);
-			DEFINELIST(Color);
-			DEFINELIST(bool);
+			DEFINELIST(T3ToonGradientRegion, "List<T3ToonGradientRegion>");
+			DEFINELIST_(Map<String SEP String SEP std::less<String>>, Map_Str_Str, "List<Map<String,String,less<String>>>");
+			DEFINELIST_(List<PropertySet>, List_Prop, "List<List<PropertySet>>");
+			DEFINELIST_(HandleLock<Scene>, hlockscene, "List<HandleLock<Scene>>");
+			DEFINELIST_(Handle<T3Texture>, htex, "List<Handle<T3Texture>>");
+			DEFINELIST_(Handle<Scene>, hscene, "List<Handle<Scene>>");
+			DEFINELIST_(Handle<Rules>, hrules, "List<Handle<Rules>>");
+			DEFINELIST_(Handle<PropertySet>, hprop, "List<Handle<PropertySet>>");
+			DEFINELIST_(Handle<Chore>, hchore, "List<Handle<Chore>>");
+			DEFINELIST_(Handle<D3DMesh>, hmesh, "List<Handle<D3DMesh>>");
+			DEFINELIST_(Handle<SoundData>, hsound, "List<Handle<SoundData>>");
+			DEFINELIST_(Handle<AudioData>, haud, "List<Handle<AudioData>>");
+			DEFINELIST_(Handle<AnimOrChore> , hanorch, "List<Handle<AnimOrChore>>");
+			DEFINELIST(float, "List<float>");
+			DEFINELIST_(List<Symbol>, List_Sym, "List<List<Symbol>>");
+			DEFINELIST_(DCArray<String>, Array_String, "List<DCArray<String>>");
+			DEFINELIST(Color, "List<Color>");
+			DEFINELIST(bool, "List<bool>");
 
-			DEFINEDCARRAY(PropertySet);
-			DEFINEDCARRAY2(Handle<AudioData>, haud);
-			DEFINEDCARRAY2(Handle<AnimOrChore>, hanorch);
-			DEFINEDCARRAY2(DCArray<String>, array_str);
-			DEFINEDCARRAY2(DCArray<PropertySet>, array_prop);
-			DEFINEDCARRAY2(DCArray<Handle<D3DMesh>>, hmesh);
-			MKNAME(meta_DCArray_hmesh, "DCArray<Handle<D3DMesh>>");
-			MKNAME(meta_DCArray_array_str, "DCArray<String>");
-			MKNAME(meta_DCArray_array_prop, "DCArray<PropertySet>");
-			DEFINEDCARRAY(Color);
-			DEFINEDCARRAY(LocationInfo);
-			MKNAME(meta_DCArray_LocationInfo, "DCArray<LocationInfo>");
-			
-			DEFINEKEYFRAMEDVALUE(Polar, Polar, M_h2Q6dQAjy4);
-			DEFINEKEYFRAMEDVALUE(Vector4, Vector4, vec4);
-			DEFINEKEYFRAMEDVALUE(Vector2, Vector2, vec2);
-			DEFINEKEYFRAMEDVALUE(Symbol, Symbol, symbol);
-			DEFINEKEYFRAMEDVALUE(ksen0, SoundEventName<SoundEventNameBase::NT_DEFAULT>, sen0);
-			DEFINEKEYFRAMEDVALUE(ksen2, SoundEventName<SoundEventNameBase::NT_DIALOG>, sen2);
-			DEFINEKEYFRAMEDVALUE(ksen1, SoundEventName<SoundEventNameBase::NT_SNAPSHOT>, sen1);
+			DEFINEDCARRAY(PropertySet, "DCArray<PropertySet>");
+			DEFINEDCARRAY2(Handle<AudioData>, haud, "DCArray<Handle<AudioData>>");
+			DEFINEDCARRAY2(Handle<AnimOrChore>, hanorch, "DCArray<Handle<AnimOrChore>>");
+			DEFINEDCARRAY2(DCArray<String>, array_str, "DCArray<String>");
+			DEFINEDCARRAY2(DCArray<PropertySet>, array_prop, "DCArray<PropertySet>");
+			DEFINEDCARRAY2(DCArray<Handle<D3DMesh>>, hmesh, "DCArray<Handle<D3DMesh>>");
+			DEFINEDCARRAY(Color, "DCArray<Color>");
+			DEFINEDCARRAY(LocationInfo, "DCArray<LocationInfo>");
 
-			MKNAME(meta_kfv_ksen0, "KeyframedValue<SoundEventName<0>>");
-			MKNAME(meta_kfv_ksen1, "KeyframedValue<SoundEventName<1>>");
-			MKNAME(meta_kfv_ksen2, "KeyframedValue<SoundEventName<2>>");
-			MKNAME(meta_sen0, "SoundEventName<0>");
-			MKNAME(meta_sen1, "SoundEventName<1>");
-			MKNAME(meta_sen2, "SoundEventName<2>");
-			MKNAME(meta_anmi_ksen0, "AnimatedValueInterface<SoundEventName<0>>");
-			MKNAME(meta_anmi_ksen1, "AnimatedValueInterface<SoundEventName<1>>");
-			MKNAME(meta_anmi_ksen2, "AnimatedValueInterface<SoundEventName<2>>");
+			DEFINEKEYFRAMEDVALUE(Polar, Polar, M_h2Q6dQAjy4, "KeyframedValue<Polar>::Sample", "DCArray<KeyframedValue<Polar>::Sample>", "AnimatedValueInterface<Polar>", "KeyframedValue<Polar>");
+			DEFINEKEYFRAMEDVALUE(Vector4, Vector4, vec4, "KeyframedValue<Vector4>::Sample", "DCArray<KeyframedValue<Vector4>::Sample>", "AnimatedValueInterface<Vector4>", "KeyframedValue<Vector4>");
+			DEFINEKEYFRAMEDVALUE(Vector2, Vector2, vec2, "KeyframedValue<Vector2>::Sample", "DCArray<KeyframedValue<Vector2>::Sample>", "AnimatedValueInterface<Vector2>", "KeyframedValue<Vector2>");
+			DEFINEKEYFRAMEDVALUE(Symbol, Symbol, symbol, "KeyframedValue<Symbol>::Sample", "DCArray<KeyframedValue<Symbol>::Sample>", "AnimatedValueInterface<Symbol>", "KeyframedValue<Symbol>");
+			DEFINEKEYFRAMEDVALUE(ksen0, SoundEventName<SoundEventNameBase::NT_DEFAULT>, sen0, "KeyframedValue<SoundEventName<0>>::Sample", "DCArray<KeyframedValue<SoundEventName<0>>::Sample>", "AnimatedValueInterface<SoundEventName<0>>", "KeyframedValue<SoundEventName<0>>");
+			DEFINEKEYFRAMEDVALUE(ksen2, SoundEventName<SoundEventNameBase::NT_DIALOG>, sen2, "KeyframedValue<SoundEventName<2>>::Sample", "DCArray<KeyframedValue<SoundEventName<2>>::Sample>", "AnimatedValueInterface<SoundEventName<2>>", "KeyframedValue<SoundEventName<2>>");
+			DEFINEKEYFRAMEDVALUE(ksen1, SoundEventName<SoundEventNameBase::NT_SNAPSHOT>, sen1, "KeyframedValue<SoundEventName<1>>::Sample", "DCArray<KeyframedValue<SoundEventName<1>>::Sample>", "AnimatedValueInterface<SoundEventName<1>>", "KeyframedValue<SoundEventName<1>>");
 
-			DEFINET2(M_nmJIgWyT7Y, ScriptEnum);
+			DEFINET2(M_nmJIgWyT7Y, ScriptEnum, "ScriptEnum");
 			ADDFLAGS(M_nmJIgWyT7Y, 0x200);
 			FIRSTMEM2(M_nmJIgWyT7Y, mCurValue, ScriptEnum, string, 0x0);
 			ADD(M_nmJIgWyT7Y);
 
-			DEFINEKEYFRAMEDVALUE(ScriptEnum, ScriptEnum, M_nmJIgWyT7Y);
-			DEFINEKEYFRAMEDVALUE(Quaternion, Quaternion, quat);
-			DEFINEKEYFRAMEDVALUE(HWALK, Handle<WalkBoxes>, Handlewbox);
-			DEFINEKEYFRAMEDVALUE(HAMB, Handle<SoundAmbience::AmbienceDefinition>, Handlehambb);
-			DEFINEKEYFRAMEDVALUE(HSUITE, Handle<SoundBusSnapshot::SnapshotSuite>, Handlesbss);
-			DEFINEKEYFRAMEDVALUE(HSNAP, Handle<SoundBusSnapshot::Snapshot>, Handlesnapss);
-			DEFINEKEYFRAMEDVALUE(HREVERB, Handle<SoundReverbDefinition>, Handlereverb);
-			DEFINEKEYFRAMEDVALUE(HESD, Handle<SoundEventSnapshotData>, Handlesedd1h);
-			DEFINEKEYFRAMEDVALUE(HSNDD, Handle<SoundEventData>, Handleseddh);
-			DEFINEKEYFRAMEDVALUE(HSCENE, Handle<Scene>, Handlescene);
-			DEFINEKEYFRAMEDVALUE(HFONT, Handle<Font>, Handlefont);
-			DEFINEKEYFRAMEDVALUE(HDLG, Handle<Dlg>, Handledlg);
-			DEFINEKEYFRAMEDVALUE(HMESH, Handle<D3DMesh>, Handlemesh);
+			DEFINEKEYFRAMEDVALUE(ScriptEnum, ScriptEnum, M_nmJIgWyT7Y, "KeyframedValue<ScriptEnum>::Sample", "DCArray<KeyframedValue<ScriptEnum>::Sample>", "AnimatedValueInterface<ScriptEnum>", "KeyframedValue<ScriptEnum>");
+			DEFINEKEYFRAMEDVALUE(Quaternion, Quaternion, quat, "KeyframedValue<Quaternion>::Sample", "DCArray<KeyframedValue<Quaternion>::Sample>", "AnimatedValueInterface<Quaternion>", "KeyframedValue<Quaternion>");
+			DEFINEKEYFRAMEDVALUE(HWALK, Handle<WalkBoxes>, Handlewbox, "KeyframedValue<Handle<WalkBoxes>>::Sample", "DCArray<KeyframedValue<Handle<WalkBoxes>>::Sample>", "AnimatedValueInterface<Handle<WalkBoxes>>", "KeyframedValue<Handle<WalkBoxes>>");
+			DEFINEKEYFRAMEDVALUE(HAMB, Handle<SoundAmbience::AmbienceDefinition>, Handlehambb, "KeyframedValue<Handle<SoundAmbience::AmbienceDefinition>>::Sample", "DCArray<KeyframedValue<Handle<SoundAmbience::AmbienceDefinition>>::Sample>", "AnimatedValueInterface<Handle<SoundAmbience::AmbienceDefinition>>", "KeyframedValue<Handle<SoundAmbience::AmbienceDefinition>>");
+			DEFINEKEYFRAMEDVALUE(HSUITE, Handle<SoundBusSnapshot::SnapshotSuite>, Handlesbss, "KeyframedValue<Handle<SoundBusSnapshot::SnapshotSuite>>::Sample", "DCArray<KeyframedValue<Handle<SoundBusSnapshot::SnapshotSuite>>::Sample>", "AnimatedValueInterface<Handle<SoundBusSnapshot::SnapshotSuite>>", "KeyframedValue<Handle<SoundBusSnapshot::SnapshotSuite>>");
+			DEFINEKEYFRAMEDVALUE(HSNAP, Handle<SoundBusSnapshot::Snapshot>, Handlesnapss, "KeyframedValue<Handle<SoundBusSnapshot::Snapshot>>::Sample", "DCArray<KeyframedValue<Handle<SoundBusSnapshot::Snapshot>>::Sample>", "AnimatedValueInterface<Handle<SoundBusSnapshot::Snapshot>>", "KeyframedValue<Handle<SoundBusSnapshot::Snapshot>>");
+			DEFINEKEYFRAMEDVALUE(HREVERB, Handle<SoundReverbDefinition>, Handlereverb, "KeyframedValue<Handle<SoundReverbDefinition>>::Sample", "DCArray<KeyframedValue<Handle<SoundReverbDefinition>>::Sample>", "AnimatedValueInterface<Handle<SoundReverbDefinition>>", "KeyframedValue<Handle<SoundReverbDefinition>>");
+			DEFINEKEYFRAMEDVALUE(HESD, Handle<SoundEventSnapshotData>, Handlesedd1h, "KeyframedValue<Handle<SoundEventSnapshotData>>::Sample", "DCArray<KeyframedValue<Handle<SoundEventSnapshotData>>::Sample>", "AnimatedValueInterface<Handle<SoundEventSnapshotData>>", "KeyframedValue<Handle<SoundEventSnapshotData>>");
+			DEFINEKEYFRAMEDVALUE(HSNDD, Handle<SoundEventData>, Handleseddh, "KeyframedValue<Handle<SoundEventData>>::Sample", "DCArray<KeyframedValue<Handle<SoundEventData>>::Sample>", "AnimatedValueInterface<Handle<SoundEventData>>", "KeyframedValue<Handle<SoundEventData>>");
+			DEFINEKEYFRAMEDVALUE(HSCENE, Handle<Scene>, Handlescene, "KeyframedValue<Handle<Scene>>::Sample", "DCArray<KeyframedValue<Handle<Scene>>::Sample>", "AnimatedValueInterface<Handle<Scene>>", "KeyframedValue<Handle<Scene>>");
+			DEFINEKEYFRAMEDVALUE(HFONT, Handle<Font>, Handlefont, "KeyframedValue<Handle<Font>>::Sample", "DCArray<KeyframedValue<Handle<Font>>::Sample>", "AnimatedValueInterface<Handle<Font>>", "KeyframedValue<Handle<Font>>");
+			DEFINEKEYFRAMEDVALUE(HDLG, Handle<Dlg>, Handledlg, "KeyframedValue<Handle<Dlg>>::Sample", "DCArray<KeyframedValue<Handle<Dlg>>::Sample>", "AnimatedValueInterface<Handle<Dlg>>", "KeyframedValue<Handle<Dlg>>");
+			DEFINEKEYFRAMEDVALUE(HMESH, Handle<D3DMesh>, Handlemesh, "KeyframedValue<Handle<D3DMesh>>::Sample", "DCArray<KeyframedValue<Handle<D3DMesh>>::Sample>", "AnimatedValueInterface<Handle<D3DMesh>>", "KeyframedValue<Handle<D3DMesh>>");
 
-			DEFINEHANDLE(VoiceData, VoiceData);
-			DEFINEHANDLE(StyleIdleTransitionsRes, StyleIdleTransitionsRes);
-			DEFINEHANDLE(StyleGuideRef, StyleGuideRef);
+			DEFINEHANDLE(VoiceData, VoiceData, "Handle<VoiceData>", "DCArray<Handle<VoiceData>>","HandleLock<VoiceData>","DCArray<HandleLock<VoiceData>>");
+			DEFINEHANDLE(StyleIdleTransitionsRes, StyleIdleTransitionsRes, "Handle<StyleIdleTransitionsRes>", "DCArray<Handle<StyleIdleTransitionsRes>>","HandleLock<StyleIdleTransitionsRes>","DCArray<HandleLock<StyleIdleTransitionsRes>>");
+			DEFINEHANDLE(StyleGuideRef, StyleGuideRef, "Handle<StyleGuideRef>", "DCArray<Handle<StyleGuideRef>>","HandleLock<StyleGuideRef>","DCArray<HandleLock<StyleGuideRef>>");
 			//darray<bool> already done in case rep same as int
-			DEFINEHANDLE(sebd, SoundEventBankDummy);
-			DEFINEHANDLE(save, SaveGame);
-			DEFINEHANDLE(Rule, Rule);
-			DEFINEHANDLE(ResourceGroupInfo, ResourceGroupInfo);
-			DEFINEHANDLE(ResourceBundle, ResourceBundle);
-			DEFINEHANDLE(PhysicsObject, PhysicsObject);
-			
-			DEFINEDCARRAY2(ParticleProperties::Animation, propanm);
-			DEFINEMAP2(String, LocomotionDB::AnimationInfo, str, locdbanmi, std::less<String>);
+			DEFINEHANDLE(sebd, SoundEventBankDummy, "Handle<SoundEventBankDummy>", "DCArray<Handle<SoundEventBankDummy>>","HandleLock<SoundEventBankDummy>","DCArray<HandleLock<SoundEventBankDummy>>");
+			DEFINEHANDLE(save, SaveGame, "Handle<SaveGame>", "DCArray<Handle<SaveGame>>","HandleLock<SaveGame>","DCArray<HandleLock<SaveGame>>");
+			DEFINEHANDLE(Rule, Rule, "Handle<Rule>", "DCArray<Handle<Rule>>","HandleLock<Rule>","DCArray<HandleLock<Rule>>");
+			DEFINEHANDLE(ResourceGroupInfo, ResourceGroupInfo, "Handle<ResourceGroupInfo>", "DCArray<Handle<ResourceGroupInfo>>","HandleLock<ResourceGroupInfo>","DCArray<HandleLock<ResourceGroupInfo>>");
+			DEFINEHANDLE(ResourceBundle, ResourceBundle, "Handle<ResourceBundle>", "DCArray<Handle<ResourceBundle>>","HandleLock<ResourceBundle>","DCArray<HandleLock<ResourceBundle>>");
+			DEFINEHANDLE(PhysicsObject, PhysicsObject, "Handle<PhysicsObject>", "DCArray<Handle<PhysicsObject>>","HandleLock<PhysicsObject>","DCArray<HandleLock<PhysicsObject>>");
 
-			DEFINEHANDLE(LanguageResource, LanguageResource);
-			DEFINEHANDLE(EventStorage, EventStorage);
+			DEFINEDCARRAY2(ParticleProperties::Animation, propanm, "DCArray<ParticleProperties::Animation>");
+			DEFINEMAP2(String, LocomotionDB::AnimationInfo, str, locdbanmi, std::less<String>, "Map<String,LocomotionDB::AnimationInfo,less<String>>");
 
-			DEFINEMAP2(unsigned int, Font::GlyphInfo, uint, fontglyinf, std::less<unsigned int>);
-			MKNAME(meta_Map_uLong_fontglyinf, "Map<unsignedint,Font::GlyphInfo,less<unsignedint>>");
+			DEFINEHANDLE(LanguageResource, LanguageResource, "Handle<LanguageResource>", "DCArray<Handle<LanguageResource>>","HandleLock<LanguageResource>","DCArray<HandleLock<LanguageResource>>");
+			DEFINEHANDLE(EventStorage, EventStorage, "Handle<EventStorage>", "DCArray<Handle<EventStorage>>","HandleLock<EventStorage>","DCArray<HandleLock<EventStorage>>");
 
-			DEFINEHANDLE(BlendMode, BlendMode);
-			DEFINEHANDLE(AudioData, AudioData);
-			DEFINEHANDLE(AnimOrChore, AnimOrChore);
-			DEFINEHANDLE(BlendGraph, BlendGraph);
+			DEFINEMAP2(unsigned int, Font::GlyphInfo, uint, fontglyinf, std::less<unsigned int>, "Map<unsignedint,Font::GlyphInfo,less<unsignedint>>");
 
-			DEFINET2(Guide, Guide);
+			DEFINEHANDLE(BlendMode, BlendMode, "Handle<BlendMode>", "DCArray<Handle<BlendMode>>","HandleLock<BlendMode>","DCArray<HandleLock<BlendMode>>");
+			DEFINEHANDLE(AudioData, AudioData, "Handle<AudioData>", "DCArray<Handle<AudioData>>","HandleLock<AudioData>","DCArray<HandleLock<AudioData>>");
+			DEFINEHANDLE(AnimOrChore, AnimOrChore, "Handle<AnimOrChore>", "DCArray<Handle<AnimOrChore>>","HandleLock<AnimOrChore>","DCArray<HandleLock<AnimOrChore>>");
+			DEFINEHANDLE(BlendGraph, BlendGraph, "Handle<BlendGraph>", "DCArray<Handle<BlendGraph>>","HandleLock<BlendGraph>","DCArray<HandleLock<BlendGraph>>");
+
+			DEFINET2(Guide, Guide, "Guide");
 			FIRSTMEM2(Guide, m_Time, Guide, float, 0);
 			NEXTMEM2(Guide, m_Bitfield, Guide, int, 0, m_Time);
 			NEXTMEM2(Guide, m_AutoActRole, Guide, int, 0, m_Bitfield);
 			ADD(Guide);
 
-			MKNAME(meta_Map_Symbol_WalkPath, "Map<Symbol,WalkPath,less<Symbol>>");
-			DEFINEMAP2(Symbol, Handle<SoundBusSnapshot::Snapshot>, sym, hsnap, std::less<Symbol>);
-			DEFINEDCARRAY(Guide);
-			DEFINEMAP2(String, Map<String SEP String SEP std::less<String>>, str, Map_Str_Str, std::less<String>);
-			
-			DEFINET2(aud, AudioData);
+			DEFINEMAP2(Symbol, Handle<SoundBusSnapshot::Snapshot>, sym, hsnap, std::less<Symbol>, "Map<Symbol,Handle<SoundBusSnapshot::Snapshot>,less<Symbol>>");
+			DEFINEDCARRAY(Guide, "DCArray<Guide>");
+			DEFINEMAP2(String, Map<String SEP String SEP std::less<String>>, str, Map_Str_Str, std::less<String>, "Map<String,Map<String,String,less<String>>,less<String>>");
+
+			DEFINET2(aud, AudioData, "AudioData");
 			EXT(aud, aud);
 			FIRSTMEM2(aud, mFilename, AudioData, string, 0);
 			NEXTMEM2(aud, mLength, AudioData, float, 0, mFilename);
 			ADD(aud);
 
-			DEFINET2(pps, ParticlePropertySamples);
+			DEFINET2(pps, ParticlePropertySamples, "ParticlePropertySamples");
 			FIRSTMEM2(pps, mSampleCount, ParticlePropertySamples, int, 0);
 			SERIALIZER(pps, ParticlePropertySamples);
 			ADD(pps);
 
-			DEFINET2(nd, Node);
+			DEFINET2(nd, Node, "Node");
 			FIRSTMEM2(nd, mName, Node, symbol, 0);
 			NEXTMEM2(nd, mFlags, Node, flags, 0, mName);
 			NEXTMEM2(nd, mLocalXform, Node, transform, 0, mFlags);
 			NEXTMEM2(nd, mGlobalXform, Node, transform, 0, mLocalXform);
 			ADD(nd);
 
-			DEFINET2(snode, SklNodeData);
+			DEFINET2(snode, SklNodeData, "SklNodeData");
 			FIRSTMEM2(snode, mNode, SklNodeData, nd, 0);
 			ADD(snode);
 
-			DEFINEDCARRAY(SklNodeData);
+			DEFINEDCARRAY(SklNodeData, "DCArray<SklNodeData>");
 
-			// LEGACY D3DMESH 
+			// LEGACY D3DMESH
 
-			DEFINET2(M_frAQBc8Wsa, LegacyD3DMesh::T3VertexComponent);
-			FIRSTMEM2(M_frAQBc8Wsa, mOffset, LegacyD3DMesh::T3VertexComponent, __uint32, 0x0);
-			NEXTMEM2(M_frAQBc8Wsa, mCount, LegacyD3DMesh::T3VertexComponent, __uint32, 0x0, mOffset);
-			NEXTMEM2(M_frAQBc8Wsa, mType, LegacyD3DMesh::T3VertexComponent, __uint32, 0x40, mCount);
+			DEFINET2(M_frAQBc8Wsa, LegacyD3DMesh::T3VertexComponent, "LegacyD3DMesh::T3VertexComponent");
+			FIRSTMEM2(M_frAQBc8Wsa, mOffset, LegacyD3DMesh::T3VertexComponent, __int32, 0x0);
+			NEXTMEM2(M_frAQBc8Wsa, mCount, LegacyD3DMesh::T3VertexComponent, __int32, 0x0, mOffset);
+			NEXTMEM2(M_frAQBc8Wsa, mType, LegacyD3DMesh::T3VertexComponent, __int32, 0x40, mCount);
 			FIRSTENUM2(M_frAQBc8Wsa, mType, "eVTypeU16N", M_1xVPfvJcrg, 5, 0);
 			NEXTENUM2(M_frAQBc8Wsa, mType, "eVTypeS16N", M_RYwTiizs2t, 4, 0, M_1xVPfvJcrg);
 			NEXTENUM2(M_frAQBc8Wsa, mType, "eVTypeU8N", M_rQF69AzBla, 3, 0, M_RYwTiizs2t);
@@ -5664,9 +5530,9 @@ namespace MetaInit {
 			NEXTENUM2(M_frAQBc8Wsa, mType, "eVTypeNone", M_exuieaoEiI, 0, 0, M_3soLBPh71Y);
 			ADD(M_frAQBc8Wsa);
 
-			DEFINESARRAY_(LegacyD3DMesh::T3VertexComponent, meshcmpleg, 13);
+			DEFINESARRAY_(LegacyD3DMesh::T3VertexComponent, meshcmpleg, 13, "SArray<LegacyD3DMesh::T3VertexComponent,13>");
 
-			DEFINET2(M_gxIX4a2dRE, LegacyD3DMesh::T3VertexBuffer);
+			DEFINET2(M_gxIX4a2dRE, LegacyD3DMesh::T3VertexBuffer, "LegacyD3DMesh::T3VertexBuffer");
 			FIRSTMEM2(M_gxIX4a2dRE, mNumVerts, LegacyD3DMesh::T3VertexBuffer, int, 0x0);
 			NEXTMEM2(M_gxIX4a2dRE, mVertSize, LegacyD3DMesh::T3VertexBuffer, int, 0x0, mNumVerts);
 			NEXTMEM2(M_gxIX4a2dRE, mFlags, LegacyD3DMesh::T3VertexBuffer, flags, 0x0, mVertSize);
@@ -5674,14 +5540,14 @@ namespace MetaInit {
 			NEXTMEM2(M_gxIX4a2dRE, mVertexComponents, LegacyD3DMesh::T3VertexBuffer,sarray_meshcmpleg_13, 0x0, mUsage);
 			ADD(M_gxIX4a2dRE);
 
-			DEFINET2(M_bbSqWy6yhK, LegacyD3DMesh::T3IndexBuffer);
+			DEFINET2(M_bbSqWy6yhK, LegacyD3DMesh::T3IndexBuffer, "LegacyD3DMesh::T3IndexBuffer");
 			FIRSTMEM2(M_bbSqWy6yhK, mFormat, LegacyD3DMesh::T3IndexBuffer, int, 0x0);
 			NEXTMEM2(M_bbSqWy6yhK, mNumIndicies, LegacyD3DMesh::T3IndexBuffer, int, 0x0, mFormat);
 			NEXTMEM2(M_bbSqWy6yhK, mFlags, LegacyD3DMesh::T3IndexBuffer, flags, 0x0, mNumIndicies);
 			NEXTMEM2(M_bbSqWy6yhK, mUsage, LegacyD3DMesh::T3IndexBuffer, int, 0x0, mFlags);
 			ADD(M_bbSqWy6yhK);
 
-			DEFINET2(M_IDCdJOyapn, LegacyD3DMesh::Texture);
+			DEFINET2(M_IDCdJOyapn, LegacyD3DMesh::Texture, "LegacyD3DMesh::Texture");
 			FIRSTMEM2(M_IDCdJOyapn, mName, LegacyD3DMesh::Texture, Handletex, 0x0);
 			NEXTMEM2(M_IDCdJOyapn, mFlags, LegacyD3DMesh::Texture, flags, 0x40000, mName);
 			FIRSTFLAG(M_IDCdJOyapn, mFlags, "eFlagHasSpecular", M_xrpMCARCr4, 0x4);
@@ -5694,9 +5560,9 @@ namespace MetaInit {
 			NEXTMEM2(M_IDCdJOyapn, mAverageObjAreaPerUVArea, LegacyD3DMesh::Texture, float, 0x0, mMaxObjAreaPerUVArea);
 			ADD(M_IDCdJOyapn);
 
-			DEFINESARRAY(int, 14);
+			DEFINESARRAY(int, 14,"SArray<int,14>");
 
-			DEFINET2(M_8YFOGKjxRr, LegacyD3DMesh::TriangleSet);
+			DEFINET2(M_8YFOGKjxRr, LegacyD3DMesh::TriangleSet, "LegacyD3DMesh::TriangleSet");
 			FIRSTMEM2(M_8YFOGKjxRr, mFlags, LegacyD3DMesh::TriangleSet, flags, 0x40000);
 			FIRSTFLAG(M_8YFOGKjxRr, mFlags, "eFlagSoftDepthTest", M_JBdT3hVOfo, 0x10000000);
 			NEXTFLAG(M_8YFOGKjxRr, mFlags, "eFlagVertexColorSubtract", M_aMeAjSWfch, 0x4000000, M_JBdT3hVOfo);
@@ -5770,54 +5636,53 @@ namespace MetaInit {
 			NEXTMEM2(M_8YFOGKjxRr, mDiffuseColor, LegacyD3DMesh::TriangleSet, color, 0x0, mSubsurfaceScateringRadius);
 			ADD(M_8YFOGKjxRr);
 
-			DEFINET2(M_OhmWvn7MIr, LegacyD3DMesh::PaletteEntry);
+			DEFINET2(M_OhmWvn7MIr, LegacyD3DMesh::PaletteEntry, "LegacyD3DMesh::PaletteEntry");
 			FIRSTMEM2(M_OhmWvn7MIr, mBoneName, LegacyD3DMesh::PaletteEntry, symbol, 0x0);
 			NEXTMEM2(M_OhmWvn7MIr, mBoundingBox, LegacyD3DMesh::PaletteEntry, bbox, 0x0, mBoneName);
 			NEXTMEM2(M_OhmWvn7MIr, mBoundingSphere, LegacyD3DMesh::PaletteEntry, sphere, 0x0, mBoundingBox);
 			NEXTMEM2(M_OhmWvn7MIr, mNumVerts, LegacyD3DMesh::PaletteEntry, int, 0x0, mBoundingSphere);
 			ADD(M_OhmWvn7MIr);
 
-			DEFINET2(M_0YKI4JSgVS1, LegacyD3DMesh::LocalTransformEntry);
+			DEFINET2(M_0YKI4JSgVS1, LegacyD3DMesh::LocalTransformEntry, "LegacyD3DMesh::LocalTransformEntry");
 			FIRSTMEM2(M_0YKI4JSgVS1, mTransform, LegacyD3DMesh::LocalTransformEntry, transform, 0x0);
 			NEXTMEM2(M_0YKI4JSgVS1, mCameraFacingType, LegacyD3DMesh::LocalTransformEntry, int, 0x0, mTransform);
 			ADD(M_0YKI4JSgVS1);
 
-			DEFINET2(legmeshanim, LegacyD3DMesh::VertexAnimation);
+			DEFINET2(legmeshanim, LegacyD3DMesh::VertexAnimation, "LegacyD3DMesh::VertexAnimation");
 			meta_legmeshanim.mbTypeUnfinished = true;
 			ADD(legmeshanim);//TODO
 
-			DEFINET2(legmeshskin, LegacyD3DMesh::SkinningEntry);
+			DEFINET2(legmeshskin, LegacyD3DMesh::SkinningEntry, "LegacyD3DMesh::SkinningEntry");
 			meta_legmeshskin.mbTypeUnfinished = true;
 			ADD(legmeshskin);//TODO
 
-			DEFINET2(legmeshbone, LegacyD3DMesh::BoneEntry);
+			DEFINET2(legmeshbone, LegacyD3DMesh::BoneEntry, "LegacyD3DMesh::BoneEntry");
 			meta_legmeshbone.mbTypeUnfinished = true;
 			ADD(legmeshbone);//TODO
 
-			DEFINET2(legmeshanmvert, LegacyD3DMesh::AnimatedVertexEntry);
+			DEFINET2(legmeshanmvert, LegacyD3DMesh::AnimatedVertexEntry, "LegacyD3DMesh::AnimatedVertexEntry");
 			meta_legmeshanmvert.mbTypeUnfinished = true;
 			ADD(legmeshanmvert);//TODO
 
-			DEFINET2(legmeshanmvertgroup, LegacyD3DMesh::AnimatedVertexGroupEntry);
+			DEFINET2(legmeshanmvertgroup, LegacyD3DMesh::AnimatedVertexGroupEntry, "LegacyD3DMesh::AnimatedVertexGroupEntry");
 			meta_legmeshanmvertgroup.mbTypeUnfinished = true;
 			ADD(legmeshanmvertgroup);//TODO
 
-			DEFINEDCARRAY2(LegacyD3DMesh::TriangleSet, legtriset);
-			DEFINEDCARRAY2(LegacyD3DMesh::VertexAnimation, legvertanm);
-			DEFINEDCARRAY2(LegacyD3DMesh::PaletteEntry, legpalentry);
-			DEFINEDCARRAY2(LegacyD3DMesh::SkinningEntry, legskinentry);
-			DEFINEDCARRAY2(LegacyD3DMesh::BoneEntry, legboneentry);
-			DEFINEDCARRAY2(LegacyD3DMesh::LocalTransformEntry, legloctrans);
-			DEFINEDCARRAY2(DCArray<LegacyD3DMesh::PaletteEntry>, legpalentryarray);
-			DEFINEDCARRAY2(DCArray<LegacyD3DMesh::LocalTransformEntry>, legloctransarray);
-			DEFINEDCARRAY2(LegacyD3DMesh::AnimatedVertexEntry, leganmentry);
-			DEFINEDCARRAY2(LegacyD3DMesh::Texture, legmeshtex_arr);
-			DEFINESARRAY_(DCArray<LegacyD3DMesh::Texture>, legmeshtex, 14);
+			DEFINEDCARRAY2(LegacyD3DMesh::TriangleSet, legtriset, "DCArray<LegacyD3DMesh::TriangleSet>");
+			DEFINEDCARRAY2(LegacyD3DMesh::VertexAnimation, legvertanm, "DCArray<LegacyD3DMesh::VertexAnimation>");
+			DEFINEDCARRAY2(LegacyD3DMesh::PaletteEntry, legpalentry, "DCArray<LegacyD3DMesh::PaletteEntry>");
+			DEFINEDCARRAY2(LegacyD3DMesh::SkinningEntry, legskinentry, "DCArray<LegacyD3DMesh::SkinningEntry>");
+			DEFINEDCARRAY2(LegacyD3DMesh::BoneEntry, legboneentry, "DCArray<LegacyD3DMesh::BoneEntry>");
+			DEFINEDCARRAY2(LegacyD3DMesh::LocalTransformEntry, legloctrans, "DCArray<LegacyD3DMesh::LocalTransformEntry>");
+			DEFINEDCARRAY2(DCArray<LegacyD3DMesh::PaletteEntry>, legpalentryarray, "DCArray<DCArray<LegacyD3DMesh::PaletteEntry>>");
+			DEFINEDCARRAY2(DCArray<LegacyD3DMesh::LocalTransformEntry>, legloctransarray, "DCArray<DCArray<LegacyD3DMesh::LocalTransformEntry>>");
+			DEFINEDCARRAY2(LegacyD3DMesh::AnimatedVertexEntry, leganmentry, "DCArray<LegacyD3DMesh::AnimatedVertexEntry>");
+			DEFINEDCARRAY2(LegacyD3DMesh::Texture, legmeshtex_arr, "DCArray<LegacyD3DMesh::Texture>");
+			DEFINESARRAY_(DCArray<LegacyD3DMesh::Texture>, legmeshtex, 14,"SArray<DCArray<LegacyD3DMesh::Texture>,14>");
 
-			DEFINEMAP2(Symbol, LegacyD3DMesh::AnimatedVertexGroupEntry, Symbol, leganmvertgroupentry, std::less<Symbol>);
-			MKNAME(meta_Map_Symbol_leganmvertgroupentry, "Map<Symbol,LegacyD3DMesh::AnimatedVertexGroupEntry,less<Symbol>>");
+			DEFINEMAP2(Symbol, LegacyD3DMesh::AnimatedVertexGroupEntry, Symbol, leganmvertgroupentry, std::less<Symbol>, "Map<Symbol,LegacyD3DMesh::AnimatedVertexGroupEntry,less<Symbol>>");
 
-			DEFINET2(M_1it18OLKdt, LegacyD3DMesh);
+			DEFINET2(M_1it18OLKdt, LegacyD3DMesh, "LegacyD3DMesh");
 			SERIALIZER(M_1it18OLKdt, LegacyD3DMesh);
 			ADDFLAGS(M_1it18OLKdt, 0x200000);
 			FIRSTMEM2(M_1it18OLKdt, mName, LegacyD3DMesh, string, 0x0);
@@ -5863,23 +5728,23 @@ namespace MetaInit {
 			NEXTMEM2(M_1it18OLKdt, mToolProps, LegacyD3DMesh, tp, 0x20, mToolAnimatedVertexGroupEntries);
 			ADD(M_1it18OLKdt);
 
-			DEFINET2(dlgr, DialogResource);
+			DEFINET2(dlgr, DialogResource, "DialogResource");
 			meta_dlgr.mbTypeUnfinished = true;
-			EXT(dlgr, "dlg");
+			EXT(dlgr, dlg);
 			ADD(dlgr);
 
-			DEFINET2(ppropsAnmParam, ParticleProperties::AnimationParams);
+			DEFINET2(ppropsAnmParam, ParticleProperties::AnimationParams, "ParticleProperties::AnimationParams");
 			FIRSTMEM2(ppropsAnmParam, mPositionMin, ParticleProperties::AnimationParams, vec3, 0);
 			NEXTMEM2(ppropsAnmParam, mPositionMax, ParticleProperties::AnimationParams, vec3, 0, mPositionMin);
 			ADD(ppropsAnmParam);
 
-			DEFINET2(ppropsAnm, ParticleProperties::Animation);
+			DEFINET2(ppropsAnm, ParticleProperties::Animation, "ParticleProperties::Animation");
 			FIRSTMEM2(ppropsAnm, mName, ParticleProperties::Animation, symbol, 0);
 			NEXTMEM2(ppropsAnm, mParams, ParticleProperties::Animation, ppropsAnmParam, 0, mName);
 			NEXTMEM2(ppropsAnm, mDataFlags, ParticleProperties::Animation, int, 0, mParams);
 			ADD(ppropsAnm);
 
-			DEFINET2(pprops, ParticleProperties);
+			DEFINET2(pprops, ParticleProperties, "ParticleProperties");
 			FIRSTMEM2(pprops, mName, ParticleProperties, string, 0);
 			NEXTMEM2(pprops, mTextureFlags, ParticleProperties, int, 0, mName);
 			NEXTMEM2(pprops, mTextureCount, ParticleProperties, int, 0, mTextureFlags);
@@ -6071,7 +5936,7 @@ namespace MetaInit {
 
 
 
-		//CONTAINERS 
+		//CONTAINERS
 	}
 
 }

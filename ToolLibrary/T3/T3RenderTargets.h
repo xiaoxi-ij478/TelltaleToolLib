@@ -67,7 +67,7 @@ struct T3RenderTargetIDSet
 		return mDepthTargetID == rhs.mDepthTargetID;
 	}
 
-}; 
+};
 
 struct T3RenderTarget
 {
@@ -520,13 +520,13 @@ namespace T3RenderTargetUtil {
 		outWidth = outHeight = 0;
 		for (int i = 0; i < 8; i++) {
 			if (GetResolution(pContext, idSet.mRenderTargetID[i].mTargetID, idSet.mRenderTargetID[i].mMipLevel, w, h)) {
-				outWidth = max(w, outWidth);
-				outHeight = max(h, outHeight);
+				outWidth = std::max(w, outWidth);
+				outHeight = std::max(h, outHeight);
 			}
 		}
 		if (GetResolution(pContext, idSet.mDepthTargetID.mTargetID, idSet.mDepthTargetID.mMipLevel, w, h)) {
-			outWidth = max(w, outWidth);
-			outHeight = max(h, outHeight);
+			outWidth = std::max(w, outWidth);
+			outHeight = std::max(h, outHeight);
 		}
 	}
 
@@ -535,13 +535,13 @@ namespace T3RenderTargetUtil {
 		outWidth = outHeight = 0;
 		for(int i = 0; i < 8; i++){
 			if(GetResolution(list, idSet.mRenderTargetID[i].mTargetID, idSet.mRenderTargetID[i].mMipLevel, w, h)){
-				outWidth = max(w, outWidth);
-				outHeight = max(h, outHeight);
+				outWidth = std::max(w, outWidth);
+				outHeight = std::max(h, outHeight);
 			}
 		}
 		if (GetResolution(list, idSet.mDepthTargetID.mTargetID, idSet.mDepthTargetID.mMipLevel, w, h)) {
-			outWidth = max(w, outWidth);
-			outHeight = max(h, outHeight);
+			outWidth = std::max(w, outWidth);
+			outHeight = std::max(h, outHeight);
 		}
 	}
 
@@ -666,8 +666,8 @@ namespace T3RenderTargetUtil {
 				if(pEntry->mpTarget){
 					int w = 0, h = 0;
 					::T3::GetMipSize(pEntry->mpTarget->mWidth, pEntry->mpTarget->mHeight, inputSet.mRenderTargetID[i].mMipLevel, &w, &h);
-					outputTarget.mWidth = max(outputTarget.mWidth, w);
-					outputTarget.mHeight = max(outputTarget.mHeight, h);
+					outputTarget.mWidth = std::max(outputTarget.mWidth, w);
+					outputTarget.mHeight = std::max(outputTarget.mHeight, h);
 				}
 				if (i == 0)
 					clear.mClearColor = pEntry->mParams.mClear.mClearColor;
@@ -681,8 +681,8 @@ namespace T3RenderTargetUtil {
 			if (pEntry->mpTarget) {
 				int w = 0, h = 0;
 				::T3::GetMipSize(pEntry->mpTarget->mWidth, pEntry->mpTarget->mHeight, inputSet.mDepthTargetID.mMipLevel, &w, &h);
-				outputTarget.mWidth = max(outputTarget.mWidth, w);
-				outputTarget.mHeight = max(outputTarget.mHeight, h);
+				outputTarget.mWidth = std::max(outputTarget.mWidth, w);
+				outputTarget.mHeight = std::max(outputTarget.mHeight, h);
 			}
 			clear.mClearStencil = pEntry->mParams.mClear.mClearStencil;
 			clear.mClearDepth = pEntry->mParams.mClear.mClearDepth;

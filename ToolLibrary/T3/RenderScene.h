@@ -293,7 +293,7 @@ struct RenderObject_Mesh : RenderObjectInterface
 		bool mbRenderProceduralLines;
 		Set<String, std::less<String> > mShaderErrorList;
 	};
-	
+
 	struct TextureInstance
 	{
 		RenderObject_Mesh* mpMeshInstance;
@@ -491,7 +491,7 @@ struct RenderObject_PostMaterial : RenderObjectInterface
 {
 	//Ptr<Agent> mpAgent;
 	T3PostMaterialParams mParams;
-	unsigned __int64 mMaterialCRC;
+	uint64_t mMaterialCRC;
 	std::shared_ptr<T3MaterialInstance> mpMaterialInstance;
 	BinaryBuffer mMaterialParameterBuffer;
 	std::shared_ptr<T3EffectParameterBuffer> mpMaterialParameterBuffer;

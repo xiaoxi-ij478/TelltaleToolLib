@@ -1,6 +1,7 @@
 #include "LibraryConfig.h"
 #include "TTArchive2.hpp"
 #include <algorithm>
+#include <sys/stat.h>
 
 bool TTArchive2::GetResourceInfo(const Symbol& s, ResourceInfo* i) {
 	if (!i)return false;
@@ -85,7 +86,7 @@ void TTArchive2::Activate(DataStream* inArchiveStream) {
 }
 
 DataStream* TTArchive2::GetResourceStream(TTArchive2::ResourceEntry* entry) {
-	return entry ? new DataStreamSubStream(mpResourceStream, (unsigned __int64)entry->mSize, entry->mOffset) : 0;
+	return entry ? new DataStreamSubStream(mpResourceStream, (unsigned int64_t)entry->mSize, entry->mOffset) : 0;
 }
 
 static bool _Cmp(const TTArchive2::ResourceCreateEntry& lhs, const TTArchive2::ResourceCreateEntry& rhs){
@@ -94,10 +95,10 @@ static bool _Cmp(const TTArchive2::ResourceCreateEntry& lhs, const TTArchive2::R
 	return xl < xr;
 }
 
-__int64 FileSizeA(const char* name)
+int64_t FileSizeA(const char* name)
 {
-	struct _stat64i32 buf{0};
-	if (_stat(name, &buf) != 0)
+	struct stat buf;
+	if (stat(name, &buf) != 0)
 		return -1;
 	return buf.st_size;
 }
@@ -107,10 +108,8 @@ bool TTArchive2::Create(ProgressFunc func, DataStream* pDst, std::vector<Resourc
 	pCompressionLibrary, u32 pVersion) {
 #define writeint(i,size) out.Serialize((char*)i,size);
 	if (!pDst || pVersion > 2)return false;
-	char buf1[MAX_PATH];
-	char buf2[MAX_PATH];
-	GetTempPathA(MAX_PATH, buf1);
-	GetTempFileNameA(buf1, "create_ttarch2_ttlib", 0, buf2);
+	char buf2[PATH_MAX];
+	strcpy(buf2,"/tmp/create_ttarch2_ttlib");
 	DataStreamFileDisc out = DataStreamFileDisc(PlatformSpecOpenFile(buf2, WRITE), DataStreamMode::eMode_Write);
 	u32 vh;
 	if (pVersion == 0) {

@@ -275,7 +275,7 @@ u64 MetaStream_JSON::Close()
 			//DONE!
 		}
 		else if (mMode == MetaStreamMode::eMetaStream_Read) {
-			//nothing 
+			//nothing
 		}
 		mMode = MetaStreamMode::eMetaStream_Closed;
 		_DeleteJSONData();
@@ -310,18 +310,18 @@ bool MetaStream_JSON::Attach(DataStream* stream, MetaStreamMode mode, MetaStream
 		mpReadWriteStream->Serialize(mpRead, mpReadWriteStream->GetSize());
 		mpParser = new LookaheadParser(mpRead);
 		mpParser->EnterObject();
-		
+
 		mpParser->NextObjectKey();
 		mpParser->SkipValue();//watermark
 
 		mpParser->NextObjectKey();
-		if (0 != _stricmp(TelltaleToolLib_GetBlowfishKey(), mpParser->GetString())) {
+		if (0 != strcasecmp(TelltaleToolLib_GetBlowfishKey(), mpParser->GetString())) {
 			TelltaleToolLib_RaiseError("Bad meta stream JSON: game mismatch. Do not use this tool to convert files between game versions.", ErrorSeverity::ERR);
 			return false;
 		}
 
 		//serialized types data
-		if (0 != _stricmp("_serializedTypes", mpParser->NextObjectKey())) {
+		if (0 != strcasecmp("_serializedTypes", mpParser->NextObjectKey())) {
 			TelltaleToolLib_RaiseError("Bad meta stream JSON: no serialized types data (perhaps using old version?)", ErrorSeverity::ERR);
 			return false;
 		}
@@ -345,7 +345,7 @@ bool MetaStream_JSON::Attach(DataStream* stream, MetaStreamMode mode, MetaStream
 			mSerializedTypes.push_back(pClazz);
 		}
 		mpParser->NextArrayValue();
-		if (0 != _stricmp("_metaVersionInfo", mpParser->NextObjectKey())) {
+		if (0 != strcasecmp("_metaVersionInfo", mpParser->NextObjectKey())) {
 			TelltaleToolLib_RaiseError("Bad meta stream JSON: no meta version information found", ErrorSeverity::ERR);
 			return false;
 		}
@@ -377,7 +377,7 @@ bool MetaStream_JSON::Attach(DataStream* stream, MetaStreamMode mode, MetaStream
 			MetaVersionInfo inf{};
 			inf.mVersionCrc = verCrc;
 			inf.mTypeSymbolCrc = typeSymbolCrc;
-			mVersionInfo.push_back(_STD move(inf));
+			mVersionInfo.push_back(std:: move(inf));
 			mpParser->NextObjectKey();
 		}
 		mpParser->NextArrayValue();
@@ -403,7 +403,7 @@ i64 MetaStream_JSON::WriteData(void* d, u32 z)
 
 i64 MetaStream_JSON::ReadData(void* d, u32 z)
 {
-	
+
 	return z;
 }
 
@@ -449,13 +449,13 @@ void MetaStream_JSON::Advance(int numBytes)
 
 void MetaStream_JSON::SkipToEndOfCurrentBlock()
 {
-	
+
 }
 // ----------------------
 
 void MetaStream_JSON::BeginBlock()
 {
-	//nothing 
+	//nothing
 }
 
 void MetaStream_JSON::EndBlock()

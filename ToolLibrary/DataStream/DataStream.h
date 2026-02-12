@@ -1,4 +1,4 @@
-// This file was written by Lucas Saragosa. Im the author of this interpretation of 
+// This file was written by Lucas Saragosa. Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 #include <list>
+#include <cstring>
 
 #ifndef _DATASTREAM
 #define _DATASTREAM
@@ -19,7 +20,7 @@
 #define READ DataStreamMode::eMode_Read
 #define WRITE DataStreamMode::eMode_Write
 
-//Returns a new instance as an object directly 
+//Returns a new instance as an object directly
 #define _OpenDataStreamFromDisc_(file_path, mode) DataStreamFileDisc(\
 PlatformSpecOpenFile(file_path,\
 	mode),\
@@ -51,20 +52,20 @@ public:
 	DataStreamMode mMode;
 	int mSubStreams;
 
-	virtual bool Copy(DataStream* pDst, unsigned __int64 pDstOffset, unsigned __int64 pSrcOffset, unsigned __int64 size);
+	virtual bool Copy(DataStream* pDst, uint64_t pDstOffset, uint64_t pSrcOffset, uint64_t size);
 
 	/*
 	* Serialize bytes. First is the buffer, second is the size. The mode member variable decides if its write or reading into the buffer.
-	* Returns if this function was successful. 
+	* Returns if this function was successful.
 	*/
-	virtual bool Serialize(char*, unsigned __int64) = 0;
+	virtual bool Serialize(char*, uint64_t) = 0;
 
 	/*
 	* Serialize helper function, to write a const pointer instead.
 	* This is not the writing function, Serialize writes and reads depending
 	* on the mode.
 	*/
-	virtual bool SerializeWrite(const char* ptr, unsigned __int64 size) {
+	virtual bool SerializeWrite(const char* ptr, uint64_t size) {
 		if (IsWrite()) {
 			return Serialize((char*)((void*)ptr), size);
 		}
@@ -72,7 +73,7 @@ public:
 		return false;
 	}
 
-	virtual bool SerializeStringRead(char* dest, unsigned __int64 size) {
+	virtual bool SerializeStringRead(char* dest, uint64_t size) {
 		if (IsRead()) {
 			return Serialize(dest, size);
 		}
@@ -86,36 +87,36 @@ public:
 	/*
 	* Gets the size in bytes of this stream.
 	*/
-	virtual unsigned __int64 GetSize() const = 0;
+	virtual uint64_t GetSize() const = 0;
 
 	/*
 	* Transfers bytes from this stream to the given stream
 	*/
-	virtual bool Transfer(DataStream* dst, unsigned __int64 off, unsigned __int64 size) = 0;
+	virtual bool Transfer(DataStream* dst, uint64_t off, uint64_t size) = 0;
 
 	/*
 	* Gets the position (offset) of this stream.
 	*/
-	virtual unsigned __int64 GetPosition() const = 0;
+	virtual uint64_t GetPosition() const = 0;
 
 	/*
 	* Sets the position or offset of this stream. The position is deduced by the seek type parameter.
 	*/
-	virtual bool SetPosition(signed __int64, DataStreamSeekType) = 0;
+	virtual bool SetPosition(int64_t, DataStreamSeekType) = 0;
 
 	/*
 	* Truncates this stream to the given new size. If its over the stream size, adds zeros (if this stream can do that, otherwise will
 	* return false) otherwise it will remove all excess bytes. Not available for all types of data stream.
 	* Only works in write mode (will return false if its not in write mode)
 	*/
-	virtual bool Truncate(unsigned __int64) = 0;
+	virtual bool Truncate(uint64_t) = 0;
 
 	/*
 	* Gets a sub-stream of this stream. A sub-stream is a READ-ONLY (will return null if its not read mode) stream which points
 	* to a section of a data stream. Like a std::string_view for a std::basic_string/std::string
 	*/
-	virtual DataStreamSubStream* GetSubStream(unsigned __int64 off,unsigned __int64 size);
-	
+	virtual DataStreamSubStream* GetSubStream(uint64_t off,uint64_t size);
+
 	/*
 	* Sets the mode of this stream. If there are substreams attached to this one and you try to set it to not read then it fails.
 	*/
@@ -126,8 +127,8 @@ public:
 	virtual bool IsInvalid() { return mMode == DataStreamMode::eMode_Unset; }
 
 	DataStream& operator=(DataStream&&) ;
-	DataStream& operator=(DataStream const&) = delete;
-	DataStream(DataStream& const) = delete;
+	DataStream& operator=(const DataStream&) = delete;
+	DataStream(const DataStream&) = delete;
 	DataStream(DataStream&&) ;
 	DataStream() : mMode(DataStreamMode::eMode_Unset), mSubStreams(0) {}
 	DataStream(DataStreamMode mode) : mMode(mode), mSubStreams(0) {}
@@ -146,22 +147,22 @@ public:
 	FileHandle mHandle = EMPTY_FILE_HANDLE;
 	i64 mStreamOffset = 0, mStreamSize = 0;
 
-	bool Serialize(char*, unsigned __int64);
-	unsigned __int64 GetSize() const { return mStreamSize; }
-	unsigned __int64 GetPosition() const { return mStreamOffset; };
-	bool SetPosition(signed __int64, DataStreamSeekType);
-	bool Truncate(unsigned __int64);
+	bool Serialize(char*, uint64_t);
+	uint64_t GetSize() const { return mStreamSize; }
+	uint64_t GetPosition() const { return mStreamOffset; };
+	bool SetPosition(int64_t, DataStreamSeekType);
+	bool Truncate(uint64_t);
 	//cant transfer from a file, only used for memory streams
-	bool Transfer(DataStream* dst, unsigned __int64 off, unsigned __int64 size);
+	bool Transfer(DataStream* dst, uint64_t off, uint64_t size);
 
 	DataStreamFile_PlatformSpecific();
 	DataStreamFile_PlatformSpecific(FileHandle H, DataStreamMode);
 	DataStreamFile_PlatformSpecific(DataStreamFile_PlatformSpecific&&);
 	DataStreamFile_PlatformSpecific& operator=(DataStreamFile_PlatformSpecific&&);
-	DataStreamFile_PlatformSpecific(DataStreamFile_PlatformSpecific const&) = delete;
-	DataStreamFile_PlatformSpecific& operator=(DataStreamFile_PlatformSpecific& const) = delete;
+	DataStreamFile_PlatformSpecific(const DataStreamFile_PlatformSpecific&) = delete;
+	DataStreamFile_PlatformSpecific& operator=(const DataStreamFile_PlatformSpecific&) = delete;
 
-	inline virtual ~DataStreamFile_PlatformSpecific() { 
+	inline virtual ~DataStreamFile_PlatformSpecific() {
 		PlatforSpecCloseFile(mHandle);
 	};
 
@@ -171,17 +172,17 @@ class DataStreamSubStream : public DataStream {
 public:
 
 	DataStream* mpBase;
-	unsigned __int64 mOffset, mStreamOffset, mSize;
+	uint64_t mOffset, mStreamOffset, mSize;
 
-	bool Serialize(char*, unsigned __int64);
+	bool Serialize(char*, uint64_t);
 
-	unsigned __int64 GetSize() const { return mSize; }
+	uint64_t GetSize() const { return mSize; }
 
-	unsigned __int64 GetPosition() const { return mOffset; };
+	uint64_t GetPosition() const { return mOffset; };
 
-	bool SetPosition(signed __int64, DataStreamSeekType);
+	bool SetPosition(int64_t, DataStreamSeekType);
 
-	inline bool Truncate(unsigned __int64 newz) {
+	inline bool Truncate(uint64_t newz) {
 		if (newz <= mSize) {
 			mSize = newz;
 			if (mOffset > mSize)
@@ -191,16 +192,16 @@ public:
 		return false;
 	};
 
-	bool Transfer(DataStream* dst, unsigned __int64 off, unsigned __int64 size);
+	bool Transfer(DataStream* dst, uint64_t off, uint64_t size);
 
-	virtual DataStreamSubStream* GetSubStream(unsigned __int64 off, unsigned __int64 size);
+	virtual DataStreamSubStream* GetSubStream(uint64_t off, uint64_t size);
 
-	DataStreamSubStream(DataStream*, unsigned __int64  size);//substream starts at base stream current offset, size is size (param 2)
-	DataStreamSubStream(DataStream*, unsigned __int64 size, unsigned __int64 baseOffset);
+	DataStreamSubStream(DataStream*, uint64_t  size);//substream starts at base stream current offset, size is size (param 2)
+	DataStreamSubStream(DataStream*, uint64_t size, uint64_t baseOffset);
 	DataStreamSubStream(DataStreamSubStream&&);
 	DataStreamSubStream& operator=(DataStreamSubStream&&);
-	DataStreamSubStream(DataStreamSubStream& const) = delete;
-	DataStreamSubStream& operator=(DataStreamSubStream& const) = delete;
+	DataStreamSubStream(const DataStreamSubStream&) = delete;
+	DataStreamSubStream& operator=(const DataStreamSubStream&) = delete;
 
 	~DataStreamSubStream();
 
@@ -214,14 +215,14 @@ public:
 	u64 mGFact = DEFAULT_GROWTH_FACTOR;
 	void* mMemoryBuffer;
 
-	bool Serialize(char*, unsigned __int64);
-	unsigned __int64 GetSize() const { return mSize; }
-	unsigned __int64 GetPosition() const { return mOffset; }
-	bool SetPosition(signed __int64, DataStreamSeekType);
-	bool Truncate(unsigned __int64 new_size);
-	bool Transfer(DataStream* dst, unsigned __int64 off, unsigned __int64 size);
+	bool Serialize(char*, uint64_t);
+	uint64_t GetSize() const { return mSize; }
+	uint64_t GetPosition() const { return mOffset; }
+	bool SetPosition(int64_t, DataStreamSeekType);
+	bool Truncate(uint64_t new_size);
+	bool Transfer(DataStream* dst, uint64_t off, uint64_t size);
 
-	inline unsigned __int64 GetMemoryBufferSize() {
+	inline uint64_t GetMemoryBufferSize() {
 		int memorybufsize = mSize;
 		if (mSize % mGFact)memorybufsize += mGFact - (mSize % mGFact);
 		return memorybufsize;
@@ -229,15 +230,15 @@ public:
 
 
 	//buffer param needs to be allocated with malloc/calloc
-	DataStreamMemory(void* buffer, unsigned __int64 size,DataStreamMode m) : mMemoryBuffer(buffer), mSize(size), mOffset(0), DataStream(m) {}
-	DataStreamMemory(void* buffer, unsigned __int64 size, unsigned __int64 growthFactor, DataStreamMode m)
+	DataStreamMemory(void* buffer, uint64_t size,DataStreamMode m) : mMemoryBuffer(buffer), mSize(size), mOffset(0), DataStream(m) {}
+	DataStreamMemory(void* buffer, uint64_t size, uint64_t growthFactor, DataStreamMode m)
 		: mMemoryBuffer(buffer), mSize(size), mOffset(0), mGFact(growthFactor), DataStream(m) {};
-	DataStreamMemory(unsigned __int64 initialSize);
-	DataStreamMemory(unsigned __int64 initialSize, unsigned __int64 growthFactor);
+	DataStreamMemory(uint64_t initialSize);
+	DataStreamMemory(uint64_t initialSize, uint64_t growthFactor);
 	DataStreamMemory(DataStreamMemory&&);
 	DataStreamMemory& operator=(DataStreamMemory&&);
-	DataStreamMemory(DataStreamMemory const&) = delete;
-	DataStreamMemory& operator=(DataStreamMemory& const) = delete;
+	DataStreamMemory(const DataStreamMemory&) = delete;
+	DataStreamMemory& operator=(const DataStreamMemory&) = delete;
 	~DataStreamMemory();
 
 };
@@ -249,28 +250,28 @@ class DataStreamLegacyEncrypted : public DataStream {
 	DataStream* mpBase;
 	unsigned int mHeader;//start pos
 	unsigned int mEncryptSize, mEncryptInterval, mEncryptSkip;
-	unsigned __int64 mSize, mOffset;
+	uint64_t mSize, mOffset;
 	int mCurrentBlock;
 
 public:
 
 	char mBuf[0x100];
 
-	bool Serialize(char*, unsigned __int64);
-	unsigned __int64 GetSize() const { return mSize + mHeader; }
-	unsigned __int64 GetPosition() const { return mOffset + mHeader; }
-	bool SetPosition(signed __int64, DataStreamSeekType);
+	bool Serialize(char*, uint64_t);
+	uint64_t GetSize() const { return mSize + mHeader; }
+	uint64_t GetPosition() const { return mOffset + mHeader; }
+	bool SetPosition(int64_t, DataStreamSeekType);
 
-	inline bool Truncate(unsigned __int64 new_size) {
+	inline bool Truncate(uint64_t new_size) {
 		return false;
 	};
 
-	bool Transfer(DataStream* dst, unsigned __int64 off, unsigned __int64 size) { return false; }
+	bool Transfer(DataStream* dst, uint64_t off, uint64_t size) { return false; }
 	DataStreamLegacyEncrypted(DataStream*,int version, unsigned int startPos);
 	DataStreamLegacyEncrypted(DataStreamLegacyEncrypted&&) = delete;
 	DataStreamLegacyEncrypted& operator=(DataStreamLegacyEncrypted&&) = delete;
-	DataStreamLegacyEncrypted(DataStreamLegacyEncrypted const&) = delete;
-	DataStreamLegacyEncrypted& operator=(DataStreamLegacyEncrypted& const) = delete;
+	DataStreamLegacyEncrypted(const DataStreamLegacyEncrypted&) = delete;
+	DataStreamLegacyEncrypted& operator=(const DataStreamLegacyEncrypted&) = delete;
 
 };
 
@@ -279,8 +280,8 @@ struct DataStreamContainerParams {
 	DataStream* mpSrcStream = 0;
 	DataStream* mpDstStream = 0;
 	//offset which to start serialing to in the destination stream
-	unsigned __int64 mDstOffset = 0;
-	unsigned __int32 mWindowSize = 0;
+	uint64_t mDstOffset = 0;
+	uint32_t mWindowSize = 0;
 	bool mbCompress = 0;
 	bool mbEncrypt = 0;
 	Compression::Library mCompressionLibrary;
@@ -295,9 +296,9 @@ class DataStreamContainer : public DataStream {
 
 	//page and chunk are synonymous
 
-	bool GetChunk(unsigned __int64 index);
+	bool GetChunk(uint64_t index);
 
-	inline unsigned __int64 GetCompressedPageSize(unsigned __int32 index);
+	inline uint64_t GetCompressedPageSize(uint32_t index);
 
 public:
 
@@ -308,9 +309,9 @@ public:
 	DataStreamContainerParams mParams;
 	char* mpCachedPage;//0x32
 	char* mpReadTransitionBuf;
-	signed __int32 mCurrentIndex;// , mCacheablePages;
-	unsigned __int64* mPageOffsets;
-	unsigned __int64 mNumPages;
+	int32_t mCurrentIndex;// , mCacheablePages;
+	uint64_t* mPageOffsets;
+	uint64_t mNumPages;
 	bool ok = false;
 
 	inline static std::shared_ptr<DataStreamContainer> ReadContainer(DataStream* pSrcStream, u64 off, u64* pSizeTransferred){
@@ -327,27 +328,27 @@ public:
 
 
 	//init from src stream
-	void Read(unsigned __int64 offset, unsigned __int64* pContainerSize);
+	void Read(uint64_t offset, uint64_t* pContainerSize);
 
 	//Creates a TT data stream container with the parameters. Serializes from src to dest. srcInStreamSize is the amount of bytes to
 	//serialize from the src stream from the source streams current offset
 	//progres function starts progress percentage at 80 (assumming you use this with .ttarch, otherwise just modify the function input)
-	static void Create(ProgressF, DataStreamContainerParams, unsigned __int64 srcInStreamSize);
-	bool SetPosition(signed __int64, DataStreamSeekType);
-	bool Serialize(char*, unsigned __int64);
+	static void Create(ProgressF, DataStreamContainerParams, uint64_t srcInStreamSize);
+	bool SetPosition(int64_t, DataStreamSeekType);
+	bool Serialize(char*, uint64_t);
 
-	unsigned __int64 GetSize() const { return mStreamSize; }
-	unsigned __int64 GetPosition() const { return mStreamPosition; }
+	uint64_t GetSize() const { return mStreamSize; }
+	uint64_t GetPosition() const { return mStreamPosition; }
 
-	inline bool Truncate(unsigned __int64 new_size) {
+	inline bool Truncate(uint64_t new_size) {
 		return false;
 	};
 
-	inline bool Transfer(DataStream* dst, unsigned __int64 off, unsigned __int64 size) {
+	inline bool Transfer(DataStream* dst, uint64_t off, uint64_t size) {
 		return Copy(dst, dst->GetPosition(), off, size);
 	}
 
-	inline DataStreamContainer(DataStreamContainerParams params) : DataStream(DataStreamMode::eMode_Read), 
+	inline DataStreamContainer(DataStreamContainerParams params) : DataStream(DataStreamMode::eMode_Read),
 		mParams(params), mStreamOffset(0), /*mCacheablePages(-1),*/ mpReadTransitionBuf(NULL),
 		mStreamSize(0), mStreamStart(0),
 		mCurrentIndex(-1), mStreamPosition(0), mNumPages(0), mPageOffsets(NULL), mpCachedPage(NULL) {}//Create
@@ -367,8 +368,8 @@ public:
 	DataStreamContainer(DataStreamContainer&&) = default;
 	DataStreamContainer& operator=(DataStreamContainer&&) = default;
 
-	DataStreamContainer(DataStreamContainer const&) = delete;
-	DataStreamContainer& operator=(DataStreamContainer& const) = delete;
+	DataStreamContainer(const DataStreamContainer&) = delete;
+	DataStreamContainer& operator=(const DataStreamContainer&) = delete;
 
 };
 

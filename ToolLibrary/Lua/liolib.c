@@ -84,7 +84,7 @@
 
 #define l_fseek(f,o,w)		_fseeki64(f,o,w)
 #define l_ftell(f)		_ftelli64(f)
-#define l_seeknum		__int64
+#define l_seeknum		int64_t
 
 #else
 
