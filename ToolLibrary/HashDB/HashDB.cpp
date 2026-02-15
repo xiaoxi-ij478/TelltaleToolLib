@@ -563,6 +563,7 @@ void HashDatabase::_SetBuffer(Page* page)
 	if(mpBuffered && mpBuffered->mCount >= page->mCount){
 		;
 	}else{
+		delete[] mpBuffer;
 		mpBuffer = new u64[page->mCount];
 	}
 	mpBuffered = page;
