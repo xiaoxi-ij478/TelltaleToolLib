@@ -1,5 +1,6 @@
 #include "HashDB.h"
 #include <algorithm>
+#include <numeric>
 #include "../HashManager.h"
 
 const u32 MAGIC = 0x54544c42;//TTLB
@@ -458,21 +459,11 @@ bool HashDatabase::Create(const char* fp, DataStream* pOut, bool bVerbose, bool 
 			std::string s = buf;
 			repl(s, "\n", "");
 			repl(s, "\r", "");
-			bool exit = false;
-			for(auto it = cur_values.begin(); it != cur_values.end(); it++){
-				if (!iequals(*it, s)) {
-					exit = true;
-					break;
-				}
-			}
-			if (exit)
-				continue;
-			currentPage.mFlags += (u32)s.length();
 			cur_values.push_back(std::move(s));
 		}
 	}
-	pages.push_back(std::move(currentPage));
-	values.push_back(std::move(cur_values));
+	pages.push_back(currentPage);
+	values.push_back(cur_values);
 	int i = 0;
 	u32 symbolStart = 0;
 	u32 stringStart = 0;
@@ -482,8 +473,16 @@ bool HashDatabase::Create(const char* fp, DataStream* pOut, bool bVerbose, bool 
 	pOut->Serialize((char*)&write, 4);
 	if (bVerbose)
 		TTL_Log("-sorting string and hashes\n");
-	for (auto x = values.begin(); x != values.end(); x++) {
-		std::sort(x->begin(), x->end(), &sorter);
+	unsigned index_=0;
+	for (auto&x:values) {
+		TTL_Log("-index %d\r",index_);
+		fflush(stdout);
+		std::sort(x.begin(), x.end(), &sorter);
+		auto it=std::unique(x.begin(),x.end(),[](const std::string&a,const std::string&b){return !strcasecmp(a.c_str(),b.c_str());});
+		unsigned long long len=std::distance(x.begin(),it);
+		x.resize(len);
+		pages[index_].mFlags = std::accumulate(x.begin(),x.end(),0u,[](unsigned&i,const std::string&s){return i+s.length();});
+		index_++;
 	}
 	if (bVerbose)
 		TTL_Log("-writing headers\n");
