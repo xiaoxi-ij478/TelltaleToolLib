@@ -33,6 +33,10 @@ public:
 	int mCapacity;
 	T* mpStorage;
 
+	// to support range-for loop
+	T*begin(){return mpStorage;}
+	T*end(){return mpStorage+mSize;}
+
 	DCArray() : mSize(0), mCapacity(0), mpStorage(NULL) {}
 
 	static MetaOpResult MetaOperation_SerializeMain(void* pObj, MetaClassDescription* pDesc, MetaMemberDescription* pContext,

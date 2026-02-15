@@ -385,7 +385,7 @@ ADD(sv_##_name);
 DEFINET2(kfv_##_name##_sample, KeyframedValue<_Ty>::Sample,typename_sample_);\
 FIRSTMEM2(kfv_##_name##_sample, mTime, KeyframedValue<_Ty>::Sample, float, 0);\
 NEXTMEM2(kfv_##_name##_sample, mbInterpolateToNextKey, KeyframedValue<_Ty>::Sample, bool, 0, mTime);\
-NEXTMEM2(kfv_##_name##_sample, mTangentMode, KeyframedValue<_Ty>::Sample, long, 0, mbInterpolateToNextKey);\
+NEXTMEM2(kfv_##_name##_sample, mTangentMode, KeyframedValue<_Ty>::Sample, __int32, 0, mbInterpolateToNextKey);\
 FIRSTENUM(kfv_##_name##_sample, mTangentMode, eTangentUnknown, 0, 0);\
 NEXTENUM(kfv_##_name##_sample, mTangentMode, eTangentStepped, 1, 0, eTangentUnknown);\
 NEXTENUM(kfv_##_name##_sample, mTangentMode, eTangentKnot, 2, 0, eTangentStepped);\

@@ -224,7 +224,7 @@ public:
 
 	};
 
-	int mPropVersion;
+	int32_t mPropVersion;
 	Flags mPropertyFlags;
 	//Flags mModifiedFlags; //NOT SERIALIZED! could be useful?
 	DCArray<PropertySet::KeyInfo> mKeyMap;//type=>value

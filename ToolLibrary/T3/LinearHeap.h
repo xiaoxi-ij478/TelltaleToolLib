@@ -60,7 +60,7 @@ class LinearHeap {
 
 	inline Page* _AllocatePage(u32 size = 0){
 		size = std::max(size, mPageSize);
-		Page* pg = (Page*)_aligned_malloc(size, 32);
+		Page* pg = (Page*)aligned_alloc(32,size);
 		if (!pg)
 			return 0;
 		memset(pg, 0, size);

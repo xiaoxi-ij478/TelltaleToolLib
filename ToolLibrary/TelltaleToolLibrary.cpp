@@ -649,41 +649,41 @@ _TTToolLib_Exp void* TelltaleToolLib_CreateIntrinsicInstance(int intrin, char da
     if(intrin == IntrinType::I8){
         mcd = TelltaleToolLib_FindMetaClassDescription("int8", 1);
         v = TelltaleToolLib_CreateClassInstance(mcd);
-        *((signed char*)v) = rawvalue & 0xFF;
+        *((int8_t*)v) = rawvalue & 0xFF;
 	}
 	else if (intrin == IntrinType::U8) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("uint8", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned char*)v) = rawvalue & 0xFF;
+		*((uint8_t*)v) = rawvalue & 0xFF;
 	}
 	else if (intrin == IntrinType::I16) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("uint16", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned short*)v) = rawvalue & 0xFFFF;
+		*((uint16_t*)v) = rawvalue & 0xFFFF;
 	}
 	else if (intrin == IntrinType::U16) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("int16", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((signed short*)v) = rawvalue & 0xFFFF;
+		*((int16_t*)v) = rawvalue & 0xFFFF;
 	}
 	else if (intrin == IntrinType::I32) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("int32", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((long*)v) = rawvalue & 0xFFFFFFFF;
+		*((int32_t*)v) = rawvalue & 0xFFFFFFFF;
 	}else if (intrin == IntrinType::U32) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("uint32", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned long*)v) = rawvalue & 0xFFFFFFFF;
+		*((uint32_t*)v) = rawvalue & 0xFFFFFFFF;
 	}
 	else if (intrin == IntrinType::I64) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("int64", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-        *((signed long long*)v) = rawvalue;
+        *((int64_t*)v) = rawvalue;
 	}
 	else if (intrin == IntrinType::U64) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("uint64", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned long long*)v) = rawvalue & 0xFF;
+		*((uint64_t*)v) = rawvalue & 0xFF;
 	}
 	else if (intrin == IntrinType::SYM) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("Symbol", 1);
@@ -698,12 +698,12 @@ _TTToolLib_Exp void* TelltaleToolLib_CreateIntrinsicInstance(int intrin, char da
 	else if (intrin == IntrinType::FLT) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("float", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-        *((unsigned long*)v) = rawvalue & 0xFFFFFFFF;
+        *((float*)v) = rawvalue & 0xFFFFFFFF;
 	}
 	else if (intrin == IntrinType::DBL) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("double", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned long long*)v) = rawvalue;
+		*((double*)v) = rawvalue;
 	}
 	else if (intrin == IntrinType::FLG) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("Flags", 1);
@@ -1082,7 +1082,7 @@ _TTToolLib_Exp void TelltaleToolLib_WriteDataStream(DataStream* pOutStream, void
     }
 }
 
-_TTToolLib_Exp unsigned long long TelltaleToolLib_CRC64CaseInsensitive(const char* pBuf, unsigned long long initialCRC){
+_TTToolLib_Exp uint64_t TelltaleToolLib_CRC64CaseInsensitive(const char* pBuf, uint64_t initialCRC){
     return CRC64_CaseInsensitive(initialCRC, pBuf);
 }
 

@@ -1177,7 +1177,7 @@ struct LocationInfo {
 
 struct ResourceGroupInfo {
 	Color mColor;
-	long mPriority;
+	int32_t mPriority;
 };
 
 struct Polar

@@ -548,7 +548,7 @@ public:
 	/**
 	 * Serializes a double64.
 	 */
-	virtual void serialize_double(long double*);
+	virtual void serialize_double(double*);
 
 	/**
 	 * Serializes a float32

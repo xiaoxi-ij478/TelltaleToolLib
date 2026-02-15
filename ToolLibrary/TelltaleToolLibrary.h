@@ -185,7 +185,7 @@ struct BinaryBuffer {
 		if (mpData)
 			delete[] mpData;
 		if (dataSize > 0) {
-			mpData = (char*)_aligned_malloc(dataSize, align);
+			mpData = (char*)aligned_alloc(align,dataSize);
 			if (mpData) {
 				mDataSize = dataSize;
 				if (pData)
@@ -680,7 +680,7 @@ _TTToolLib_Exp void* TelltaleToolLib_ReadDataStream(DataStream* pReadStream, uns
 
 _TTToolLib_Exp void TelltaleToolLib_WriteDataStream(DataStream* pOutStream, void* pBuffer, unsigned long size);
 
-_TTToolLib_Exp unsigned long long TelltaleToolLib_CRC64CaseInsensitive(const char* pNulTermString, unsigned long long initCRC/*=0*/);
+_TTToolLib_Exp uint64_t TelltaleToolLib_CRC64CaseInsensitive(const char* pNulTermString, uint64_t initCRC/*=0*/);
 
 //See T3EffectUser.h. Does not deallocate any old ones
 _TTToolLib_Exp void TelltaleToolLib_SetRenderAdapters(ToolLibRenderAdapters* pRenderAdapterOverloads);

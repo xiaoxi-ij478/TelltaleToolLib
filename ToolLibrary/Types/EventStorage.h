@@ -37,7 +37,7 @@ struct SaveGame
 
 //.EPAGE FILES
 struct EventStoragePage {
-	long mVersion;
+	int32_t mVersion;
 	u64 mSessionID;
 	String mFlushedNameOnDisk;
 	List<EventLoggerEvent*> mEvents;
@@ -61,7 +61,7 @@ struct EventData {
 	EventDataType mDataType;//as char
 	union {
 		Symbol mDataSymbolMemory;
-		long double mDataDouble;
+		double mDataDouble;
 		u64 mDataInt;
 	};
 	char mSeverity;
@@ -77,8 +77,8 @@ struct EventData {
 
 struct EventLoggerEvent {
 
-	long mEventID;
-	long mMaxSeverity;
+	int32_t mEventID;
+	int32_t mMaxSeverity;
 
 	struct TypeHeader {
 		Symbol mType;
@@ -186,7 +186,7 @@ struct EventStorage {
 		u32 mMaxEventID;
 	};
 
-	long mVersion;
+	int32_t mVersion;
 	u64 mSessionID;
 	DCArray<PageEntry> mPages;
 	String mName;

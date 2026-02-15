@@ -21,15 +21,15 @@ public:
 
 	struct EnumEntry {
 		uint64_t mpEnumName;
-		int mEnumValue;
-		int mFlags;
-		int mpNext = -1;
+		int32_t mEnumValue;
+		int32_t mFlags;
+		int32_t mpNext = -1;
 	};
 
 	struct FlagEntry {
 		uint64_t mpFlagName;
-		int mFlagValue;
-		int mpNext = -1;
+		int32_t mFlagValue;
+		int32_t mpNext = -1;
 	};
 
 	struct ClassEntry {
@@ -39,7 +39,7 @@ public:
 		//if the actual one is not -1, then it is correct in the game (should equal versioncrc, if not then use actual)
 		uint32_t mFlags, mClassSize, mVersionCRC, mActualVersionCRC = -1;
 
-		int mpFirstMember = -1;
+		int32_t mpFirstMember = -1;
 
 		inline bool is_crc_definite() {
 			return mActualVersionCRC != -1;
@@ -54,15 +54,15 @@ public:
 	struct MemberEntry {
 		uint64_t mpName;
 		uint32_t mOffset, mFlags;
-		int mpHostClass;
-		int mpNextMember = -1;
-		int mpEnumDesc = -1, mpFlagDesc = -1;
+		int32_t mpHostClass;
+		int32_t mpNextMember = -1;
+		int32_t mpEnumDesc = -1, mpFlagDesc = -1;
 		/*its a normal pointer index into the classes array, stored as a 64 bit value for backend purposes in serialization*/
 		uint64_t mpMemberDesc;
 	};
 
-	int mVersion;
-	int mDBFlags;
+	int32_t mVersion;
+	int32_t mDBFlags;
 	DCArray<ClassEntry> mClasses;
 	DCArray<FlagEntry> mFlags;
 	DCArray<EnumEntry> mEnums;

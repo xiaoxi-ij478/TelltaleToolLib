@@ -7,7 +7,7 @@ This is a very strict library, and requires that you understand the fundamentals
 
 Still, this library can only run on Windows, so in order to port Telltale Inspector to Linux, I ported this library to Linux as well. It is still highly experimental and may break at anywhere. But I don't have much time working on it.....
 
-Note though that since oodle is shipped only as a Windows DLL so oodle compression is disabled in this Library. If there's an open source oodle compression implementation I may consider add it to this library.
+Note though that since oodle is shipped only as a Windows DLL oodle compression is disabled in this Library. If there's an open source oodle compression implementation I may consider add it to this library.
 
 ### Library Information
 

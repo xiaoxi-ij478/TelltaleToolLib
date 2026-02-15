@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -22,12 +22,12 @@ struct ResourceBundle {
 
 	struct ResourceInfo {
 		Symbol mResNameSymbol;
-		unsigned long mStreamOffset, mStreamSize;
+		uint32_t mStreamOffset, mStreamSize;
 		ResourceState mState;
 		MetaClassDescription* mpDesc;
 	};
 
-	long mVersion;
+	int32_t mVersion;
 	String mName;
 	DCArray<ResourceInfo> mResourceInfo;
 
@@ -43,7 +43,7 @@ struct ResourceBundle {
 			for (int i = 0; i < bundle->mResourceInfo.GetSize(); i++) {
 				ResourceInfo* info = bundle->mResourceInfo.mpStorage + i;
 				currentpos = meta->GetPos();
-				if (info->mState != 
+				if (info->mState !=
 					ResourceState::eResourceState_InternalInOtherBundle) {
 
 				}

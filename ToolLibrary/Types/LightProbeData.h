@@ -23,9 +23,9 @@ struct Tetrahedron {
 };
 
 struct TetrahedralMeshData {
-	long mVersion;
-	long mTetrahedraCount;
-	long mVertexCount;
+	int32_t mVersion;
+	int32_t mTetrahedraCount;
+	int32_t mVertexCount;
 
 	void* mpMemoryBuffer;
 	Vector3* mpVertices;
@@ -90,7 +90,7 @@ struct LightProbeData {
 	};
 
 	String mName;
-	long mVersion;
+	int32_t mVersion;
 	TetrahedralMeshData mTetrahedralMeshData;
 	CompressedProbeSH* mProbeSH[4];
 

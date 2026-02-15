@@ -73,24 +73,24 @@ bool LookaheadParser::NextArrayValue() {
 	return true;
 }
 
-unsigned long long LookaheadParser::GetULong() {
+uint64_t LookaheadParser::GetULong() {
 	if (st_ != kHasNumber || !v_.IsUint64()) {
 		st_ = kError;
 		return 0;
 	}
 
-	unsigned long long result = v_.GetUint64();
+	uint64_t result = v_.GetUint64();
 	ParseNext();
 	return result;
 }
 
-int LookaheadParser::GetInt() {
+int32_t LookaheadParser::GetInt() {
 	if (st_ != kHasNumber || !v_.IsInt()) {
 		st_ = kError;
 		return 0;
 	}
 
-	int result = v_.GetInt();
+	int32_t result = v_.GetInt();
 	ParseNext();
 	return result;
 }
@@ -281,6 +281,8 @@ u64 MetaStream_JSON::Close()
 		_DeleteJSONData();
 		return completeStreamSize;
 	}
+	// would cause SIGILL otherwise...
+	return 0;
 }
 
 bool MetaStream_JSON::Attach(DataStream* stream, MetaStreamMode mode, MetaStreamParams params)
@@ -532,12 +534,12 @@ void MetaStream_JSON::serialize_bool(bool* p)
 	}
 }
 
-void MetaStream_JSON::serialize_double(long double* p)
+void MetaStream_JSON::serialize_double(double* p)
 {
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("Double Value");
-		mpWriter->mWriter.Double((double) * p);
+		mpWriter->mWriter.Double(* p);
 	}
 }
 
@@ -546,7 +548,7 @@ void MetaStream_JSON::serialize_float(float* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("Float Value");
-		mpWriter->mWriter.Double((double)*p);
+		mpWriter->mWriter.Double(*p);
 	}
 }
 
@@ -555,7 +557,7 @@ void MetaStream_JSON::serialize_uint16(u16* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("UInt16 Value");
-		mpWriter->mWriter.Uint((unsigned long long) *p);
+		mpWriter->mWriter.Uint(*p);
 	}
 }
 
@@ -564,7 +566,7 @@ void MetaStream_JSON::serialize_uint32(u32* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("UInt32 Value");
-		mpWriter->mWriter.Uint64((unsigned long long)*p);
+		mpWriter->mWriter.Uint64(*p);
 	}
 }
 
@@ -573,7 +575,7 @@ void MetaStream_JSON::serialize_uint64(u64* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("UInt64 Value");
-		mpWriter->mWriter.Uint64((uint64_t)*p);
+		mpWriter->mWriter.Uint64(*p);
 	}
 }
 
@@ -582,7 +584,7 @@ void MetaStream_JSON::serialize_int8(char* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("Int8 Value");
-		mpWriter->mWriter.Uint((unsigned long long) *p);
+		mpWriter->mWriter.Uint((uint8_t)*p);
 	}
 }
 

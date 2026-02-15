@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -15,7 +15,7 @@
 #include "SoundData.h"
 
 struct ProjectDatabaseIDPair {
-	long mProjectID, mDBID;//db id
+	int32_t mProjectID, mDBID;//db id
 };
 
 struct LocalizeInfo {
@@ -41,8 +41,8 @@ struct LanguageResLocal {
 //.LANG FILES
 struct LanguageRes {
 	Symbol mResName;
-	unsigned long mID;
-	unsigned long mIDAlias;
+	uint32_t mID;
+	uint32_t mIDAlias;
 	Handle<Animation> mhAnimation;
 	Handle<SoundData> mhVoiceData;
 	DCArray<LanguageResLocal> mLocalData;
@@ -55,10 +55,10 @@ struct LanguageRes {
 //.LANDB FILES
 struct LanguageDB : public UID::Owner, public UID::Generator {
 
-	Map<unsigned int, LanguageRes> mLanguageResources;
+	Map<uint32_t, LanguageRes> mLanguageResources;
 	LocalizationRegistry mRegistry;
 	Flags mFlags;
-	long mProjectID;
+	int32_t mProjectID;
 	DCArray<ProjectDatabaseIDPair> mExpandedIDRanges;
 
 	struct _DebugMapping {
@@ -117,7 +117,7 @@ struct LanguageDB : public UID::Owner, public UID::Generator {
 	static METAOP_FUNC_IMPL__(SerializeAsync) {
 		//looks empty but originally there is a debug section in the langdb, which of course in is not shipped and is only used internally
 		//the debug section contains list of string triplets in the format {lang file, anm file, sound data file}
-		//the size of the list is the 
+		//the size of the list is the
 		MetaOpResult r = Meta::MetaOperation_SerializeAsync(pObj, pObjDescription, pContextDescription, pUserData);
 		MetaStream* meta = static_cast<MetaStream*>(pUserData);
 		LanguageDB* db = static_cast<LanguageDB*>(pObj);

@@ -276,7 +276,7 @@ struct DlgChainHead : DlgObjIDOwner {
 
 struct DlgDownstreamVisibilityConditions {
 	Flags mNodeTypeFlags;
-	long mMaxNumNodeEvals;
+	int32_t mMaxNumNodeEvals;
 };
 
 struct DlgVisibilityConditions {
@@ -1249,12 +1249,12 @@ struct Dlg : DlgObjIDOwner, UID::Generator {//UID im not 100% sure since its onl
 	}
 
 	String mName;
-	long mVersion;
+	int32_t mVersion;
 	DlgObjID mDefFolderID;
 	LanguageDB mLangDB;
-	unsigned long mProjectID;
+	uint32_t mProjectID;
 	Symbol mResourceLocationID;
-	long mChronology;
+	int32_t mChronology;
 	Flags mFlags;//values in DlgNode::ClassFlags
 	DependencyLoader<1> mDependencies;
 	PropertySet mProdReportProps;
@@ -1459,17 +1459,17 @@ struct DialogLine : DialogBase {
 
 //.DLG FILES
 struct DialogResource {
-	long miNextDialogID, miNextBranchID, miNextItemID, miNextExchangeID, miNextLineID, miNextTextID, miNextChoreID;
-	DCArray<int> mDialogs, mSoloItems, mTexts;
-	long mProjectID;
+	int32_t miNextDialogID, miNextBranchID, miNextItemID, miNextExchangeID, miNextLineID, miNextTextID, miNextChoreID;
+	DCArray<int32_t> mDialogs, mSoloItems, mTexts;
+	int32_t mProjectID;
 	String mResourcePath;
-	unsigned long mTaskID;
-	Map<int, Ptr<DialogDialog>> mResDialogs;
-	Map<int, Ptr<DialogBranch>> mResBranches;
-	Map<int, Ptr<DialogItem>> mResItems;
-	Map<int, Ptr<DialogExchange>> mResExchanges;
-	Map<int, Ptr<DialogLine>> mResLines;
-	Map<int, Ptr<DialogText>> mResTexts;
+	uint32_t mTaskID;
+	Map<int32_t, Ptr<DialogDialog>> mResDialogs;
+	Map<int32_t, Ptr<DialogBranch>> mResBranches;
+	Map<int32_t, Ptr<DialogItem>> mResItems;
+	Map<int32_t, Ptr<DialogExchange>> mResExchanges;
+	Map<int32_t, Ptr<DialogLine>> mResLines;
+	Map<int32_t, Ptr<DialogText>> mResTexts;
 
 	static inline METAOP_FUNC_IMPL__(SerializeAsync) {
 		MetaStream* pStream = (MetaStream*)pUserData;

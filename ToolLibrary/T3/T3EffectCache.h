@@ -2112,7 +2112,7 @@ struct T3GFXBuffer : T3GFXResource {
 
 	GFXPlatformFormat mBufferFormat;
 	GFXPlatformBufferUsage mBufferUsage;
-	long mStride, mCount;
+	int32_t mStride, mCount;
 	GFXPlatformResourceUsage mResourceUsage;
 	void* mpCPUBuffer;
 
@@ -2172,7 +2172,7 @@ namespace T3 {
 
 struct T3GFXVertexState : T3GFXResource {
 
-	long mVertexCountPerInstance, mIndexBufferCount, mVertexBufferCount, mAttributeCount;
+	int32_t mVertexCountPerInstance, mIndexBufferCount, mVertexBufferCount, mAttributeCount;
 	GFXPlatformAttributeParams mAttributes[32];
 	std::shared_ptr<T3GFXBuffer> mpIndexBuffer[4];
 	std::shared_ptr<T3GFXBuffer> mpVertexBuffer[32];

@@ -90,8 +90,8 @@ public:
 	bool EnterArray();
 	const char* NextObjectKey();
 	bool NextArrayValue();
-	int GetInt();
-	unsigned long long GetULong();
+	int32_t GetInt();
+	uint64_t GetULong();
 	double GetDouble();
 	const char* GetString();
 	bool GetBool();

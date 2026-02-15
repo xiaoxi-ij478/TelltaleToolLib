@@ -26,7 +26,7 @@ MetaOpResult BinaryBuffer::MetaOperation_SerializeAsync(void* pObj, MetaClassDes
 	if (stream->mMode == MetaStreamMode::eMetaStream_Read) {
 		if (bb->mpData)
 			delete[] bb->mpData;
-		bb->mpData = (char*)_aligned_malloc(size, 4);
+		bb->mpData = (char*)malloc(size);//(char*)_aligned_malloc(size, 4);
 		if (!bb->mpData) {
 			stream->Advance(size);
 			return eMetaOp_OutOfMemory;
@@ -523,7 +523,6 @@ VersionInfo:
 				verinfo.mTypeSymbolCrc = CRC64_CaseInsensitive(0, typeName.c_str());
 			}
 			serialize_uint32(&verinfo.mVersionCrc);
-			TTL_Log("current symbol crc: %llx", verinfo.mTypeSymbolCrc);
 			MetaClassDescription* desc = TelltaleToolLib_FindMetaClassDescription_ByHash(verinfo.mTypeSymbolCrc);
 			if (desc)SerializedVersionInfo::RetrieveCompiledVersionInfo(desc);
 			if (!desc || !desc->mpCompiledVersionSerializedVersionInfo ||
@@ -910,7 +909,7 @@ void MetaStream::serialize_float(float* param) {
 	serialize_uint32((u32*)param);
 }
 
-void MetaStream::serialize_double(long double* param) {
+void MetaStream::serialize_double(double* param) {
 	serialize_uint64((u64*)param);
 }
 
@@ -1454,7 +1453,7 @@ METAOP_FUNC_IMPL__(SerializeIntrinsicAsyncfloat) {
 }
 
 METAOP_FUNC_IMPL__(SerializeIntrinsicAsyncdouble) {
-	static_cast<MetaStream*>(pUserData)->serialize_double((long double*)pObj);
+	static_cast<MetaStream*>(pUserData)->serialize_double((double*)pObj);
 	return eMetaOp_Succeed;
 }
 

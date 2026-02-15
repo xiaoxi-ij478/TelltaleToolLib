@@ -6,8 +6,8 @@ struct EnumBase {};
 
 struct Guide {
 	float m_Time;
-	long m_Bitfield;
-	long m_AutoActRole;
+	int32_t m_Bitfield;
+	int32_t m_AutoActRole;
 };
 
 struct ParticleLODKey

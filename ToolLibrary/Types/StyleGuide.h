@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -128,9 +128,9 @@ struct ActingOverridablePropOwner {
 		CreateOverridableValuesPropertySet();
 		if (!mpOverridableValues->ExistsKey(Acting::kPriorityKey, false)) {
 			mpOverridableValues->CreateKey(Acting::kPriorityKey,
-				GetMetaClassDescription(typeid(long).name()));
+				GetMetaClassDescription(typeid(int32_t).name()));
 		}
-		*mpOverridableValues->GetProperty<long>(Acting::kPriorityKey)
+		*mpOverridableValues->GetProperty<int32_t>(Acting::kPriorityKey)
 			= v;
 	}
 
@@ -187,7 +187,7 @@ struct ActingOverridablePropOwner {
 	void CreateKeys() {
 		CreateOverridableValuesPropertySet();
 		mpOverridableValues->CreateKey(Acting::kPriorityKey,
-			GetMetaClassDescription(typeid(long).name()));
+			GetMetaClassDescription(typeid(int32_t).name()));
 		mpOverridableValues->CreateKey(Acting::kFadeTimeKey,
 			GetMetaClassDescription(typeid(float).name()));
 		mpOverridableValues->CreateKey(Acting::kPreDelayKey,
@@ -220,9 +220,9 @@ struct ActingOverridablePropOwner {
 		CreateOverridableValuesPropertySet();
 		if (!mpOverridableValues->ExistsKey(Acting::kPriorityKey, false)) {
 			mpOverridableValues->CreateKey(Acting::kPriorityKey,
-				GetMetaClassDescription(typeid(long).name()));
+				GetMetaClassDescription(typeid(int32_t).name()));
 		}
-		return *mpOverridableValues->GetProperty<long>
+		return *mpOverridableValues->GetProperty<int32_t>
 			(Acting::kPriorityKey);
 	}
 
@@ -364,12 +364,12 @@ struct ActingPalette : public ActingResourceOwner, public UID::Owner {
 	TRange<float> mLatestStartOffsetRange;
 	TRange<float> mValidIntensityRange;
 	DCArray<ActingResource*> mResourcePtrs;
-	long mGroupMembershipUID;
+	int32_t mGroupMembershipUID;
 	Flags mFlags;
 	EnumEndRelativeTo mFirstActionEndRel, mEndOffsetRel, mLatestStartOffsetRel;
 	EnumOverrun mOverrunAllowed, mMoodOverrunAllowed;
 	bool mDisableAct;
-	long mJunket;
+	int32_t mJunket;
 
 	ActingPalette() {
 		mResourcePtrs = DCArray<ActingResource*>();
@@ -438,11 +438,11 @@ struct ActingAccentPalette : public ActingResourceOwner, public UID::Owner {
 	TRange<float> mValidIntensityRange;
 	TRange<float> mSpilloutBufPostRange;
 	float mRandomChance;
-	long mTrackID;//ENUM: 1= Body, 2= Face, 3 = Head 1, 4 = Head 2
+	int32_t mTrackID;//ENUM: 1= Body, 2= Face, 3 = Head 1, 4 = Head 2
 	DCArray<ActingResource*> mResourcePtrs;
-	long mGroupMembershipUID;
+	int32_t mGroupMembershipUID;
 	Flags mFlags;
-	long mVersion;
+	int32_t mVersion;
 
 	ActingAccentPalette() {
 		mResourcePtrs = DCArray<ActingResource*>();
@@ -550,7 +550,7 @@ struct ActingPaletteClass : public UID::Generator, public UID::Owner, public Act
 	DCArray<ActingAccentPalette*> mAccentPalettePtrs;
 	DCArray<ActingPaletteGroup*> mPaletteGroupPtrs;
 	DCArray<String> mAlternateNames;
-	long mDefaultPaletteGroupID;
+	int32_t mDefaultPaletteGroupID;
 	Flags mFlags;
 	bool mInstantChange;
 
@@ -668,12 +668,12 @@ constexpr const char* strUserClassName = "__uSeR_pAl_cLaSS___";
 
 //.STYLE FILES
 struct StyleGuide : public UID::Generator, public ActingOverridablePropOwner {
-	long mDefPaletteClassID;
+	int32_t mDefPaletteClassID;
 	bool mbGeneratesLookAts;
 	DCArray<ActingPaletteClass*> mPaletteClassPtrs;
 	Flags mFlags;
 	DCArray<ActingPaletteClass> mPaletteClasses;
-	long mDefPaletteClassIndex;
+	int32_t mDefPaletteClassIndex;
 
 	StyleGuide() {
 		mDefPaletteClassID = UID::Generator::msUninitID;
