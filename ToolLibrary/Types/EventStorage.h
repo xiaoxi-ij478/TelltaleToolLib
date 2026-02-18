@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -23,7 +23,7 @@ struct SaveGame
 		Symbol mAgentName;
 		Symbol mSceneName;
 		Vector3 mPosition;
-		__declspec(align(8)) Quaternion mQuaternion;
+		alignas(8) Quaternion mQuaternion;
 		bool mbAttached;
 		Symbol mAttachedToAgent;
 		Symbol mAttachedToNode;
@@ -37,7 +37,7 @@ struct SaveGame
 
 //.EPAGE FILES
 struct EventStoragePage {
-	long mVersion;
+	int32_t mVersion;
 	u64 mSessionID;
 	String mFlushedNameOnDisk;
 	List<EventLoggerEvent*> mEvents;
@@ -61,7 +61,7 @@ struct EventData {
 	EventDataType mDataType;//as char
 	union {
 		Symbol mDataSymbolMemory;
-		long double mDataDouble;
+		double mDataDouble;
 		u64 mDataInt;
 	};
 	char mSeverity;
@@ -77,8 +77,8 @@ struct EventData {
 
 struct EventLoggerEvent {
 
-	long mEventID;
-	long mMaxSeverity;
+	int32_t mEventID;
+	int32_t mMaxSeverity;
 
 	struct TypeHeader {
 		Symbol mType;
@@ -186,7 +186,7 @@ struct EventStorage {
 		u32 mMaxEventID;
 	};
 
-	long mVersion;
+	int32_t mVersion;
 	u64 mSessionID;
 	DCArray<PageEntry> mPages;
 	String mName;

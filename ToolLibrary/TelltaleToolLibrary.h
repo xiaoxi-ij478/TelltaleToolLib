@@ -14,16 +14,18 @@
 #include <memory>
 #include <sstream>
 #include <iomanip>
+#include <cstdlib>
 
 // ============================================================= TYPE DEFINITIONS =============================================================
 
 #define _TTTLib_PrintMetaClasses() TelltaleToolLib_DumpClassInfo(_PrintfDumper)
-
+#define _aligned_malloc(a,b) aligned_alloc(b,a)
+#define _aligned_free(a) free(a)
 struct Flags;
 template<typename T> class Ptr;
 struct MetaClassDescription;
 struct MetaMemberDescription;
-enum MetaOpResult;
+enum MetaOpResult:unsigned;
 struct RenderConfiguration;
 class ToolLibRenderAdapters;
 class MetaStream;
@@ -183,7 +185,7 @@ struct BinaryBuffer {
 		if (mpData)
 			delete[] mpData;
 		if (dataSize > 0) {
-			mpData = (char*)_aligned_malloc(dataSize, align);
+			mpData = (char*)aligned_alloc(align,dataSize);
 			if (mpData) {
 				mDataSize = dataSize;
 				if (pData)
@@ -290,7 +292,7 @@ struct T3GFXResource {
 		((u32*)(&mpRenderPlatformHandle))[1] = v;
 		mbResourceAssigned = true;
 	}
-	
+
 	inline T3GFXResource(GFXPlatformResourceType type) : mpRenderPlatformHandle(0llu), mResourceType(type) {
 		OnCreate();
 	}
@@ -303,7 +305,7 @@ struct T3GFXResource {
 
 struct GFXPlatformVertexAttributeSet
 {
-	unsigned __int64 mAttributes;
+	uint64_t mAttributes;
 };
 
 struct GFXPlatformShader : T3GFXResource {
@@ -403,12 +405,12 @@ struct ProxyMetaState {
 _TTToolLib_Exp bool TelltaleToolLib_ProxyClassesAvail(const char* pGameID);
 
 /**
- * 
+ *
  * Generates (either calling new and appending to the proxy class list, or retrieving existing one) a new proxy meta class
  * description for the type symbol hash. If the hash is invalid for the current game (ie the type does not exit in the game
- * engine at that point) then this will return NULL. bGetOnly can be true if you don't want to create one but check if it 
+ * engine at that point) then this will return NULL. bGetOnly can be true if you don't want to create one but check if it
  * is already loaded.
- * 
+ *
  */
 _TTToolLib_Exp MetaClassDescription* TelltaleToolLib_GenerateMetaClassDescriptionProxy(ProxyMetaState* pState, u64 typeSymbolCrc, bool bGetOnly = false);
 
@@ -423,16 +425,16 @@ _TTToolLib_Exp bool TelltaleToolLib_SetUsingProxyMetaStates(bool bOnOff);
 * Resets the given proxy state, clearing all of its proxy classes from memory. Also called when shutting down.
 * This clears and DELETES all proxy class descriptions which were alive so be careful with your references to them, check their
 * proxy flag if its set before calling this, then you know this will delete it.
-* 
+*
 */
 _TTToolLib_Exp void TelltaleToolLib_ResetProxyMetaState(ProxyMetaState* pState);
 
 /**
- * 
+ *
  * Gets the proxy meta state for the library. This is a static object and should not be deleted.
  * Pass in the game ID which it is attached to, or null to use the currently set one. This will return
  * NULL is the game ID is invalid or if TelltaleToolLib_ProxyClassesAvail is false for the given ID!
- * 
+ *
  */
 _TTToolLib_Exp ProxyMetaState* TelltaleToolLib_GetProxyMetaState(const char* pGameID = nullptr);
 /*
@@ -458,7 +460,7 @@ _TTToolLib_Exp T3EffectCacheVersionDatabase* TelltaleToolLib_GetEffectCacheDB(co
 _TTToolLib_Exp void TelltaleToolLib_DumpClassInfo(DumpClassInfoF _Dumper);
 
 /*
-* Makes the type name of the given string pointer to one which is ready to be hashed. 
+* Makes the type name of the given string pointer to one which is ready to be hashed.
 * The parameter needs to be a pointer to a string which is allocated with calloc/malloc.
 * This string is freed and the new string (allocated with calloc) is set to the parameter pointer's value.
 */
@@ -468,8 +470,8 @@ _TTToolLib_Exp void TelltaleToolLib_MakeInternalTypeName(char**);
 * If you have lots of .VersDB files which contain dumped game meta class descriptions in V2 format, then you can
 * call this after Initialize to set the folder which contains the files. The library will try and load each file from
 * this folder which is a game ID with a VersDB extension, eg WDC.VersDB or MCSM.VersDB. Returns the number of loaded
-* or found version databases. Check the error callbacks if any could not be loaded. Returns 0 if the folder was invalid or 
-* contained no files. If there was an error loading a database it returns -1. 
+* or found version databases. Check the error callbacks if any could not be loaded. Returns 0 if the folder was invalid or
+* contained no files. If there was an error loading a database it returns -1.
 * IMPORTANT: The folder must be a full path from C: !
 */
 _TTToolLib_Exp int TelltaleToolLib_SetProxyVersionDatabases(const char* pFolder);
@@ -481,8 +483,8 @@ _TTToolLib_Exp int TelltaleToolLib_SetProxyVersionDatabasesFromArchive(TTArchive
 /*
 * Initialize the library. This must be called before you call any file reading and writing functions.
 * Must pass a game id for the game that you are going to be working with files from. This is used for decryption keys.
-* See TelltaleToolLib_SetBlowfishKey. The game id *can* be NULL, where it will be set to the default game id which can be 
-* found in the Blowfish translation unit. If you pass an invalid game id, this will return false and fail. Passing NULL succeeds 
+* See TelltaleToolLib_SetBlowfishKey. The game id *can* be NULL, where it will be set to the default game id which can be
+* found in the Blowfish translation unit. If you pass an invalid game id, this will return false and fail. Passing NULL succeeds
 * with the default ID, this goes aswell for the SetBlowfishKey function.
 */
 _TTToolLib_Exp bool TelltaleToolLib_Initialize(const char* game_id);
@@ -573,13 +575,13 @@ _TTToolLib_Exp bool TelltaleToolLib_Initialized();
 _TTToolLib_Exp LibraryHandle TelltaleToolLib_GetLibrary(const char* pName);
 
 /*
-* Reads a meta stream from the given data stream source. Must have pClass serialized first. If correct then the dest instance will contain the data from the file. 
+* Reads a meta stream from the given data stream source. Must have pClass serialized first. If correct then the dest instance will contain the data from the file.
 */
 _TTToolLib_Exp bool TelltaleToolLib_ReadMetaStream(DataStream* pIn, MetaClassDescription* pClass, void* pDestInstance);
 
 /*
 * Writes a instance of pClass to a meta stream and flushes the bytes to pOut.
-*/ 
+*/
 _TTToolLib_Exp bool TelltaleToolLib_WriteMetaStream(DataStream* pOut, MetaClassDescription* pClass, void* pInstance);
 
 /*
@@ -598,7 +600,7 @@ _TTToolLib_Exp void TelltaleToolLib_DeleteDataStream(DataStream*);
 _TTToolLib_Exp char* TelltaleToolLib_Alloc_GetFixed1024ByteStringBuffer();
 
 /*
-* A static 8 byte buffer to store pointers. Useful when using for loops which need to get the next class/member and can store the 
+* A static 8 byte buffer to store pointers. Useful when using for loops which need to get the next class/member and can store the
 * pointer to it in this buffer to save memory allocations.
 */
 _TTToolLib_Exp char* TelltaleToolLib_Alloc_GetFixed8BytePointerBuffer();
@@ -623,14 +625,14 @@ _TTToolLib_Exp u8* TelltaleToolLib_DecryptLencScript(u8* data, u32 size, u32* ou
 _TTToolLib_Exp void TelltaleToolLib_SetGlobalHashDatabase(HashDatabase*);
 
 /*
-* Does the same as the normal set global hash db, but creates it for you. Pass in the reading file stream to it. This stream 
+* Does the same as the normal set global hash db, but creates it for you. Pass in the reading file stream to it. This stream
 * is deleted by the library so DONT DELETE IT!
 * You should always set this after initialization. It may work without but older files may fail on serialize!
 */
 _TTToolLib_Exp void TelltaleToolLib_SetGlobalHashDatabaseFromStream(DataStream*);
 
 /*
-* Gets the game index of the given game id. This is used to match when a game is released with others. Used internally make sure the 
+* Gets the game index of the given game id. This is used to match when a game is released with others. Used internally make sure the
 * current file is being read correctly with the correct version range.
 */
 _TTToolLib_Exp i32 TelltaleToolLib_GetGameKeyIndex(const char* pGameID);
@@ -678,7 +680,7 @@ _TTToolLib_Exp void* TelltaleToolLib_ReadDataStream(DataStream* pReadStream, uns
 
 _TTToolLib_Exp void TelltaleToolLib_WriteDataStream(DataStream* pOutStream, void* pBuffer, unsigned long size);
 
-_TTToolLib_Exp unsigned long long TelltaleToolLib_CRC64CaseInsensitive(const char* pNulTermString, unsigned long long initCRC/*=0*/);
+_TTToolLib_Exp uint64_t TelltaleToolLib_CRC64CaseInsensitive(const char* pNulTermString, uint64_t initCRC/*=0*/);
 
 //See T3EffectUser.h. Does not deallocate any old ones
 _TTToolLib_Exp void TelltaleToolLib_SetRenderAdapters(ToolLibRenderAdapters* pRenderAdapterOverloads);
@@ -712,7 +714,7 @@ _TTToolLib_Exp void* TelltaleToolLib_Container(int op, void* container, void* ar
 _TTToolLib_Exp void* TelltaleToolLib_String(int op, void* stringInst, void* param);
 
 /*
-* Frees all non-static memory related to this library. 
+* Frees all non-static memory related to this library.
 */
 _TTToolLib_Exp void TelltaleToolLib_Free();
 

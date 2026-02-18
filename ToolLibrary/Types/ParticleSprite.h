@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -42,8 +42,8 @@ struct ParticleSprite {
 
 	struct Animation {
 		Symbol mName;
-		long mStartFrame;
-		long mFrameCount;
+		int32_t mStartFrame;
+		int32_t mFrameCount;
 	};
 
 	inline int GetIndexForAnimation(const Symbol& name){
@@ -56,8 +56,8 @@ struct ParticleSprite {
 
 	String mName;
 	SArray<Handle<T3Texture>, 1> mhTexture;
-	long mTextureX;
-	long mTextureY;
+	int32_t mTextureX;
+	int32_t mTextureY;
 	Vector2 mSpriteSize;
 	BlendMode mBlendMode;
 	DCArray<ParticleSprite::Animation> mAnimations;

@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -150,8 +150,7 @@ private:
 
 public:
 
-	template<>
-	String* GetValue<String>() const {
+	String* GetValue() const {
 		MetaClassDescription* desc = GetStringDesc();
 		if (!desc)
 			return NULL;
@@ -170,8 +169,7 @@ public:
 	}
 
 	//TAKES OWNERSHIP
-	template<>
-	bool SetValue<String>(String* v) {
+	bool SetValue(String* v) {
 		MetaClassDescription* strDesc = GetStringDesc();
 		if (!strDesc)
 			return false;

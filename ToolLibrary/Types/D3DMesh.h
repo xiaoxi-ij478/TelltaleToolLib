@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -41,15 +41,15 @@ struct MeshSceneLightmapData {
 
 	struct Entry {
 		Symbol mMeshName;
-		unsigned long mLODIndex;
-		long mLightQuality;
+		uint32_t mLODIndex;
+		int32_t mLightQuality;
 		Vector2 mTextureScale;
 		Vector2 mTextureOffset;
-		unsigned long mTexturePage;
+		uint32_t mTexturePage;
 	};
 
 	DCArray<Entry> mEntries;
-	DCArray<unsigned short> mStationaryLightIndices;
+	DCArray<uint16_t> mStationaryLightIndices;
 	Flags mFlags;
 
 };
@@ -59,8 +59,8 @@ struct T3MaterialParameter {
 	T3MaterialPropertyType mPropertyType;
 	T3MaterialValueType mValueType;
 	//in WDM its mscalaroffset[2]
-	long mFlags, mScalarOffset[4];//in GoG and above its just mScalarOffset, not an array
-	long mPreShaderScalarOffset, mNestedMaterialIndex;
+	int32_t mFlags, mScalarOffset[4];//in GoG and above its just mScalarOffset, not an array
+	int32_t mPreShaderScalarOffset, mNestedMaterialIndex;
 };
 
 struct T3MaterialEnlightenPrecomputeParams {
@@ -74,13 +74,13 @@ struct T3MaterialTexture {
 	T3TextureLayout mLayout;
 	T3MaterialPropertyType mPropertyType;//wd4+
 	BitSetBase<1> mTextureTypes;
-	long mFirstParamIndex, mParamCount, mTextureIndex, mNestedMaterialIndex;
+	int32_t mFirstParamIndex, mParamCount, mTextureIndex, mNestedMaterialIndex;
 };
 
 struct T3MaterialTransform2D {
 	Symbol mParameterPrefix;
-	long mFlags, mScalarOffset0[4], mScalarOffset1[4], mPreShaderScalarOffset0, mPreShaderScalarOffset1;//not arrays in games newer GoG (inc)
-	long mNestedMaterialIndex;//mflags only in GoG and above
+	int32_t mFlags, mScalarOffset0[4], mScalarOffset1[4], mPreShaderScalarOffset0, mPreShaderScalarOffset1;//not arrays in games newer GoG (inc)
+	int32_t mNestedMaterialIndex;//mflags only in GoG and above
 };
 
 struct T3MaterialNestedMaterial {
@@ -89,18 +89,18 @@ struct T3MaterialNestedMaterial {
 
 struct T3MaterialPreShader {
 	T3MaterialValueType mValueType;
-	long mFlags, mPreShaderOffset, mScalarParameterOffset[4];//flags newer and inc GoG
+	int32_t mFlags, mPreShaderOffset, mScalarParameterOffset[4];//flags newer and inc GoG
 };
 
 struct T3MaterialStaticParameter {
 	Symbol mName;
-	long mNestedMaterialIndex;
+	int32_t mNestedMaterialIndex;
 };
 
 struct T3MaterialTextureParam {
 	T3MaterialTextureParamType mParamType;
 	T3MaterialValueType mValueType;
-	long mFlags, mScalarOffset;
+	int32_t mFlags, mScalarOffset;
 };
 
 struct T3MaterialPassData {
@@ -160,7 +160,7 @@ struct T3MaterialData {
 	LightType mLightType;//bat2 and below
 	DCArray<T3MaterialRuntimeProperty> mRuntimeProperties;
 	Flags mFlags, mRuntimeFlags;//runtimeflags not serialized
-	long mVersion;
+	int32_t mVersion;
 	float mMaxDistance;//bat2 and below, not sure if its a float/int always 0
 	DCArray<T3MaterialCompiledData> mCompiledData2;
 
@@ -253,16 +253,16 @@ struct T3MeshTextureIndices {
 struct T3MeshPropertyEntry {
 	String mIncludeFilter, mExcludeFilter;
 	Handle<PropertySet> mhProperties;
-	long mPriority;
+	int32_t mPriority;
 };
 
 struct T3MeshBatch {
 	BoundingBox mBoundingBox;
 	Sphere mBoundingSphere;
 	Flags mBatchUsage;
-	long mMinVertIndex, mMaxVertIndex, mBaseIndex, mStartIndex, mNumPrimitives, mNumIndices;//base index and indices in GoG and above
+	int32_t mMinVertIndex, mMaxVertIndex, mBaseIndex, mStartIndex, mNumPrimitives, mNumIndices;//base index and indices in GoG and above
 	T3MeshTextureIndices mTextureIndices;
-	long mMaterialIndex, mAdjacencyStartIndex;//adjancency games newer (excl) than WDM
+	int32_t mMaterialIndex, mAdjacencyStartIndex;//adjancency games newer (excl) than WDM
 	int mLocalTransformIndex, mBonePaletteIndex;//wd3 and below
 };
 
@@ -276,7 +276,7 @@ struct T3MeshLOD {
 	//primitives,batches not in WDM
 	//vertex state index, index into T3MeshData::mVertexStates (buffers)
 	//vertex start,count, atlas width and height only in wd4 or higher
-	long mVertexStateIndex, mNumPrimitives, mNumBatches, mVertexStart, mVertexCount, mTextureAtlasWidth, mTextureAtlasHeight;
+	int32_t mVertexStateIndex, mNumPrimitives, mNumBatches, mVertexStart, mVertexCount, mTextureAtlasWidth, mTextureAtlasHeight;
 	//distance only in wd4 or higher
 	float mPixelSize, mDistance;
 	DCArray<Symbol> mBones;
@@ -295,14 +295,14 @@ struct T3MeshTexture {
 
 struct T3MeshMaterialOverride {
 	Handle<PropertySet> mhOverrideMaterial;
-	long mMaterialIndex;
+	int32_t mMaterialIndex;
 };
 
 struct T3MeshBoneEntry {
 	Symbol mBoneName;//use hash db
 	BoundingBox mBoundingBox;
 	Sphere mBoundingSphere;
-	long mNumVerts;
+	int32_t mNumVerts;
 };
 
 struct T3MeshLocalTransformEntry {
@@ -321,7 +321,7 @@ struct T3MaterialRequirements {
 
 struct T3MeshEffectPreloadDynamicFeatures {
 	BitSetBase<1> mDynamicFeatures;
-	long mPriority;
+	int32_t mPriority;
 };
 
 struct T3MeshEffectPreloadEntry {
@@ -332,15 +332,15 @@ struct T3MeshEffectPreloadEntry {
 };
 
 struct T3MeshEffectPreload {
-	long mEffectQuality;
+	int32_t mEffectQuality;
 	DCArray<T3MeshEffectPreloadEntry> mEntries;
-	long mTotalEffectCount;
+	int32_t mTotalEffectCount;
 };
 
 struct T3MeshCPUSkinningData {
 	GFXPlatformFormat mPositionFormat, mNormalFormat, mWeightFormat;
 	BitSetBase<1> mVertexStreams;
-	long mNormalCount, mWeightOffset, mVertexSize, mWeightSize;//weight off/size >= wd4
+	int32_t mNormalCount, mWeightOffset, mVertexSize, mWeightSize;//weight off/size >= wd4
 	BinaryBuffer mData;
 };
 
@@ -371,7 +371,7 @@ struct T3MeshData {
 	Vector3 mPositionScale, mPositionWScale, mPositionOffset;//all three in GoG and above
 	float mLightmapTexelAreaPerSurfaceArea;
 	Symbol mPropertyKeyBase;//all keys in internal resources concat onto this crc (crc with this as the start CRC64). very anoying.
-	long mVertexCount;
+	int32_t mVertexCount;
 	Flags mFlags;
 	DCArray<T3MeshEffectPreload> mMeshPreload;//>=wd4
 	T3MeshTexCoordTransform mTexCoordTransform[4];
@@ -485,7 +485,7 @@ struct T3VertexSampleDataBase {
 
 struct T3OcclusionMeshBatch {
 	Flags mFlags;
-	long mStartIndex, mNumTriangles;
+	int32_t mStartIndex, mNumTriangles;
 };
 
 struct T3OcclusionMeshData {
@@ -493,7 +493,7 @@ struct T3OcclusionMeshData {
 	BoundingBox mBoundingBox;
 	Sphere mBoundingSphere;
 	DCArray<T3OcclusionMeshBatch> mBatches;
-	long mVertexCount;
+	int32_t mVertexCount;
 
 	static METAOP_FUNC_IMPL__(SerializeAsync) {
 		CAST_METAOP(T3OcclusionMeshData, occ);
@@ -510,7 +510,7 @@ struct T3OcclusionMeshData {
 struct D3DMesh {
 
 	String mName;
-	long mVersion;
+	int32_t mVersion;
 	T3MeshData mMeshData;
 	DCArray<HandleUncached> mInternalResources;
 	ToolProps mToolProps;
@@ -518,9 +518,9 @@ struct D3DMesh {
 	EnumRenderLightmapUVGenerationType mLightmapUVGenerationType;//bat2 and below
 	float mLightmapTexelAreaPerSurfaceArea;//in games older and including bat2
 	float mLightmapGlobalScale;
-	long mLightmapTexCoordVersion;
+	int32_t mLightmapTexCoordVersion;
 	//MeshDebugRenderType mType;//bat2 and below,99%sure
-	long mLightmapTextureWidth, mLightmapTextureHeight;//bat2 and below
+	int32_t mLightmapTextureWidth, mLightmapTextureHeight;//bat2 and below
 	u64 mLODParamCRC;//wd4+
 	T3OcclusionMeshData* mpOcclusionMeshData;
 
@@ -531,7 +531,7 @@ struct D3DMesh {
 	}
 
 	//DEPRECATED. THIS IS WRONG. THIS GETS THE RUNTIME CACHED PROP SET NOT THE SERIALIZED ONE
-	inline PropertySet* GetMeshProps() {
+/*	inline PropertySet* GetMeshProps() {
 		String propsResource = "\"";
 		propsResource.append(mName);
 		propsResource.append("\" Mesh Properties");
@@ -545,7 +545,7 @@ struct D3DMesh {
 				return (PropertySet*)handle.GetHandleObjectPointer();
 		}
 		return NULL;
-	}
+	}*/
 
 	inline PropertySet* GetResourceMaterial(Symbol hMaterial){
 		for (int i = 0; i < mInternalResources.GetSize(); i++) {
@@ -618,7 +618,7 @@ struct D3DMesh {
 				meta->serialize_Symbol(&mesh->mInternalResources[i].mHandleObjectInfo.mObjectName);
 				meta->serialize_uint64(&mesh->mInternalResources[i].GetTypeDesc()->mHash);
 				meta->BeginBlock();
-				r=PerformMetaSerializeFull(meta, mesh->mInternalResources[i].GetHandleObjectPointer(), 
+				r=PerformMetaSerializeFull(meta, mesh->mInternalResources[i].GetHandleObjectPointer(),
 					mesh->mInternalResources[i].GetTypeDesc());
 				if (r != eMetaOp_Succeed)
 					return r;
@@ -654,7 +654,7 @@ struct D3DMesh {
 			//MCSM
 			if (false) {
 
-			}else{ 
+			}else{
 				if (19 > mesh->mVersion) {
 					//TODO not supported in WDC
 					TelltaleToolLib_RaiseError("Cannot serialize D3DMeshes from games older and including MC: Story Mode... with D3DMesh. See LegacyD3DMesh!", ErrorSeverity::ERR);
@@ -729,7 +729,7 @@ inline float decompose_to_float(void* data, GFXPlatformFormat fmt, int typeoff) 
 		u16* raw = (u16*)data;
 		u16 val = raw[typeoff];
 		float asf = (float)val;
-		return asf / 65536.f;
+		return asf / 65535.f;
 	}
 	else if (fmt == eGFXPlatformFormat_SN8 || fmt == eGFXPlatformFormat_SN8x2 || fmt == eGFXPlatformFormat_SN8x4) {
 		i8* raw = (i8*)data;
@@ -761,8 +761,9 @@ inline float decompose_new_UV(void* data, GFXPlatformFormat fmt, int typeoff, T3
 		asf = 1.0f;
 	if (asf > 1.0f)
 		asf = asf - (float)((int)asf);
-	if (bNeg)
-		asf = 0.f;
+	// you sure?
+//	if (bNeg)
+//		asf = 0.f;
 	return asf;
 }
 
@@ -905,6 +906,15 @@ inline GFXPlatformAttributeParams* get_params(T3GFXVertexState& state, GFXPlatfo
 			return state.mAttributes + i;
 	}
 	return 0;
+}
+
+inline std::vector<GFXPlatformAttributeParams> get_all_uvs(T3GFXVertexState& state) {
+	std::vector<GFXPlatformAttributeParams> ret;
+	for (int i = 0; i < state.mAttributeCount; i++) {
+		if (state.mAttributes[i].mAttribute == GFXPlatformVertexAttribute::eGFXPlatformAttribute_TexCoord)
+			ret.push_back(state.mAttributes[i]);
+	}
+	return ret;
 }
 
 #endif

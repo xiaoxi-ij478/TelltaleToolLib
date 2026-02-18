@@ -6,8 +6,10 @@
 
 #include <iostream>
 #include <vector>
-#include <Windows.h>
-#include <Shlwapi.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+
 
 const char* Get() {
 	static char buf[1024];
@@ -49,12 +51,9 @@ enum ptype {
 };
 
 ptype ffType(const char* p) {
-	if (!PathFileExistsA(p))
-		return ptype::invalid;
-	DWORD attrib = GetFileAttributesA(p);
-	if (attrib & FILE_ATTRIBUTE_DIRECTORY)
-		return ptype::folder;
-	return ptype::file;
+	struct stat sbuf;
+	if(stat(p,&sbuf)<0)return ptype::invalid;
+	return S_ISDIR(sbuf.st_mode)?ptype::folder:ptype::file;
 }
 
 enum mode {
@@ -157,19 +156,19 @@ void DoApp(std::vector<std::string>& args) {
 	}
 	printf("\n");
 	if (m == mode::C_ARCH) {
-		if (_setmaxstdio(8192) == -1) {
+		/*if (_setmaxstdio(8192) == -1) {
 			printf("\n\tCould not set max stdio limit, please contact me with your machine information\n");
 			return;
-		}
+		}*/
 		std::vector<TTArchive2::ResourceCreateEntry> files{};
-		WIN32_FIND_DATAA fd{};
+		DIR*dir_fd=opendir(args[2].c_str());
+		struct dirent *direntt;
 		std::string fpp = args[2] + "/*";
-		HANDLE h = FindFirstFileA(fpp.c_str(), &fd);
 		int i = 1;
-		do {
-			if (fd.cFileName[0] == '.')
+		while((direntt=readdir(dir_fd))){
+			if (direntt->d_name[0] == '.')
 				continue;
-			if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+			if (S_ISDIR(direntt->d_type))
 				continue;
 			if (i >= 8100) {
 				for (int x = 0; x < files.size(); x++)
@@ -178,13 +177,13 @@ void DoApp(std::vector<std::string>& args) {
 				return;
 			}
 			TTArchive2::ResourceCreateEntry entry{};
-			entry.name = fd.cFileName;
+			entry.name = direntt->d_name;
 			std::string fullPath = (args[2] + "/") + entry.name;
 			entry.mpStream = _OpenDataStreamFromDisc(fullPath.c_str(), READ);
 			i++;
-			files.push_back(_STD move(entry));
-		} while (FindNextFileA(h, &fd));
-		FindClose(h);
+			files.push_back(std:: move(entry));
+		}
+		closedir(dir_fd);
 		DataStreamFileDisc dst = _OpenDataStreamFromDisc_(args[3].c_str(), WRITE);
 		TTArchive2::Create(&ttarchProgress, &dst, files, (ops & toolops::encrypt) ? true : false,
 			((ops & toolops::compressnormal) || (ops & toolops::compressoodle)) ? true : false,
@@ -258,7 +257,7 @@ void DoApp(std::vector<std::string>& args) {
 		DataStreamContainerParams params{};
 		params.mpSrcStream = rawContained;//take ownership
 		DataStreamContainer effectPackage{ params };
-		unsigned __int64 size = rawContained->GetSize();
+		uint64_t size = rawContained->GetSize();
 		effectPackage.Read(0, &size);
 
 		printf("\tLoading T3EffectPackage (T3EffectCache) %s [0x%llX bytes]: please wait...\n", args[2].c_str(), size);
@@ -269,7 +268,7 @@ void DoApp(std::vector<std::string>& args) {
 			return;
 		}
 		printf("\tLoaded the effect package. Writing to disk...\n");
-		printf("\n\tInformation:\n\t\tPrograms: %d\n\t\tShaders: %d\n\t\tVersion: %d\n", 
+		printf("\n\tInformation:\n\t\tPrograms: %d\n\t\tShaders: %d\n\t\tVersion: %d\n",
 			package.mHeader.mProgramCount, package.mHeader.mShaderCount, package.mHeader.mVersion);
 
 		unsigned int biggestShaderSize = 0;
@@ -387,7 +386,7 @@ void DoApp(std::vector<std::string>& args) {
 		DataStreamContainerParams params{};
 		params.mpSrcStream = rawContained;//take ownership
 		DataStreamContainer container{ params };
-		unsigned long long x{};
+		unsigned long x{};
 		container.Read(0, &x);
 		if (x == 0) {
 			printf("\n\tThe container is invalid or corrupt. Only use this tool if you know what you're doing.\n");
@@ -419,7 +418,7 @@ void DoApp(std::vector<std::string>& args) {
 int __main(int argc, char* argv[]) {
 	if (argc < 1)
 		return 2;//no!
-	
+
 	std::vector<std::string> argData{};
 	argData.reserve(argc - 1);
 	for (int i = 1; i < argc; i++) {
@@ -429,7 +428,7 @@ int __main(int argc, char* argv[]) {
 	DoApp(argData);
 
 	if (bInit)
-		TelltaleToolLib_Free(); 
+		TelltaleToolLib_Free();
 
 	return 0;
 }

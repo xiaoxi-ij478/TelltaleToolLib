@@ -16,8 +16,8 @@ struct T3TextureView;
 enum T3EffectParameterType : u32;
 struct RenderFrameStats;
 struct T3EffectParameterBoundState;
-enum T3RenderHiStencilMode;
-enum PlatformType;
+enum T3RenderHiStencilMode:unsigned;
+enum PlatformType:unsigned;
 struct T3RenderTargetSet;
 struct T3RenderClear;
 struct T3RenderViewport;
@@ -34,7 +34,7 @@ public:
 	 * Upload the static indices in the given vertex state to the GPU. Most of this time this can just call UpdateGFXBufferFromCPUBuffer with the index buffer.
 	 */
 	virtual void EndStaticIndices(T3GFXVertexState& state);
-	
+
 	virtual void UpdateGFXBufferFromCPUBuffer(T3GFXBuffer* pBuffer);
 
 	/**
@@ -49,10 +49,10 @@ public:
 
 	/**
 	 * Test the capability of the render API and return if it supports the parameter cap.
-	 * 
+	 *
 	 * At the moment, if the graphics library uses binding for buffers (eg opengl) then this will be OK.
 	 * However any non binding defered stuff won't work.
-	 * 
+	 *
 	 */
 	virtual bool TestCap(GFXPlatformCapability cap);
 

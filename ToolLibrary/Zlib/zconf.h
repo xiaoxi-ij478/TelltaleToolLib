@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -485,7 +485,7 @@ typedef uLong FAR uLongf;
 #  define z_off64_t off64_t
 #else
 #  if defined(_WIN32) && !defined(__GNUC__) && !defined(Z_SOLO)
-#    define z_off64_t __int64
+#    define z_off64_t int64_t
 #  else
 #    define z_off64_t z_off_t
 #  endif

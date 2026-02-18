@@ -1,5 +1,6 @@
 #include "HashDB.h"
 #include <algorithm>
+#include <numeric>
 #include "../HashManager.h"
 
 const u32 MAGIC = 0x54544c42;//TTLB
@@ -192,7 +193,7 @@ HashDatabase_Legacy::Page* HashDatabase_Legacy::FindPage(const char* n) {
 	if (!this->db_pages)return NULL;
 	int pages = this->NumPages();
 	for (int i = 0; i < pages; i++) {
-		if (!_stricmp(PageAt(i)->pageName, n)) return PageAt(i);
+		if (!strcasecmp(PageAt(i)->pageName, n)) return PageAt(i);
 	}
 	return NULL;
 }
@@ -274,7 +275,7 @@ HashDatabase::Page* HashDatabase::PageAt(int index)
 HashDatabase::Page* HashDatabase::FindPage(const char* name)
 {
 	for (auto it = mPages.begin(); it != mPages.end(); it++)
-		if (!_stricmp(name,it->mPageName.c_str()))
+		if (!strcasecmp(name,it->mPageName.c_str()))
 			return &(*it);
 	return 0;
 }
@@ -429,7 +430,7 @@ bool HashDatabase::Create(const char* fp, DataStream* pOut, bool bVerbose, bool 
 	std::vector<Page> pages{};
 	std::vector<std::vector<std::string>> values{};
 	FILE* stream{};
-	fopen_s(&stream, fp, "r");
+	stream=fopen(fp, "r");
 	if (!stream)
 		return false;
 	if (!pOut || !fp)
@@ -441,7 +442,7 @@ bool HashDatabase::Create(const char* fp, DataStream* pOut, bool bVerbose, bool 
 		char* buf = fgets(_buf, 512, stream);
 		if (!buf)
 			break;
-		if (strlen(buf) >= 8 && !_stricmp(std::string(buf).substr(0,7).c_str(), "NEWPAGE")) {
+		if (strlen(buf) >= 8 && !strcasecmp(std::string(buf).substr(0,7).c_str(), "NEWPAGE")) {
 			if(currentPage.mPageName.length() != 0){
 				if (bVerbose)
 					TTL_Log("-collected page %s: %d hashes\n", currentPage.mPageName.c_str(), (u32)cur_values.size());
@@ -458,21 +459,11 @@ bool HashDatabase::Create(const char* fp, DataStream* pOut, bool bVerbose, bool 
 			std::string s = buf;
 			repl(s, "\n", "");
 			repl(s, "\r", "");
-			bool exit = false;
-			for(auto it = cur_values.begin(); it != cur_values.end(); it++){
-				if (!iequals(*it, s)) {
-					exit = true;
-					break;
-				}
-			}
-			if (exit)
-				continue;
-			currentPage.mFlags += (u32)s.length();
 			cur_values.push_back(std::move(s));
 		}
 	}
-	pages.push_back(std::move(currentPage));
-	values.push_back(std::move(cur_values));
+	pages.push_back(currentPage);
+	values.push_back(cur_values);
 	int i = 0;
 	u32 symbolStart = 0;
 	u32 stringStart = 0;
@@ -482,8 +473,16 @@ bool HashDatabase::Create(const char* fp, DataStream* pOut, bool bVerbose, bool 
 	pOut->Serialize((char*)&write, 4);
 	if (bVerbose)
 		TTL_Log("-sorting string and hashes\n");
-	for (auto x = values.begin(); x != values.end(); x++) {
-		std::sort(x->begin(), x->end(), &sorter);
+	unsigned index_=0;
+	for (auto&x:values) {
+		TTL_Log("-index %d\r",index_);
+		fflush(stdout);
+		std::sort(x.begin(), x.end(), &sorter);
+		auto it=std::unique(x.begin(),x.end(),[](const std::string&a,const std::string&b){return !strcasecmp(a.c_str(),b.c_str());});
+		unsigned long long len=std::distance(x.begin(),it);
+		x.resize(len);
+		pages[index_].mFlags = std::accumulate(x.begin(),x.end(),0u,[](unsigned&i,const std::string&s){return i+s.length();});
+		index_++;
 	}
 	if (bVerbose)
 		TTL_Log("-writing headers\n");
@@ -564,6 +563,7 @@ void HashDatabase::_SetBuffer(Page* page)
 	if(mpBuffered && mpBuffered->mCount >= page->mCount){
 		;
 	}else{
+		delete[] mpBuffer;
 		mpBuffer = new u64[page->mCount];
 	}
 	mpBuffered = page;

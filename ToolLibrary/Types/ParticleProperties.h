@@ -29,7 +29,7 @@ struct ParticlePropertySamples {
 	};
 
 	Sample* mpSamples;
-	long mSampleCount;
+	int32_t mSampleCount;
 
 	ParticlePropertySamples() : mSampleCount(0), mpSamples(0) {}
 
@@ -90,7 +90,7 @@ struct ParticleProperties {
 
 	struct Animation {
 
-		//SERIALIZED 
+		//SERIALIZED
 		Symbol mName;
 		AnimationParams mParams;
 		Flags mDataFlags;
@@ -115,7 +115,7 @@ struct ParticleProperties {
 
 	String mName;
 	Flags mTextureFlags;//bit field for number of textures stored?
-	long mTextureCount;
+	int32_t mTextureCount;
 	DCArray<Animation> mAnimations;
 	T3Texture* mpTexture[eParticlePropTexture_Count]{ 0,0,0,0 };
 

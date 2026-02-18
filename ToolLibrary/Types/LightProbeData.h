@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 #pragma once
@@ -23,9 +23,9 @@ struct Tetrahedron {
 };
 
 struct TetrahedralMeshData {
-	long mVersion;
-	long mTetrahedraCount;
-	long mVertexCount;
+	int32_t mVersion;
+	int32_t mTetrahedraCount;
+	int32_t mVertexCount;
 
 	void* mpMemoryBuffer;
 	Vector3* mpVertices;
@@ -90,7 +90,7 @@ struct LightProbeData {
 	};
 
 	String mName;
-	long mVersion;
+	int32_t mVersion;
 	TetrahedralMeshData mTetrahedralMeshData;
 	CompressedProbeSH* mProbeSH[4];
 
@@ -100,12 +100,12 @@ struct LightProbeData {
 		char* temp = (char*)malloc(56 * probeCount);
 		stream->serialize_bytes(temp, 56 * probeCount);
 		CompressedProbeSH* v5 = pProbeSH;
-		signed __int64 v8;
+		int64_t v8;
 		char* v9;
 		unsigned int v4 = probeCount;
 		if (v4) {
-			__int64 v10;
-			v8 = (signed __int64)&v5->mBlue[1];
+			int64_t v10;
+			v8 = (int64_t)&v5->mBlue[1];
 			v9 = temp + 38;
 			v10 = v4;
 			do
@@ -123,7 +123,7 @@ struct LightProbeData {
 				*(i16*)(v8 - 4) = *((i16*)v9 - 7);
 				*(i16*)(v8 + 4) = *((i16*)v9 + 2);
 				v9 += 56;
-				v8 += 24i64;
+				v8 += 24LL;
 				--v10;
 			} while (v10);
 		}

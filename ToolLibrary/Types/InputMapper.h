@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -41,7 +41,7 @@ struct InputMapper {
 	DCArray<EventMapping> mMappedEvents;
 
 	static MetaOpResult MetaOperation_SerializeAsync(void* pObj, MetaClassDescription* pObjDesc, MetaMemberDescription* c, void* pUserData) {
-		return Meta::MetaOperation_SerializeAsync(pObj, pObjDesc, c, pUserData);//dont ask, telltale did it not me 
+		return Meta::MetaOperation_SerializeAsync(pObj, pObjDesc, c, pUserData);//dont ask, telltale did it not me
 	}
 
 };
@@ -55,10 +55,10 @@ struct PlatformInputMapper {
 
 	String mName;
 	DCArray<EventMapping> mMappedEvents;
-	TTBitArray<4096, unsigned __int64> mKeyFlags, mPlatformKeyFlags;//512 byte buf
+	TTBitArray<4096, uint64_t> mKeyFlags, mPlatformKeyFlags;//512 byte buf
 
 	static MetaOpResult MetaOperation_SerializeAsync(void* pObj, MetaClassDescription* pObjDesc, MetaMemberDescription* c, void* pUserData) {
-		return Meta::MetaOperation_SerializeAsync(pObj, pObjDesc, c, pUserData);//dont ask, telltale did it not me 
+		return Meta::MetaOperation_SerializeAsync(pObj, pObjDesc, c, pUserData);//dont ask, telltale did it not me
 	}
 
 };

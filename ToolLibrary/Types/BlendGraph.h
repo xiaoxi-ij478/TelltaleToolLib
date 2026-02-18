@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -123,10 +123,10 @@ struct BlendGraph {
 	String mComment;
 	void* mpGeometry;
 	Handle<Chore> mhBlendGraphAuxiliaryChore;
-	long mbInvertParameters;
-	long mVersion;
-	long mNumGeometryDimensions;
-	long mNumDimensions;
+	int32_t mbInvertParameters;
+	int32_t mVersion;
+	int32_t mNumGeometryDimensions;
+	int32_t mNumDimensions;
 	DCArray<int> mParameterOrder;
 
 	//static void ConvertEaseInFlagsToV6(int v5Flags, CorrespondencePoint* cp) {}
@@ -205,7 +205,7 @@ struct BlendGraphManager {
 	bool mbUseAnimationMoverData;
 	Handle<BlendGraph> mhFreewalkStartGraph, mhFreewalkLoopGraph, mhFreewalkStopGraph, mhTurnToFaceGraph,//turn to face in newer
 		mhChoredMovementStartGraph, mhChoredMovementLoopGraph, mhChoredMovementStopGraph;//older games this line
-	long mVersion;
+	int32_t mVersion;
 	bool mbUseAlgorithmicHeadTurn;
 	float mfMaxManualSteeringVelocityInDegrees, mfMinManualSteeringVelocityInDegrees;
 	float mfMaxLeanInPercentVelocity, mfMinLeanInPercentVelocity;

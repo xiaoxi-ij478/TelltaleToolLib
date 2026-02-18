@@ -181,7 +181,7 @@ constexpr Symbol kPropKeyForceVisibleInEnlighten("Render Enlighten Force Visible
 constexpr Symbol kPropKeyForceVisibleInShadow("Render Shadow Force Visible");
 constexpr const char* kSceneChoreCameraLayer = "Chore";
 constexpr const char* k3dSoundParametersPropName = "module_sound_3d_params.prop";
-constexpr Symbol kNeutralPhoneme(6675906533782001351i64);
+constexpr Symbol kNeutralPhoneme(6675906533782001351LL);
 constexpr Symbol kPropKeyBoundingVolumeScalingFactor("Bounding Volume Scaling Factor");
 constexpr Symbol kPropKeyBoundingVolumeType("Bounding Volume Type");
 constexpr Symbol kPropKeyCollisionType("Collision Type");

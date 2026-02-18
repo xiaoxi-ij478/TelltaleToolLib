@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -116,7 +116,7 @@ public:
 		eDontSearchParents = 0x2
 	};
 
-	enum PropertyFlags { 
+	enum PropertyFlags {
 		ePropertyFlag_HasEmbedded = 0x400,
 		ePropertyFlag_LockUnloadable = 0x400000,
 		ePropertyFlag_IsRuntime = 0x10,
@@ -126,16 +126,16 @@ public:
 
 	enum PropertyLocalKeyOptions { eKeepLocalKeys = 0x0, eDiscardLocalKeys = 0x1, ePrompt = 0x2, };
 
-	enum PropertyModifications { 
-		eInModifiedList = 0x1, 
-		eKeyAdded = 0x2, 
-		eKeyRemoved = 0x4, 
-		eKeyModified = 0x8, 
-		eParentAdded = 0x10, 
-		eParentRemoved = 0x20, 
-		eKeyCallbacksPending = 0x40, 
-		eChangedSinceSave = 0x80, 
-		eForDestructor = 0x100, 
+	enum PropertyModifications {
+		eInModifiedList = 0x1,
+		eKeyAdded = 0x2,
+		eKeyRemoved = 0x4,
+		eKeyModified = 0x8,
+		eParentAdded = 0x10,
+		eParentRemoved = 0x20,
+		eKeyCallbacksPending = 0x40,
+		eChangedSinceSave = 0x80,
+		eForDestructor = 0x100,
 		eAnyChangeMask = 0x3E, };
 
 	struct KeyInfo {
@@ -224,12 +224,12 @@ public:
 
 	};
 
-	int mPropVersion;
+	int32_t mPropVersion;
 	Flags mPropertyFlags;
 	//Flags mModifiedFlags; //NOT SERIALIZED! could be useful?
 	DCArray<PropertySet::KeyInfo> mKeyMap;//type=>value
 	DCArray<ParentInfo> mParentList;//list of parent property set handle file references. in the engine these could be files (eTTArch) or just
-	//memory references (eMemory). not implemented in this lib but useful to know for loaded .props 
+	//memory references (eMemory). not implemented in this lib but useful to know for loaded .props
 	HandleObjectInfo mHOI;
 	//The property set may have its parent property set embedded in the file. If so this is valid (if you set this, use new)
 	PropertySet* mEmbeddedParentProps;
@@ -330,7 +330,7 @@ public:
 				if (it == typeMap.end()) {
 					List<KeyInfo> l;
 					l.AddElement(0, NULL, &mapping);
-					typeMap.insert(std::make_pair(typeSymbol.GetCRC(), _STD move(l)));
+					typeMap.insert(std::make_pair(typeSymbol.GetCRC(), std:: move(l)));
 				}
 				else {
 					it->second.AddElement(0, NULL, &mapping);
@@ -362,7 +362,7 @@ public:
 					stream->serialize_Symbol(&keyInfo.mKeyName);
 					stream->BeginObject("Key Value", false);
 					PerformMetaSerializeFull(stream, keyInfo.mpValue->mpValue,
-						keyInfo.mpValue->mpDataDescription); 
+						keyInfo.mpValue->mpDataDescription);
 					stream->EndObject("Key Value");
 				}
 			}
@@ -399,7 +399,7 @@ public:
 			for (int i = 0; i < numtypes; i++) {
 				Symbol typeSymbol;
 				stream->serialize_Symbol(&typeSymbol);
-				MetaClassDescription* typeDesc = 
+				MetaClassDescription* typeDesc =
 					TelltaleToolLib_FindMetaClassDescription_ByHash
 						(typeSymbol.GetCRC());
 				if (!typeDesc) {
@@ -422,8 +422,8 @@ public:
 					if (!metaTypedNew)return eMetaOp_Fail;//ABSTRACT! no
 					property.mpValue->mpValue = metaTypedNew();
 					stream->BeginObject("Key Value", false);
-					if((opres=PerformMetaSerializeFull(stream, 
-						property.mpValue->mpValue,typeDesc)) 
+					if((opres=PerformMetaSerializeFull(stream,
+						property.mpValue->mpValue,typeDesc))
 						!= eMetaOp_Succeed) return opres;
 					stream->EndObject("Key Value");
 					prop->mKeyMap.AddElement(0, NULL, &property);

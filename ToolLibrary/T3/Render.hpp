@@ -211,7 +211,7 @@ struct RenderFrameUpdateList {
 		job.mEnd = end;
 	}
 
-	//Put the data into the returned buffer and copy the new data for it. 
+	//Put the data into the returned buffer and copy the new data for it.
 	inline void* UpdateBuffer(std::shared_ptr < T3GFXBuffer> pBuffer, unsigned int count){
 		ResourceEntry_MeshBuffer& job = *mHeap->NewNoDestruct<ResourceEntry_MeshBuffer>();
 		mMeshBufferList.insert_tail(&job);
@@ -569,8 +569,8 @@ struct T3RenderInst : ListNode<T3RenderInst>
 	 * Sets the render layer. This determines the draw order.
 	 */
 	inline void SetRenderLayer(T3TransparencyMode mode, int layer, int sublayer){
-		layer = min(0x7FFF, max(layer, -0x8000));
-		sublayer = min(0x3FF, max(sublayer, 0));
+		layer = std::min(0x7FFF, std::max(layer, -0x8000));
+		sublayer = std::min(0x3FF, std::max(sublayer, 0));
 		mSortKey = ((u64)mode << 62) | ((u64)sublayer << 26) | ((u64)(layer + 0x8000) << 46) | 0x3FF000000000llu;
 	}
 
@@ -681,7 +681,7 @@ struct RenderViewPass : RenderViewPassBase, ListNode<RenderViewPass>
 
 	LinearHeap* mHeap;
 	RenderPassParams mParams;
-	unsigned __int64 mProfileToken;
+	uint64_t mProfileToken;
 	const char* mName;
 	T3EffectParameterGroupStack mParameterStack;
 	T3EffectParameterGroupStack mFullScreenClearParameterStack;
@@ -730,7 +730,7 @@ inline const char* _SetRenderStructName(LinearHeap* pHeap, const char* szFormat,
 	tmp[0] = 0;
 	va_list v{};
 	va_start(v, szFormat);
-	int sz = vsnprintf_s(tmp, 0x400, szFormat, v);
+	int sz = vsnprintf(tmp, 0x400, szFormat, v);
 	if (sz < 0)
 		sz = -1;
 	char* dest = pHeap->Alloc(++sz, 1);
@@ -790,7 +790,7 @@ struct RenderSceneView : ListNode<RenderSceneView>
 	void _Execute(RenderFrameContext& context, RenderFrameStats& frameStats, T3RenderTargetList& targetList, BitSet<T3RenderPass, 22, 0>& baseValidPasses, RenderSubViewParams* pSubViewParams);
 
 	inline Scene* GetScene();
-	
+
 	inline RenderViewPass* GetScenePass(T3RenderPass pass){
 		return mScenePassList[pass];
 	}

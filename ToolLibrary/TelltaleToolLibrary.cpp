@@ -220,7 +220,7 @@ _TTToolLib_Exp int TelltaleToolLib_SetProxyVersionDatabases(const char* pFolder)
 _TTToolLib_Exp i32 TelltaleToolLib_GetGameKeyIndex(const char* pGameID) {
     if (pGameID) {
         for (int i = 0; i < KEY_COUNT; i++) {
-            if (!_stricmp(sBlowfishKeys[i].game_id, pGameID)) {
+            if (!strcasecmp(sBlowfishKeys[i].game_id, pGameID)) {
                 return i;
             }
         }
@@ -243,7 +243,7 @@ void (*printf_hook)(const char* const fmt, va_list args) = NULL;
 
 void _DefaultCallback(const char* msg, ErrorSeverity e) {
 #ifdef DEBUGMODE
-    TTL_Log("ERROR: %s: [%s]\n",msg, e == ErrorSeverity::CRITICAL_ERROR ? "CRITICAL" : e == ErrorSeverity::NOTIFY ? "NOTIFY" 
+    TTL_Log("ERROR: %s: [%s]\n",msg, e == ErrorSeverity::CRITICAL_ERROR ? "CRITICAL" : e == ErrorSeverity::NOTIFY ? "NOTIFY"
     : e == ErrorSeverity::WARN ? "WARNING" : "ERR");
 #endif
     if (e == ErrorSeverity::CRITICAL_ERROR)exit(-1);
@@ -269,7 +269,9 @@ _TTToolLib_Exp void TTL_Log(const char* const  _Fmt, ...){
     va_list va{};
     va_start(va, _Fmt);
 #ifdef _DEBUG
-    vprintf_s(_Fmt, va); //print as normal
+    vprintf(_Fmt, va); //print as normal
+    va_end(va);
+    va_start(va, _Fmt);
 #endif
     if (printf_hook != NULL)
         printf_hook(_Fmt, va);
@@ -302,7 +304,7 @@ _TTToolLib_Exp void* TelltaleToolLib_CreateClassInstance(MetaClassDescription* p
 
 _TTToolLib_Exp LibraryHandle TelltaleToolLib_GetLibrary(const char* pName) {
     char buf[256];
-    sprintf_s(buf, "./LibBin/%s64." PLATFORM_DYLIB_EXT, pName);
+    sprintf(buf, "./LibBin/%s64." PLATFORM_DYLIB_EXT, pName);
     pName = buf;
     for(auto& it : loadedLibraries){
         if (!memcmp(pName, it.pName, strlen(pName)))
@@ -474,7 +476,7 @@ _TTToolLib_Exp MetaClassDescription* TelltaleToolLib_FindMetaClassDescription_By
 _TTToolLib_Exp MetaClassDescription* TelltaleToolLib_FindMetaClassDescription(const char* pStr, bool pIsName) {
     if (pIsName) {
         u64 crc = CRC64_CaseInsensitive(0, pStr);
-        for (MetaClassDescription* i = TelltaleToolLib_GetFirstMetaClassDescription(); i;) {          
+        for (MetaClassDescription* i = TelltaleToolLib_GetFirstMetaClassDescription(); i;) {
             if (i->mHash == crc)
                 return i;
             TelltaleToolLib_GetNextMetaClassDescription(&i);
@@ -486,7 +488,7 @@ _TTToolLib_Exp MetaClassDescription* TelltaleToolLib_FindMetaClassDescription(co
                 TelltaleToolLib_GetNextMetaClassDescription(&i);
                 continue;
             }
-            if (!_stricmp(pStr,i->mpExt))
+            if (!strcasecmp(pStr,i->mpExt))
                 return i;
             TelltaleToolLib_GetNextMetaClassDescription(&i);
         }
@@ -647,41 +649,41 @@ _TTToolLib_Exp void* TelltaleToolLib_CreateIntrinsicInstance(int intrin, char da
     if(intrin == IntrinType::I8){
         mcd = TelltaleToolLib_FindMetaClassDescription("int8", 1);
         v = TelltaleToolLib_CreateClassInstance(mcd);
-        *((signed char*)v) = rawvalue & 0xFF;
+        *((int8_t*)v) = rawvalue & 0xFF;
 	}
 	else if (intrin == IntrinType::U8) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("uint8", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned char*)v) = rawvalue & 0xFF;
+		*((uint8_t*)v) = rawvalue & 0xFF;
 	}
 	else if (intrin == IntrinType::I16) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("uint16", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned short*)v) = rawvalue & 0xFFFF;
+		*((uint16_t*)v) = rawvalue & 0xFFFF;
 	}
 	else if (intrin == IntrinType::U16) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("int16", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((signed short*)v) = rawvalue & 0xFFFF;
+		*((int16_t*)v) = rawvalue & 0xFFFF;
 	}
 	else if (intrin == IntrinType::I32) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("int32", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((long*)v) = rawvalue & 0xFFFFFFFF;
+		*((int32_t*)v) = rawvalue & 0xFFFFFFFF;
 	}else if (intrin == IntrinType::U32) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("uint32", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned long*)v) = rawvalue & 0xFFFFFFFF;
+		*((uint32_t*)v) = rawvalue & 0xFFFFFFFF;
 	}
 	else if (intrin == IntrinType::I64) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("int64", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-        *((signed long long*)v) = rawvalue;
+        *((int64_t*)v) = rawvalue;
 	}
 	else if (intrin == IntrinType::U64) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("uint64", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned long long*)v) = rawvalue & 0xFF;
+		*((uint64_t*)v) = rawvalue & 0xFF;
 	}
 	else if (intrin == IntrinType::SYM) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("Symbol", 1);
@@ -696,12 +698,12 @@ _TTToolLib_Exp void* TelltaleToolLib_CreateIntrinsicInstance(int intrin, char da
 	else if (intrin == IntrinType::FLT) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("float", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-        *((unsigned long*)v) = rawvalue & 0xFFFFFFFF;
+        *((float*)v) = rawvalue & 0xFFFFFFFF;
 	}
 	else if (intrin == IntrinType::DBL) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("double", 1);
 		v = TelltaleToolLib_CreateClassInstance(mcd);
-		*((unsigned long long*)v) = rawvalue;
+		*((double*)v) = rawvalue;
 	}
 	else if (intrin == IntrinType::FLG) {
 		mcd = TelltaleToolLib_FindMetaClassDescription("Flags", 1);
@@ -788,7 +790,7 @@ _TTToolLib_Exp void* TelltaleToolLib_Container(int op, void* container, void* ar
         if (container == nullptr)
             return 0;
         MetaClassDescription* clazz = (MetaClassDescription*)arg1;
-        return (void*)((clazz->mpFirstMember != nullptr && !_stricmp(clazz->mpFirstMember->mpName,"Baseclass_ContainerInterface")) ? 1llu : 0llu);
+        return (void*)((clazz->mpFirstMember != nullptr && !strcasecmp(clazz->mpFirstMember->mpName,"Baseclass_ContainerInterface")) ? 1llu : 0llu);
     }
     ContainerInterface* pInterface = (ContainerInterface*)container;
     if (pInterface == nullptr)
@@ -837,7 +839,7 @@ _TTToolLib_Exp MetaMemberDescription* TelltaleToolLib_FindMember(MetaClassDescri
          return nullptr;
      MetaMemberDescription* pMem = clazz->mpFirstMember;
      while(pMem){
-         if (!_stricmp(memberVarName, pMem->mpName))
+         if (!strcasecmp(memberVarName, pMem->mpName))
              return pMem;
          pMem = pMem->mpNextMember;
      }
@@ -868,7 +870,7 @@ _TTToolLib_Exp bool TelltaleToolLib_WriteMetaStream(DataStream* pOut, MetaClassD
 _TTToolLib_Exp bool TelltaleToolLib_SetBlowfishKey(const char* game_id) {
     if (game_id) {
         for (int i = 0; i < KEY_COUNT; i++) {
-            if (!_stricmp(sBlowfishKeys[i].game_id, game_id)) {
+            if (!strcasecmp(sBlowfishKeys[i].game_id, game_id)) {
                 sSetKeyIndex = i;
                 return true;
                 break;
@@ -891,7 +893,7 @@ _TTToolLib_Exp bool TelltaleToolLib_Initialize(const char* game_id) {
     if (game_id) {
         const BlowfishKey* k = NULL;
         for (int i = 0; i < KEY_COUNT; i++) {
-            if (!_stricmp(sBlowfishKeys[i].game_id, game_id)) {
+            if (!strcasecmp(sBlowfishKeys[i].game_id, game_id)) {
                 k = &sBlowfishKeys[i];
                 sSetKeyIndex = i;
                 break;
@@ -961,7 +963,7 @@ _TTToolLib_Exp void TelltaleToolLib_MakeInternalTypeName(char** _StringPtr) {
     //for (int i = 0; i < slen; i++) {
     //    nbuf[i] |= 0b100000;
     //}
-    nbuf[slen] = 0i8;
+    nbuf[slen] = 0;
     free(*_StringPtr);
     *_StringPtr = nbuf;
 }
@@ -1080,7 +1082,7 @@ _TTToolLib_Exp void TelltaleToolLib_WriteDataStream(DataStream* pOutStream, void
     }
 }
 
-_TTToolLib_Exp unsigned long long TelltaleToolLib_CRC64CaseInsensitive(const char* pBuf, unsigned long long initialCRC){
+_TTToolLib_Exp uint64_t TelltaleToolLib_CRC64CaseInsensitive(const char* pBuf, uint64_t initialCRC){
     return CRC64_CaseInsensitive(initialCRC, pBuf);
 }
 

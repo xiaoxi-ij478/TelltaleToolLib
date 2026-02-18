@@ -1,5 +1,5 @@
  // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -17,15 +17,15 @@ struct LogicGroup {
 	struct LogicItem : PropertySet {
 		String mName;
 		Map<Symbol, bool, std::less<Symbol>> mKeyNegateList;
-		Map<Symbol, int, std::less<Symbol>> mKeyComparisonList, mKeyActionList;
+		Map<Symbol, int32_t, std::less<Symbol>> mKeyComparisonList, mKeyActionList;
 		DCArray<String> mReferenceKeyList;
 	};
 
-	long mOperator;
+	int32_t mOperator;
 	Map<String, LogicItem, std::less<String>> mItems;
 	DCArray<LogicGroup> mLogicGroups;
-	long mGroupOperator;
-	long mType;
+	int32_t mGroupOperator;
+	int32_t mType;
 	String mName;
 
 };

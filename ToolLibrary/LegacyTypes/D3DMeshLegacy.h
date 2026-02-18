@@ -2,10 +2,10 @@
 
 #include "../Meta.hpp"
 #include "../Types/D3DMesh.h"
-#include "../types/ObjectSpaceIntrinsics.h"
+#include "../Types/ObjectSpaceIntrinsics.h"
 #include "../Types/DCArray.h"
 #include "../Types/SArray.h"
-#include "../types/Map.h"
+#include "../Types/Map.h"
 
 class LegacyD3DMesh {
 public:
@@ -191,7 +191,7 @@ public:
 	};
 
 	struct SkinningEntry {
-		
+
 	};
 
 	struct BoneEntry {

@@ -20,49 +20,49 @@ public:
 	};
 
 	struct EnumEntry {
-		unsigned __int64 mpEnumName;
-		int mEnumValue;
-		int mFlags;
-		int mpNext = -1;
+		uint64_t mpEnumName;
+		int32_t mEnumValue;
+		int32_t mFlags;
+		int32_t mpNext = -1;
 	};
 
 	struct FlagEntry {
-		unsigned __int64 mpFlagName;
-		int mFlagValue;
-		int mpNext = -1;
+		uint64_t mpFlagName;
+		int32_t mFlagValue;
+		int32_t mpNext = -1;
 	};
 
 	struct ClassEntry {
-		unsigned __int64 mpTypeInfoName;
-		unsigned __int64 mpExt;
-		unsigned __int64 mHash;
+		uint64_t mpTypeInfoName;
+		uint64_t mpExt;
+		uint64_t mHash;
 		//if the actual one is not -1, then it is correct in the game (should equal versioncrc, if not then use actual)
-		unsigned __int32 mFlags, mClassSize, mVersionCRC, mActualVersionCRC = -1;
+		uint32_t mFlags, mClassSize, mVersionCRC, mActualVersionCRC = -1;
 
-		int mpFirstMember = -1;
+		int32_t mpFirstMember = -1;
 
 		inline bool is_crc_definite() {
 			return mActualVersionCRC != -1;
 		}
 
-		inline unsigned __int32 get_best_version_crc_estimate() {
+		inline uint32_t get_best_version_crc_estimate() {
 			return mActualVersionCRC != -1 ? mActualVersionCRC : mVersionCRC;
 		}
 
 	};
 
 	struct MemberEntry {
-		unsigned __int64 mpName;
-		unsigned __int32 mOffset, mFlags;
-		int mpHostClass;
-		int mpNextMember = -1;
-		int mpEnumDesc = -1, mpFlagDesc = -1;
+		uint64_t mpName;
+		uint32_t mOffset, mFlags;
+		int32_t mpHostClass;
+		int32_t mpNextMember = -1;
+		int32_t mpEnumDesc = -1, mpFlagDesc = -1;
 		/*its a normal pointer index into the classes array, stored as a 64 bit value for backend purposes in serialization*/
-		unsigned __int64 mpMemberDesc;
+		uint64_t mpMemberDesc;
 	};
 
-	int mVersion;
-	int mDBFlags;
+	int32_t mVersion;
+	int32_t mDBFlags;
 	DCArray<ClassEntry> mClasses;
 	DCArray<FlagEntry> mFlags;
 	DCArray<EnumEntry> mEnums;
@@ -97,7 +97,7 @@ public:
 		return (mDBFlags & eVersionCRCS_Outdated) != 0;
 	}
 
-	inline ClassEntry* FindClass(unsigned __int64 crc) {
+	inline ClassEntry* FindClass(uint64_t crc) {
 		for (int i = 0; i < mClasses.GetSize(); i++) {
 			if (mClasses[i].mHash == crc)
 				return mClasses.mpStorage + i;

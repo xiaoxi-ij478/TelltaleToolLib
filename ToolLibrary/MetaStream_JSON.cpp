@@ -73,24 +73,24 @@ bool LookaheadParser::NextArrayValue() {
 	return true;
 }
 
-unsigned long long LookaheadParser::GetULong() {
+uint64_t LookaheadParser::GetULong() {
 	if (st_ != kHasNumber || !v_.IsUint64()) {
 		st_ = kError;
 		return 0;
 	}
 
-	unsigned long long result = v_.GetUint64();
+	uint64_t result = v_.GetUint64();
 	ParseNext();
 	return result;
 }
 
-int LookaheadParser::GetInt() {
+int32_t LookaheadParser::GetInt() {
 	if (st_ != kHasNumber || !v_.IsInt()) {
 		st_ = kError;
 		return 0;
 	}
 
-	int result = v_.GetInt();
+	int32_t result = v_.GetInt();
 	ParseNext();
 	return result;
 }
@@ -275,12 +275,14 @@ u64 MetaStream_JSON::Close()
 			//DONE!
 		}
 		else if (mMode == MetaStreamMode::eMetaStream_Read) {
-			//nothing 
+			//nothing
 		}
 		mMode = MetaStreamMode::eMetaStream_Closed;
 		_DeleteJSONData();
 		return completeStreamSize;
 	}
+	// would cause SIGILL otherwise...
+	return 0;
 }
 
 bool MetaStream_JSON::Attach(DataStream* stream, MetaStreamMode mode, MetaStreamParams params)
@@ -310,18 +312,18 @@ bool MetaStream_JSON::Attach(DataStream* stream, MetaStreamMode mode, MetaStream
 		mpReadWriteStream->Serialize(mpRead, mpReadWriteStream->GetSize());
 		mpParser = new LookaheadParser(mpRead);
 		mpParser->EnterObject();
-		
+
 		mpParser->NextObjectKey();
 		mpParser->SkipValue();//watermark
 
 		mpParser->NextObjectKey();
-		if (0 != _stricmp(TelltaleToolLib_GetBlowfishKey(), mpParser->GetString())) {
+		if (0 != strcasecmp(TelltaleToolLib_GetBlowfishKey(), mpParser->GetString())) {
 			TelltaleToolLib_RaiseError("Bad meta stream JSON: game mismatch. Do not use this tool to convert files between game versions.", ErrorSeverity::ERR);
 			return false;
 		}
 
 		//serialized types data
-		if (0 != _stricmp("_serializedTypes", mpParser->NextObjectKey())) {
+		if (0 != strcasecmp("_serializedTypes", mpParser->NextObjectKey())) {
 			TelltaleToolLib_RaiseError("Bad meta stream JSON: no serialized types data (perhaps using old version?)", ErrorSeverity::ERR);
 			return false;
 		}
@@ -345,7 +347,7 @@ bool MetaStream_JSON::Attach(DataStream* stream, MetaStreamMode mode, MetaStream
 			mSerializedTypes.push_back(pClazz);
 		}
 		mpParser->NextArrayValue();
-		if (0 != _stricmp("_metaVersionInfo", mpParser->NextObjectKey())) {
+		if (0 != strcasecmp("_metaVersionInfo", mpParser->NextObjectKey())) {
 			TelltaleToolLib_RaiseError("Bad meta stream JSON: no meta version information found", ErrorSeverity::ERR);
 			return false;
 		}
@@ -377,7 +379,7 @@ bool MetaStream_JSON::Attach(DataStream* stream, MetaStreamMode mode, MetaStream
 			MetaVersionInfo inf{};
 			inf.mVersionCrc = verCrc;
 			inf.mTypeSymbolCrc = typeSymbolCrc;
-			mVersionInfo.push_back(_STD move(inf));
+			mVersionInfo.push_back(std:: move(inf));
 			mpParser->NextObjectKey();
 		}
 		mpParser->NextArrayValue();
@@ -403,7 +405,7 @@ i64 MetaStream_JSON::WriteData(void* d, u32 z)
 
 i64 MetaStream_JSON::ReadData(void* d, u32 z)
 {
-	
+
 	return z;
 }
 
@@ -449,13 +451,13 @@ void MetaStream_JSON::Advance(int numBytes)
 
 void MetaStream_JSON::SkipToEndOfCurrentBlock()
 {
-	
+
 }
 // ----------------------
 
 void MetaStream_JSON::BeginBlock()
 {
-	//nothing 
+	//nothing
 }
 
 void MetaStream_JSON::EndBlock()
@@ -532,12 +534,12 @@ void MetaStream_JSON::serialize_bool(bool* p)
 	}
 }
 
-void MetaStream_JSON::serialize_double(long double* p)
+void MetaStream_JSON::serialize_double(double* p)
 {
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("Double Value");
-		mpWriter->mWriter.Double((double) * p);
+		mpWriter->mWriter.Double(* p);
 	}
 }
 
@@ -546,7 +548,7 @@ void MetaStream_JSON::serialize_float(float* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("Float Value");
-		mpWriter->mWriter.Double((double)*p);
+		mpWriter->mWriter.Double(*p);
 	}
 }
 
@@ -555,7 +557,7 @@ void MetaStream_JSON::serialize_uint16(u16* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("UInt16 Value");
-		mpWriter->mWriter.Uint((unsigned long long) *p);
+		mpWriter->mWriter.Uint(*p);
 	}
 }
 
@@ -564,7 +566,7 @@ void MetaStream_JSON::serialize_uint32(u32* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("UInt32 Value");
-		mpWriter->mWriter.Uint64((unsigned long long)*p);
+		mpWriter->mWriter.Uint64(*p);
 	}
 }
 
@@ -573,7 +575,7 @@ void MetaStream_JSON::serialize_uint64(u64* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("UInt64 Value");
-		mpWriter->mWriter.Uint64((uint64_t)*p);
+		mpWriter->mWriter.Uint64(*p);
 	}
 }
 
@@ -582,7 +584,7 @@ void MetaStream_JSON::serialize_int8(char* p)
 	if (mMode == MetaStreamMode::eMetaStream_Write) {
 		if (NeedsKey())
 			mpWriter->mWriter.Key("Int8 Value");
-		mpWriter->mWriter.Uint((unsigned long long) *p);
+		mpWriter->mWriter.Uint((uint8_t)*p);
 	}
 }
 

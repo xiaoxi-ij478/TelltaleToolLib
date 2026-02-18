@@ -294,12 +294,12 @@ struct MipSizeData
 
 	struct MipSize
 	{
-		unsigned __int16 mWidthPix;
-		unsigned __int16 mHeightPix;
-		unsigned __int16 mWidthBlocks;
-		unsigned __int16 mHeightBlocks;
-		unsigned __int16 mPitchBytes;
-		unsigned __int16 mMipLevel;
+		uint16_t mWidthPix;
+		uint16_t mHeightPix;
+		uint16_t mWidthBlocks;
+		uint16_t mHeightBlocks;
+		uint16_t mPitchBytes;
+		uint16_t mMipLevel;
 		unsigned int mMipOffsetBytes;
 		unsigned int mblockAlignment;
 	};
@@ -346,8 +346,8 @@ struct RenderVertex_Texture2
 
 struct RenderVertex_EnlightenUV
 {
-	__int16 mTexCoordU;
-	__int16 mTexCoordV;
+	int16_t mTexCoordU;
+	int16_t mTexCoordV;
 };
 
 struct RenderVertex_OutlineSize
@@ -644,7 +644,7 @@ namespace T3 {
 		hash0 = CRC64(hash0, (const char*)&layout.mAttributes, sizeof(GFXPlatformAttributeParams) * layout.mAttributeCount);
 		return hash0;
 	}
-	
+
 	inline std::shared_ptr<LayoutAttach> AddCachedVertexLayout(GFXPlatformVertexLayout& layout){
 		u64 hash = ComputeVertexLayoutHash(layout, 0);
 		for (auto& it : sCachedLayouts)
@@ -687,18 +687,18 @@ namespace T3 {
 		T3GFXVertexState* vState=0; // rbx@1
 		unsigned int v2 = 0; // eax@1
 		unsigned int* v3 = 0; // rcx@2
-		__int64 v4 = 0; // rdx@2
-		__int64 v5 = 0; // rax@3
+		int64_t v4 = 0; // rdx@2
+		int64_t v5 = 0; // rax@3
 		unsigned int verButCount = 0; // eax@4
 		unsigned int v7 = 0; // esi@4
 		unsigned int incrementIfUSED = 0; // er13@4
 		unsigned int alwaysIncrements = 0; // edi@4
 		std::shared_ptr<T3GFXBuffer> currentvertbuf{}; // rbp@6
 		int v11 = 0; // er15@6
-		__int64 currentCounterRep = 0; // rax@6
-		signed __int64 v13 = 0; // r12@6
+		int64_t currentCounterRep = 0; // rax@6
+		int64_t v13 = 0; // r12@6
 		unsigned int v15 = 0; // edi@12
-		__int64 v17 = 0; // rax@17
+		int64_t v17 = 0; // rax@17
 		int Dst[32];
 		int v19[32];
 
@@ -726,7 +726,7 @@ namespace T3 {
 		{
 			do
 			{
-				if ((unsigned int)Dst[(unsigned __int64)alwaysIncrements] <= 0)
+				if ((unsigned int)Dst[(unsigned int64_t)alwaysIncrements] <= 0)
 				{
 					v11 = -1;
 				}
@@ -997,7 +997,7 @@ namespace T3 {
 		return (unsigned int)v5;
 	}
 
-	inline void GetMipSize(int baseWidth, int baseHeight, __int64 miplevel, int* outWidth, int* outHeight)
+	inline void GetMipSize(int baseWidth, int baseHeight, int64_t miplevel, int* outWidth, int* outHeight)
 	{
 		signed int v5; // er10@1
 		int v6; // eax@3
@@ -1023,7 +1023,7 @@ namespace T3 {
 				if (v7 > 1)
 					baseWidth = v7;
 				v8 = v5;
-				v9 = (unsigned __int64)v5 >> 32;
+				v9 = (unsigned int64_t)v5 >> 32;
 				v5 = 1;
 				v10 = (v8 - v9) >> 1;
 				if (v10 > 1)
@@ -1042,11 +1042,11 @@ namespace T3 {
 		unsigned int v6; // er10@1
 		unsigned int v7; // er9@1
 		char* v8; // rdi@1
-		__int64 v9; // r8@3
-		__int64 v10; // rax@3
+		int64_t v9; // r8@3
+		int64_t v10; // rax@3
 		char* v11; // rdx@3
 		char* v12; // rax@3
-		__int64 v13; // rcx@4
+		int64_t v13; // rcx@4
 
 		v4 = (char*)pSrc;
 		v5 = (height + 3) >> 2;
@@ -1084,11 +1084,11 @@ namespace T3 {
 		char* v6; // rbx@1
 		char* v7; // rdi@1
 		unsigned int v8; // er9@1
-		__int64 v9; // r8@3
-		__int64 v10; // rax@3
+		int64_t v9; // r8@3
+		int64_t v10; // rax@3
 		char* v11; // rdx@3
-		signed __int64 v12; // rax@3
-		__int64 v13; // rcx@4
+		int64_t v12; // rax@3
+		int64_t v13; // rcx@4
 
 		v4 = (height + 3) >> 2;
 		v5 = (width + 3) >> 2;
@@ -1104,7 +1104,7 @@ namespace T3 {
 					v9 = v5;
 					v10 = v5 * v8;
 					v11 = &v6[8 * v10];
-					v12 = (signed __int64)&v7[16 * v10];
+					v12 = (int64_t)&v7[16 * v10];
 					do
 					{
 						v13 = *(u64*)v11;
@@ -1133,7 +1133,7 @@ namespace T3 {
 		int v14;
 		int v15;
 		int i;
-		__int64 v17;
+		int64_t v17;
 		signed int v18;
 		int v19;
 		int v20;
@@ -1166,13 +1166,13 @@ namespace T3 {
 			if (v19 > 1)
 				v9 = v19;
 			v20 = v8;
-			v21 = (unsigned __int64)v8 >> 32;
+			v21 = (unsigned int64_t)v8 >> 32;
 			v8 = 1;
 			v22 = (v20 - v21) >> 1;
 			if (v22 > 1)
 				v8 = v22;
 			v23 = v13;
-			v24 = (unsigned __int64)v13 >> 32;
+			v24 = (unsigned int64_t)v13 >> 32;
 			v13 = 1;
 			v25 = (v23 - v24) >> 1;
 			if (v25 > 1)
@@ -1193,7 +1193,7 @@ namespace T3 {
 		signed int v7; // ebx@1
 		signed int v8; // edi@1
 		T3SurfaceFormatDesc* v9; // r14@1
-		__int64 v10; // rsi@3
+		int64_t v10; // rsi@3
 		signed int v11; // er12@4
 		unsigned int v12; // er15@7
 		int v13; // er10@8
@@ -1395,7 +1395,7 @@ namespace T3 {
 
 	inline const char* T3TextureLayout_GetName(T3TextureLayout v)
 	{
-		unsigned __int32 v1; // ecx@2
+		uint32_t v1; // ecx@2
 		int v2; // ecx@3
 		int v3; // ecx@4
 		const char* result; // rax@6
@@ -1489,18 +1489,18 @@ namespace T3 {
 		return -1;
 	}
 
-	inline float HalfToFloat(unsigned __int16 x)
+	inline float HalfToFloat(uint16_t x)
 	{
 		u32 u = Float16ToFloat32(x);
 		return *((float*)&u);
 	}
 
-	/*inline float TT_Broken_HalfToFloat(unsigned __int16 v)
+	/*inline float TT_Broken_HalfToFloat(uint16_t v)
 	{
 		unsigned int v2; // edx@1
 		int v3; // ecx@1
 		int v4; // eax@2
-		__int64 result; // rax@10
+		int64_t result; // rax@10
 		int v7; // [sp+8h] [bp+8h]@10
 
 		v2 = v;
@@ -1537,8 +1537,8 @@ namespace T3 {
 	{
 		int v1; // edx@1
 		int v2; // er8@1
-		signed __int16 v3; // ax@2
-		unsigned __int16 result; // ax@4
+		int16_t v3; // ax@2
+		uint16_t result; // ax@4
 		unsigned int v5; // edx@6
 
 		v1 = *(u32*)&v & 0x7FFFFFFF;
@@ -2452,7 +2452,7 @@ namespace T3 {
 		}
 	}
 
-	//In Degrees. pVerts has min 33 elements for wire, 66 for filled 
+	//In Degrees. pVerts has min 33 elements for wire, 66 for filled
 	inline void SetArcVerts(RenderVertex_Position3* pVerts, RenderPrimitiveStyle style, float angleStart, float angleEnd){
 		float until = angleEnd - 0.001f;
 		float increment = (angleEnd - angleStart) * 0.03125f;//1/32: 32 frames
@@ -2506,7 +2506,7 @@ namespace T3 {
 			res = desc.mName;
 		res += BuildSuffix(context, feat);
 		if(materialCrc){
-			sprintf_s(tmp, "_M%llx", materialCrc);
+			sprintf(tmp, "_M%llx", materialCrc);
 			res += tmp;
 		}
 		res += BuildQualityList(context, validQuality);

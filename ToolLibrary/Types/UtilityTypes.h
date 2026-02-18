@@ -6,8 +6,8 @@ struct EnumBase {};
 
 struct Guide {
 	float m_Time;
-	long m_Bitfield;
-	long m_AutoActRole;
+	int32_t m_Bitfield;
+	int32_t m_AutoActRole;
 };
 
 struct ParticleLODKey
@@ -915,7 +915,7 @@ namespace UID {
 
 	typedef int idT;
 
-	struct __declspec(align(8)) Generator {
+	struct alignas(8) Generator {
 		static constexpr idT msUninitID = -1;
 		idT miNextUniqueID;
 
@@ -945,7 +945,7 @@ namespace UID {
 		}
 	};
 
-	struct __declspec(align(8)) Owner {
+	struct alignas(8) Owner {
 		idT miUniqueID;
 
 		Owner() : miUniqueID(-1) {}

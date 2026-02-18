@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -82,8 +82,8 @@ struct T3Texture : T3GFXResource {
 		eTxToonLookup = 0xE,
 		eTxStandard = 0xF,
 		eTxOutlineDiscontinuity = 0x10,
-		eTxLightmapHDRScaled = 0x11, 
-		eTxEmissiveMap = 0x12, 
+		eTxLightmapHDRScaled = 0x11,
+		eTxEmissiveMap = 0x12,
 		eTxParticleProperties = 0x13,
 		eTxBrushNormalMap = 0x14,
 		eTxUNUSED2 = 0x15,
@@ -92,7 +92,7 @@ struct T3Texture : T3GFXResource {
 		eTxAmbientOcclusion = 0x18,
 		eTxPrefilteredEnvCubeMapHDR = 0x19,
 		eTxBrushLookupMap = 0x1A,
-		eTxVector2Map = 0x1B, 
+		eTxVector2Map = 0x1B,
 		eTxNormalDxDyMap = 0x1C,
 		eTxPackedSDFDetailMap = 0x1D,
 		eTxSingleChannelSDFDetailMap = 0x1E,
@@ -100,7 +100,7 @@ struct T3Texture : T3GFXResource {
 		eTxLightmapStaticShadows = 0x20,
 		eTxLightStaticShadowMapAtlas = 0x21,
 		eTxLightStaticShadowMap = 0x22,
-		eTxPrefilteredEnvCubeMapHDRScaled = 0x23, 
+		eTxPrefilteredEnvCubeMapHDRScaled = 0x23,
 		eTxLightStaticShadowVolume = 0x24,
 		eTxLightmapAtlas = 0x25,
 		eTxNormalXYMap = 0x26,
@@ -148,7 +148,7 @@ struct T3Texture : T3GFXResource {
 		eTxAlphaUnkown = 0xFFFFFFFF//telltale spelt it wrong not me
 	};
 
-	long mVersion;
+	int32_t mVersion;
 	T3SamplerStateBlock mSamplerState;
 	EnumPlatformType mPlatform;
 	String mName;
@@ -156,11 +156,11 @@ struct T3Texture : T3GFXResource {
 	float mImportScale;
 	float mImportSpecularPower;//old games
 	ToolProps mToolProps;
-	long mNumMipLevels;
-	long mWidth;
-	long mHeight;
-	long mDepth;
-	long mArraySize;
+	int32_t mNumMipLevels;
+	int32_t mWidth;
+	int32_t mHeight;
+	int32_t mDepth;
+	int32_t mArraySize;
 	T3SurfaceFormat mSurfaceFormat;
 	T3TextureLayout mTextureLayout;
 	T3SurfaceGamma mSurfaceGamma;
@@ -492,7 +492,7 @@ struct T3Texture : T3GFXResource {
 
 	~T3Texture();
 
-	static MetaOpResult MetaOperation_SerializeAsync(void* pObj, 
+	static MetaOpResult MetaOperation_SerializeAsync(void* pObj,
 		MetaClassDescription* pObjDesc, MetaMemberDescription* pCtx, void* pUserData) {
 		MetaStream* stream = static_cast<MetaStream*>(pUserData);
 		T3Texture* tex = static_cast<T3Texture*>(pObj);
@@ -512,7 +512,7 @@ struct T3Texture : T3GFXResource {
 				PerformMetaSerializeAsync(stream, &header);
 				if (header.mRegionCount > tex->mRegionHeaders.mCapacity)
 					tex->mRegionHeaders.ReserveAndResize(header.mRegionCount - tex->mRegionHeaders.mCapacity);
-				else 
+				else
 					tex->mRegionHeaders.mSize = header.mRegionCount;
 				for (int i = 0; i < header.mRegionCount; i++) {
 					RegionStreamHeader* ptr = tex->mRegionHeaders.mpStorage + i;

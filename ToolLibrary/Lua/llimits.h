@@ -204,7 +204,7 @@ typedef lu_int32 Instruction;
 #define lua_number2int(i,n)  __asm {__asm fld n   __asm fistp i}
 #define lua_number2integer(i,n)		lua_number2int(i, n)
 #define lua_number2unsigned(i,n)  \
-  {__int64 l; __asm {__asm fld n   __asm fistp l} i = (unsigned int)l;}
+  {int64_t l; __asm {__asm fld n   __asm fistp l} i = (unsigned int)l;}
 
 
 #elif defined(LUA_IEEE754TRICK)		/* }{ */

@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -15,12 +15,12 @@
 //.ANM FILES
 struct Animation {
 
-	long mVersion;
+	int32_t mVersion;
 	Flags mFlags;
 	Symbol mName;
 	float mLength;
 	float mAdditiveMask;
-	DCArray<AnimationValueInterfaceBase*> mValues;//not serialized/see spec. 
+	DCArray<AnimationValueInterfaceBase*> mValues;//not serialized/see spec.
 	ToolProps mToolProps;
 	u32 mValueDataBufferSize;//no ser
 	void* mpValueDataBuffer;//no ser - a runtime buffer for animation data. size is serialized. might be needed for some value types
@@ -152,7 +152,7 @@ struct Animation {
 			return eMetaOp_Succeed;
 		}
 		else {
-			MetaClassDescription* interfaceDesc = 
+			MetaClassDescription* interfaceDesc =
 				GetMetaClassDescription<AnimationValueInterfaceBase>();
 			if (!interfaceDesc) {
 				TelltaleToolLib_RaiseError("Meta not initialized: "
@@ -176,7 +176,7 @@ struct Animation {
 					desc = TelltaleToolLib_FindMetaClassDescription_ByHash(crc);
 					if (!desc) {
 						static char temp[100];
-						sprintf(temp, 
+						sprintf(temp,
 							"Could not find anm value description SYM: %llx", crc);
 						TelltaleToolLib_RaiseError(temp, ErrorSeverity::ERR);
 						meta->EndBlock();
@@ -199,7 +199,7 @@ struct Animation {
 					if (!anm->mpValueDataBuffer) {
 						free(classDescriptions);
 						TelltaleToolLib_RaiseError("Could not allocate "
-							"animation value data buffers", 
+							"animation value data buffers",
 							ErrorSeverity::ERR);
 						meta->EndBlock();
 						return eMetaOp_OutOfMemory;
@@ -247,7 +247,7 @@ struct Animation {
 					for (int i = 0; i < totalNumOfInterfaces; i++) {
 						AnimationValueInterfaceBase* value = *(anm->mValues.mpStorage + i);
 						meta->serialize_uint32(&value->mFlags);
-						if (!(value->mFlags & (AnimationValueInterfaceBase::Flags::eRuntimeAnimation | 
+						if (!(value->mFlags & (AnimationValueInterfaceBase::Flags::eRuntimeAnimation |
 							AnimationValueInterfaceBase::Flags::eTransientAnimation))) {
 							value->mFlags |= AnimationValueInterfaceBase::Flags::eRuntimeAnimation;
 							meta->mRuntimeFlags.mFlags |= MetaStream::RuntimeFlags::eWriteback;

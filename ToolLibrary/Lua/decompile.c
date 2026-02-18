@@ -100,8 +100,8 @@ const char* getUpvalName(const Proto* f, int i) {
 	}
 }
 
-char* luadec_strdup(const char* src) {
-	return ((src) ? _strdup(src) : NULL);
+char* luadecstrdup(const char* src) {
+	return ((src) ? strdup(src) : NULL);
 }
 
 #define UPVALUE(i) (getUpvalName(F->f,i))
@@ -225,8 +225,8 @@ LogicExp* MakeExpNode(BoolOp* boolOp) {
 	node->subexp = NULL;
 	node->next = NULL;
 	node->prev = NULL;
-	node->op1 = luadec_strdup(boolOp->op1);
-	node->op2 = luadec_strdup(boolOp->op2);
+	node->op1 = luadecstrdup(boolOp->op1);
+	node->op2 = luadecstrdup(boolOp->op2);
 	node->op = boolOp->op;
 	node->dest = boolOp->dest;
 	node->neg = boolOp->neg;
@@ -541,7 +541,7 @@ LogicExp* MakeBoolean(Function* F, int* thenaddr, int* endif) {
 		}
 
 	}
-	curr = last; 
+	curr = last;
 	while (curr) {
 		BoolOp* prev = cast(BoolOp*, curr->super.prev);
 		DeleteBoolOp(curr);
@@ -591,7 +591,7 @@ char* OutputBoolean(Function* F, int* thenaddr, int* endif, int test) {
 
 	exp = MakeBoolean(F, thenaddr, endif);
 	if (error) goto OutputBoolean_CLEAR_HANDLER1;
-	result = WriteBoolean(exp, thenaddr, endif, test);	
+	result = WriteBoolean(exp, thenaddr, endif, test);
 	if (error) goto OutputBoolean_CLEAR_HANDLER1;
 
 OutputBoolean_CLEAR_HANDLER1:
@@ -651,7 +651,7 @@ void FlushWhile1(Function* F) {
 
 	if (walk->type == WHILE_STMT && walk->start <= F->pc && walk->body == -1) {
 		AstStatement* whilestmt = walk->block;
-		whilestmt->code = _strdup("1");
+		whilestmt->code = strdup("1");
 		RawAddAstStatement(F, whilestmt);
 		F->currStmt = whilestmt;
 		walk->body = walk->start;
@@ -738,7 +738,7 @@ void DeclarePendingLocals(Function* F);
 
 void AssignGlobalOrUpvalue(Function* F, const char* dest, const char* src) {
 	F->testjump = 0;
-	AddToVarList(&(F->vpend), luadec_strdup(dest), luadec_strdup(src), -1);
+	AddToVarList(&(F->vpend), luadecstrdup(dest), luadecstrdup(src), -1);
 }
 
 void AssignReg(Function* F, int reg, const char* src, int prio, int mayTest) {
@@ -765,7 +765,7 @@ void AssignReg(Function* F, int reg, const char* src, int prio, int mayTest) {
 		printf("SET_SIZE(tpend) = %d \n", SET_SIZE(F->tpend));
 	}
 
-	nsrc = luadec_strdup(src);
+	nsrc = luadecstrdup(src);
 	if (F->testpending == reg+1 && mayTest && F->testjump == F->pc+2) {
 		int thenaddr, endif;
 		char* test = OutputBoolean(F, &thenaddr, &endif, 1);
@@ -792,7 +792,7 @@ void AssignReg(Function* F, int reg, const char* src, int prio, int mayTest) {
 		REGISTER(reg) = nsrc;
 		AddToSet(F->tpend, reg);
 	} else {
-		AddToVarList(&(F->vpend), luadec_strdup(dest), nsrc, reg);
+		AddToVarList(&(F->vpend), luadecstrdup(dest), nsrc, reg);
 	}
 }
 
@@ -804,9 +804,9 @@ DecTableItem* NewTableItem(const char* value, int index, const char* key) {
 	DecTableItem* self = (DecTableItem*)calloc(1, sizeof(DecTableItem));
 	self->super.prev = NULL;
 	self->super.next = NULL;
-	self->value = luadec_strdup(value);
+	self->value = luadecstrdup(value);
 	self->index = index;
-	self->key = luadec_strdup(key);
+	self->key = luadecstrdup(key);
 	return self;
 }
 
@@ -1130,7 +1130,7 @@ void DeclareVariable(Function* F, const char* name, int reg) {
 	if (F->R[reg]) {
 		free(F->R[reg]);
 	}
-	F->R[reg] = luadec_strdup(name);
+	F->R[reg] = luadecstrdup(name);
 	F->Rprio[reg] = 0;
 	UnsetPending(F, reg);
 	if (error) return;
@@ -1300,7 +1300,7 @@ void DeclareLocals(Function* F) {
 				}
 			}
 			if ((F->Rinternal[r])) {
-				names[r] = luadec_strdup(LOCAL(i));
+				names[r] = luadecstrdup(LOCAL(i));
 				PENDING(r) = 0;
 				IS_VARIABLE(r) = 1;
 				F->Rinternal[r] = 0;
@@ -1323,7 +1323,7 @@ void DeclareLocals(Function* F) {
 			}
 			CALL(r) = 0;
 			IS_VARIABLE(r) = 1;
-			names[r] = luadec_strdup(LOCAL(i));
+			names[r] = luadecstrdup(LOCAL(i));
 			locals++;
 		}
 	}
@@ -1381,7 +1381,7 @@ char* RegisterOrConstant(Function* F, int r) {
 	if (ISK(r)) {
 		return DecompileConstant(F->f, INDEXK(r));
 	} else {
-		return luadec_strdup(GetR(F, r));
+		return luadecstrdup(GetR(F, r));
 	}
 }
 
@@ -1497,7 +1497,7 @@ void ShowState(Function* F) {
 
 	walk = F->vpend.head;
 	i = 0;
-	while (walk) {		
+	while (walk) {
 		int r = cast(VarListItem*, walk)->reg;
 		char* src = cast(VarListItem*, walk)->src;
 		char* dest = cast(VarListItem*, walk)->dest;
@@ -1553,7 +1553,7 @@ void DeclarePendingLocals(Function* F) {
 			AddStatement(F,str);
 			while (walk) {
 				int reg = cast(IntSetItem*, walk)->value;
-				char* s = luadec_strdup(REGISTER(reg));
+				char* s = luadecstrdup(REGISTER(reg));
 				GetR(F, reg);
 				DeclareLocal(F, reg, s);
 				free(s);
@@ -1569,7 +1569,7 @@ Proto* toproto(lua_State* L, int i);
 int FunctionCheck(Proto* f, const char* funcnumstr, StringBuffer* str) {
 	lua_State* newState;
 	int check_result;
-	char* decompiled = ProcessSubFunction(f, 1, luadec_strdup(funcnumstr));
+	char* decompiled = ProcessSubFunction(f, 1, luadecstrdup(funcnumstr));
 	newState = lua_open();
 	if (luaL_loadstring(newState, decompiled) != 0) {
 		check_result = -1;
@@ -1960,20 +1960,20 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				}
 			} else if (F->loop_ptr->start <= dest && dest < pc) {
 				if (isTestOpCode(o_1)) { //REPEAT jump back
-					/* 
+					/*
 					** if the out loop(loop_ptr) is while and body=loop_ptr.start,
 					** jump back may be 'until' or 'if', they are the same,
 					** but 'if' is more clear, so we skip making a loop to choose 'if'.
 					** see the lua code:
 					** local a,b,c,f
-					** 
+					**
 					** while 1 do
 					**	repeat
 					**		f(b)
 					**	until c
 					**	f(a)
 					** end
-					** 
+					**
 					** while 1 do
 					**	f(b)
 					** 	if c then
@@ -2133,7 +2133,7 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				if (walk->type == WHILE_STMT) {
 					walk->body = walk->start;
 					loopstmt = walk->block;
-					loopstmt->code = _strdup("1");
+					loopstmt->code = strdup("1");
 				} else if (walk->type == REPEAT_STMT) {
 					loopstmt = walk->block;
 				}
@@ -2151,11 +2151,11 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				** try to process all while as " while 1 do if "
 				** see the lua code:
 				** local f, a, b, c
-				** 
+				**
 				** while test do
 				** 	whilebody
 				** end
-				** 
+				**
 				** while 1 do
 				** 	if test then
 				** 		whilebody
@@ -2165,7 +2165,7 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				** end
 				*/
 				AstStatement* loopstmt = walk->block;
-				loopstmt->code = _strdup("1");
+				loopstmt->code = strdup("1");
 				RawAddAstStatement(F, cast(AstStatement*, loopstmt));
 				F->currStmt = loopstmt;
 				walk->body = walk->start;
@@ -2638,7 +2638,7 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				char* test = NULL;
 				/* skip */
 				const char* ra = REGISTER(boola);
-				AddToList(&(F->bools), (ListItem*)MakeBoolOp(luadec_strdup(ra), luadec_strdup(ra), OP_TESTSET, c, pc+3, dest));
+				AddToList(&(F->bools), (ListItem*)MakeBoolOp(luadecstrdup(ra), luadecstrdup(ra), OP_TESTSET, c, pc+3, dest));
 				F->testpending = a+1;
 				F->testjump = dest;
 				TRY(test = OutputBoolean(F, &thenaddr, NULL, 1));
@@ -2651,7 +2651,7 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				/*
 				* y = (a or b==c) -- assigne statement may be bool (calucate at last)
 				* constant boolean value
-				* JMP 
+				* JMP
 				* ....skipped , not decompiled
 				* ::jmp_target
 				* LOADBOOL
@@ -2736,7 +2736,7 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				TRY(ra = GetR(F, a));
 			}
 			TRY(rb = GetR(F, b));
-			AddToList(&(F->bools), (ListItem*)MakeBoolOp(luadec_strdup(ra), luadec_strdup(rb), o, c, pc + 1, -1));
+			AddToList(&(F->bools), (ListItem*)MakeBoolOp(luadecstrdup(ra), luadecstrdup(rb), o, c, pc + 1, -1));
 			F->testpending = a + 1;
 			goto LOGIC_NEXT_JMP;
 			break;
@@ -2750,7 +2750,7 @@ char* ProcessCode(Proto* f, int indent, int func_checking, char* funcnumstr) {
 				PENDING(a) = 0;
 				F->testpending = a + 1;
 			}
-			AddToList(&(F->bools), (ListItem*)MakeBoolOp(luadec_strdup(ra), luadec_strdup(ra), o, c, pc + 1, -1));
+			AddToList(&(F->bools), (ListItem*)MakeBoolOp(luadecstrdup(ra), luadecstrdup(ra), o, c, pc + 1, -1));
 			goto LOGIC_NEXT_JMP;
 			break;
 		}
@@ -3001,7 +3001,7 @@ LOGIC_NEXT_JMP:
 
 
 
-				//initial = luadec_strdup(initial);
+				//initial = luadecstrdup(initial);
 				step = atoi(REGISTER(a + 2));
 				stepLen = strlen(REGISTER(a + 2));
 				// findSign = strrchr(initial, '-');
@@ -3234,7 +3234,7 @@ void luaU_decompile(Proto* f, int dflag) {
 	debug = dflag;
 	functionnum = 0;
 	errorStr = StringBuffer_new(NULL);
-	code = ProcessCode(f, 0, 0, luadec_strdup("0"));
+	code = ProcessCode(f, 0, 0, luadecstrdup("0"));
 	StringBuffer_delete(errorStr);
 	printf("%s\n", code);
 	free(code);

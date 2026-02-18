@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -26,7 +26,7 @@ MetaOpResult BinaryBuffer::MetaOperation_SerializeAsync(void* pObj, MetaClassDes
 	if (stream->mMode == MetaStreamMode::eMetaStream_Read) {
 		if (bb->mpData)
 			delete[] bb->mpData;
-		bb->mpData = (char*)_aligned_malloc(size, 4);
+		bb->mpData = (char*)malloc(size);//(char*)_aligned_malloc(size, 4);
 		if (!bb->mpData) {
 			stream->Advance(size);
 			return eMetaOp_OutOfMemory;
@@ -215,7 +215,7 @@ void SerializedVersionInfo::RetrieveVersionInfo(const char* versFileName, DataSt
 	u32 i;
 	meta.serialize_uint32(&i);
 	mFileName = versFileName;
-	if (i == -1) {//reason we have this -1 (0xFFFFFFFF) header is because old .vers used to start with the .vers file name 
+	if (i == -1) {//reason we have this -1 (0xFFFFFFFF) header is because old .vers used to start with the .vers file name
 		//and the first int would therefore be the size of it. no string is 0xFFFFFFFF bytes long, so thats how we can distinguish
 		mMembers.clear();
 		meta.serialize_uint32(&i);
@@ -332,7 +332,7 @@ String SerializedVersionInfo::MakeVersionFileName(const char* typeName, u32 tn)
 {
 	char* temp = (char*)malloc(512);
 	char buf[30];
-	_ui64toa(tn, buf, 36);
+	sprintf(buf, "%x", tn);
 	std::string fn{ typeName };
 	replace(fn, "<", "_");
 	replace(fn, ">", "_");
@@ -583,9 +583,9 @@ MetaClassDescription* GetMetaClassDescription(const char* typeInfoName) {
 		for (i; i; i = i->pNextMetaClassDescription) {
 			if (i->mbHiddenInternal)
 				continue;
-			if (!_strcmpi(typeInfoName, i->mpTypeInfoExternalName))
+			if (!strcasecmp(typeInfoName, i->mpTypeInfoExternalName))
 				return i;
-			if (!_strcmpi(typeInfoName, i->mpTypeInfoName))
+			if (!strcasecmp(typeInfoName, i->mpTypeInfoName))
 				return i;
 		}
 	}
@@ -799,7 +799,7 @@ _TTToolLib_Exp MetaOpResult TelltaleToolLib_SerializeMetaStream(MetaStream* pStr
 MetaStream::MetaStream() {
 	MetaStream* v1;
 	v1 = this;
-	this->mpReadWriteStream = 0i64;
+	this->mpReadWriteStream = 0LL;
 	this->mMode = MetaStreamMode::eMetaStream_Closed;
 	this->mStreamVersion = 0;
 	v1->mRuntimeFlags.mFlags = 0;
@@ -909,7 +909,7 @@ void MetaStream::serialize_float(float* param) {
 	serialize_uint32((u32*)param);
 }
 
-void MetaStream::serialize_double(long double* param) {
+void MetaStream::serialize_double(double* param) {
 	serialize_uint64((u64*)param);
 }
 
@@ -991,7 +991,7 @@ void MetaStream::_FinalizeStream() {
 			sect.mbCompressed = true;
 			sect.mpStream = out_stream;
 			DataStreamContainer::Create(
-				_unused_progressf, params, 
+				_unused_progressf, params,
 				params.mpSrcStream->GetSize());
 			delete params.mpSrcStream;
 		}
@@ -1010,7 +1010,7 @@ bool MetaStream::_SetSection(SectionType s) {
 		return true;
 	}
 	if (!sect.mbEnable || mMode != MetaStreamMode::eMetaStream_Write)return false;
-	sect.mpStream = new DataStreamMemory(0, 0x4000ui64);
+	sect.mpStream = new DataStreamMemory(0, 0x4000ULL);
 	mCurrentSection = s;
 	return true;
 }
@@ -1365,7 +1365,7 @@ MetaSerializeAccel* MetaSerialize_GenerateAccel(MetaClassDescription* pObj) {
 			toserialize++;
 	} while (member);
 	if (toserialize > 0) {
-		MetaSerializeAccel* accels = new MetaSerializeAccel[toserialize + 1i64];
+		MetaSerializeAccel* accels = new MetaSerializeAccel[toserialize + 1ULL];
 		MetaSerializeAccel* first = accels;
 		member = pObj->mpFirstMember;
 		do {
@@ -1453,7 +1453,7 @@ METAOP_FUNC_IMPL__(SerializeIntrinsicAsyncfloat) {
 }
 
 METAOP_FUNC_IMPL__(SerializeIntrinsicAsyncdouble) {
-	static_cast<MetaStream*>(pUserData)->serialize_double((long double*)pObj);
+	static_cast<MetaStream*>(pUserData)->serialize_double((double*)pObj);
 	return eMetaOp_Succeed;
 }
 
@@ -1804,7 +1804,7 @@ template<typename T> MetaClassDescription* MetaClassDescription_Typed<T>::GetMet
 		for (i; i; i = i->pNextMetaClassDescription) {
 			if (i->mbHiddenInternal)
 				continue;
-			if (!_strcmpi(typeid(T).name(), i->mpTypeInfoExternalName))
+			if (!strcasecmp(typeid(T).name(), i->mpTypeInfoExternalName))
 				return i;
 		}
 	}
@@ -1812,7 +1812,7 @@ template<typename T> MetaClassDescription* MetaClassDescription_Typed<T>::GetMet
 		for (i; i; i = i->pNextMetaClassDescription) {
 			if (i->mbHiddenInternal)
 				continue;
-			if (!_strcmpi(typeid(T).name(), type))
+			if (!strcasecmp(typeid(T).name(), type))
 				return i;
 		}
 	}

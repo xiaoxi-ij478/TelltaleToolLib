@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -38,7 +38,7 @@ struct PathBase {
 
 struct PathSegment : PathBase {
 	Vector3 mStart, mEnd;
-	unsigned long mStartNodeId, mEndNodeId;
+	uint32_t mStartNodeId, mEndNodeId;
 
 	virtual MetaClassDescription* GetMetaClassDescription() override {
 		return ::GetMetaClassDescription<PathSegment>();
@@ -58,7 +58,7 @@ struct PathSegment : PathBase {
 struct HermiteCurvePathSegment : PathBase {
 	Vector3 mStart, mEnd;
 	Vector3 mStartDir, mEndDir;
-	unsigned long mStartNodeId, mEndNodeId;
+	uint32_t mStartNodeId, mEndNodeId;
 
 	virtual MetaClassDescription* GetMetaClassDescription() override {
 		return ::GetMetaClassDescription<HermiteCurvePathSegment>();
@@ -77,7 +77,7 @@ struct HermiteCurvePathSegment : PathBase {
 struct AnimationDrivenPathSegment : PathBase {
 
 	struct EnumAnimatedPathSegmentType {
-		long mVal;//start type = 0, loop type = 1, stop type = 2
+		int32_t mVal;//start type = 0, loop type = 1, stop type = 2
 	};
 
 	Vector3 mStart, mEnd, mStartDirection, mEndDirection;
@@ -237,7 +237,7 @@ struct ActorAgentBinding {
 };
 
 struct AutoActStatus {
-	long m_Status;
+	int32_t m_Status;
 
 	bool operator!=(const AutoActStatus& other) {
 		return other.m_Status != m_Status;
@@ -266,10 +266,10 @@ struct ChoreResource {
 	};
 
 	Chore* mpChore;
-	long mVersion;
+	int32_t mVersion;
 	Symbol mResName;
 	float mResLength;
-	long mPriority;
+	int32_t mPriority;
 	Flags mFlags;
 	String mResourceGroup;
 	HandleBase mhObject;
@@ -327,7 +327,7 @@ struct ChoreResource {
 			mbEmbedded = false;
 		}
 	}
-	
+
 	inline ~ChoreResource(){
 		if (mhObjectDesc && mhObjectEmbedded)
 			mhObjectDesc->Delete(mhObjectEmbedded);
@@ -422,11 +422,11 @@ struct Chore {
 	String mName;
 	Flags mFlags;
 	float mLength;
-	long mNumResources;
-	long mNumAgents;
+	int32_t mNumResources;
+	int32_t mNumAgents;
 	PropertySet mEditorProps;
 	String mChoreSceneFile;
-	long mRenderDelay;
+	int32_t mRenderDelay;
 	LocalizeInfo mSynchronizedToLocalization;
 	DependencyLoader<1> mDependencies;
 	ToolProps mToolProps;
@@ -476,7 +476,7 @@ struct Chore {
 			return 0.0;
 		else do {
 			if(mPtrResources[resind]->mbEnabled){
-				//add control anim get max time  
+				//add control anim get max time
 			}
 			resind++;
 		} while (resind < mPtrResources.mSize);

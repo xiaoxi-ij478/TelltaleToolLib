@@ -16,9 +16,9 @@ public:
 		eVersionlessMetaStream = 3,
 		//eCleanVersionlessJson = 4,
 	};
-	
+
 	MetaStream_JSON(eJSONMode);
-	
+
 	INLINE ~MetaStream_JSON() {
 		_DeleteJSONData();
 		Close();
@@ -65,7 +65,7 @@ public:
 	virtual void serialize_String(String*) override;
 	virtual void serialize_Symbol(Symbol*) override;
 	virtual void serialize_bool(bool*) override;
-	virtual void serialize_double(long double*) override;
+	virtual void serialize_double(double*) override;
 	virtual void serialize_float(float*) override;
 	virtual void serialize_uint16(u16*) override;
 	virtual void serialize_uint32(u32*) override;

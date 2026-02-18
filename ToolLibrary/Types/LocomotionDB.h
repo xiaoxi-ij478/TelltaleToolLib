@@ -8,7 +8,7 @@
 struct LocomotionDB {
 
 	struct AnimationInfo {
-		unsigned __int64 mu64TimeStamp;
+		uint64_t mu64TimeStamp;
 		String mzName;
 		enum {
 			Category_Idle = 0,

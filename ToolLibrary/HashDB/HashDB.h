@@ -58,7 +58,7 @@ protected:
 
 #define SEP ,
 
-#define DB_FN(_NAME, _RETURN, _ARGS) _TTToolLib_Exp _RETURN TelltaleToolLib_HashDB_ ## _NAME(HashDatabase_Legacy* pDatabase _ARGS)
+#define DB_FN(_NAME, _RETURN, _ARGS...) _TTToolLib_Exp _RETURN TelltaleToolLib_HashDB_ ## _NAME(HashDatabase_Legacy* pDatabase _ARGS)
 
 DB_FN(NumPages, int);
 DB_FN(NumEntries, int);

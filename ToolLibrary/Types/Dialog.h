@@ -1,5 +1,5 @@
 // This file was written by Lucas Saragosa. The code derives from Telltale Games' Engine.
-// I do not intend to take credit for it, however; Im the author of this interpretation of 
+// I do not intend to take credit for it, however; Im the author of this interpretation of
 // the engine and require that if you use this code or library, you give credit to me and
 // the amazing Telltale Games.
 
@@ -276,7 +276,7 @@ struct DlgChainHead : DlgObjIDOwner {
 
 struct DlgDownstreamVisibilityConditions {
 	Flags mNodeTypeFlags;
-	long mMaxNumNodeEvals;
+	int32_t mMaxNumNodeEvals;
 };
 
 struct DlgVisibilityConditions {
@@ -434,7 +434,7 @@ struct DlgFolder : DlgObjIDOwner, DlgObjectPropsOwner, DlgChildSet, UID::Owner {
 
 };
 
-struct DlgNode : DlgObjIDOwner, DlgObjectPropsOwner, 
+struct DlgNode : DlgObjIDOwner, DlgObjectPropsOwner,
 	DlgVisibilityConditionsOwner, UID::Owner {
 
 	DlgNodeLink mPrev, mNext;
@@ -656,7 +656,7 @@ struct DlgChildSetConditionalCase : DlgChildSet {
 };
 
 struct DateStamp {
-	u8 mSec, mMin, mHour, mMday, mMon, mYear, mWday, mIsdst;//direct 
+	u8 mSec, mMin, mHour, mMday, mMon, mYear, mWday, mIsdst;//direct
 	u16 mYday;//365>2^8-1
 };
 
@@ -1001,7 +1001,7 @@ struct DlgNodeExchange : DlgNode {
 		int mID;
 		EntryType mType;
 	};
-	
+
 	float mPriority;
 	Handle<Chore> mhChore;
 	NoteCollection* mpNotes;
@@ -1230,7 +1230,7 @@ struct DlgFolderChild : DlgChild {
 };
 
 //.DLOG FILES
-struct Dlg : DlgObjIDOwner, UID::Generator {//UID im not 100% sure since its only in older games, looks like a UID 
+struct Dlg : DlgObjIDOwner, UID::Generator {//UID im not 100% sure since its only in older games, looks like a UID
 
 	DCArray<DlgFolder*> mFolders;
 	DCArray<DlgNode*> mNodes;
@@ -1247,20 +1247,20 @@ struct Dlg : DlgObjIDOwner, UID::Generator {//UID im not 100% sure since its onl
 	~Dlg() {
 		_DeleteData();
 	}
-	
+
 	String mName;
-	long mVersion;
+	int32_t mVersion;
 	DlgObjID mDefFolderID;
 	LanguageDB mLangDB;
-	unsigned long mProjectID;
+	uint32_t mProjectID;
 	Symbol mResourceLocationID;
-	long mChronology;
+	int32_t mChronology;
 	Flags mFlags;//values in DlgNode::ClassFlags
 	DependencyLoader<1> mDependencies;
 	PropertySet mProdReportProps;
 	JiraRecordManager mJiraRecordManager;
 	bool mbHasToolOnlyData;
-	
+
 	INLINE DlgNode* FindNode(const DlgObjID& id){
 		for(int i = 0; i < mNodes.GetSize(); i++)
 			if(mNodes[i]->mDlgObjID.mID == id.mID)
@@ -1409,7 +1409,7 @@ struct DlgNodeJump : DlgNode {
 
 struct DialogInstance {
 	struct InstanceID {
-		unsigned __int32 mID;
+		uint32_t mID;
 	};
 };
 
@@ -1459,17 +1459,17 @@ struct DialogLine : DialogBase {
 
 //.DLG FILES
 struct DialogResource {
-	long miNextDialogID, miNextBranchID, miNextItemID, miNextExchangeID, miNextLineID, miNextTextID, miNextChoreID;
-	DCArray<int> mDialogs, mSoloItems, mTexts;
-	long mProjectID;
+	int32_t miNextDialogID, miNextBranchID, miNextItemID, miNextExchangeID, miNextLineID, miNextTextID, miNextChoreID;
+	DCArray<int32_t> mDialogs, mSoloItems, mTexts;
+	int32_t mProjectID;
 	String mResourcePath;
-	unsigned long mTaskID;
-	Map<int, Ptr<DialogDialog>> mResDialogs;
-	Map<int, Ptr<DialogBranch>> mResBranches;
-	Map<int, Ptr<DialogItem>> mResItems;
-	Map<int, Ptr<DialogExchange>> mResExchanges;
-	Map<int, Ptr<DialogLine>> mResLines;
-	Map<int, Ptr<DialogText>> mResTexts;
+	uint32_t mTaskID;
+	Map<int32_t, Ptr<DialogDialog>> mResDialogs;
+	Map<int32_t, Ptr<DialogBranch>> mResBranches;
+	Map<int32_t, Ptr<DialogItem>> mResItems;
+	Map<int32_t, Ptr<DialogExchange>> mResExchanges;
+	Map<int32_t, Ptr<DialogLine>> mResLines;
+	Map<int32_t, Ptr<DialogText>> mResTexts;
 
 	static inline METAOP_FUNC_IMPL__(SerializeAsync) {
 		MetaStream* pStream = (MetaStream*)pUserData;
@@ -1489,7 +1489,7 @@ struct DialogResource {
 			pStream->serialize_uint32((u32*)&nLines);
 			pStream->serialize_uint32((u32*)&nTexts);
 
-			//TODO 
+			//TODO
 
 		}
 

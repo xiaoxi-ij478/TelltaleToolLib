@@ -196,13 +196,11 @@ namespace T3EffectCache {
 			return true;//TODO
 		}
 	};
-	
+
 	bool SavePackage(std::shared_ptr<DataStreamContainer> pPreviousPackage, std::vector<LoadedShader>& shaders, std::vector<LoadedBucket>& buckets, DataStream* pStream, int ver)
 	{
-		char buf1[MAX_PATH];
-		char buf2[MAX_PATH];
-		GetTempPathA(MAX_PATH, buf1);
-		GetTempFileNameA(buf1, "create_fxpack_data_ttlib", 0, buf2);
+		char buf2[PATH_MAX];
+		strcpy(buf2,"/tmp/create_fxpack_data_ttlib");
 		DataStreamFileDisc disc = DataStreamFileDisc(PlatformSpecOpenFile(buf2, WRITE), DataStreamMode::eMode_Write);
 		DataStream* pFinal = pStream;
 		pStream = &disc;
@@ -374,7 +372,7 @@ namespace T3EffectCache {
 							pass.mpComputeShader = pLoadedShader;
 							pass.mInitialShaderIndex = shaderIndex;
 						}
-						else {//no shader attach 
+						else {//no shader attach
 							pass.mpComputeShader = NULL;
 							pass.mInitialShaderIndex = (u32)i;
 						}
@@ -399,7 +397,7 @@ namespace T3EffectCache {
 								pass.mpDrawShader[i] = pLoadedShader;
 								pass.mInitialShaderIndex[i] = shaderIndex;
 							}
-							else {//-1 (mostly geom) no shader attach 
+							else {//-1 (mostly geom) no shader attach
 								pass.mpDrawShader[i] = NULL;
 								pass.mInitialShaderIndex[i] = (u32)-1;
 							}
@@ -412,7 +410,7 @@ namespace T3EffectCache {
 				context.mPrograms[eEffectProgramStatus_Compiled].insert_tail(pLoadedProgram);
 			}
 			//first shader: vertex, 0 3 4 29 (effect parameter): camera, object, instance, material main
-			//shader param 7 bytes: u16 T3EffectParameterType, u16 scalarSize (bytes/4), 
+			//shader param 7 bytes: u16 T3EffectParameterType, u16 scalarSize (bytes/4),
 			//00w 180w 0b FFb 0b cam
 			//03w 050w 1b FFb 0b obj
 			//04w 020w 2b FFb 0b inst
@@ -552,7 +550,7 @@ T3EffectFeature T3EffectCache_Legacy::GetFeatureEnum(const char* p)
 	return (T3EffectFeature)0;
 	/*
 	for (int i = 0; i < NumFeatures; i++) {
-		if (!_stricmp(p, sFeatureDesc_WDC[i].mName))
+		if (!strcasecmp(p, sFeatureDesc_WDC[i].mName))
 			return (T3EffectFeature)i;
 	}
 	return T3EffectFeature::eEffectFeature_None;*/
@@ -566,7 +564,7 @@ const char* T3EffectCache_Legacy::GetParameterTypeName(T3EffectParameterType ft)
 T3EffectParameterType T3EffectCache_Legacy::GetParameterTypeEnum(const char* p)
 {
 	for (int i = 0; i < NumParamTypes; i++) {
-		if (!_stricmp(p, sBufferDesc[i].mName))
+		if (!strcasecmp(p, sBufferDesc[i].mName))
 			return (T3EffectParameterType)i;
 	}
 	return T3EffectParameterType::eEffectParameter_Unknown;
@@ -580,7 +578,7 @@ const char* T3EffectCache_Legacy::GetShaderTypeName(T3MaterialShaderType a)
 T3MaterialShaderType T3EffectCache_Legacy::GetShaderType(const char* n)
 {
 	for (int i = 0; i < 5; i++) {
-		if (!_stricmp(n, sShaderDesc[i].mName))
+		if (!strcasecmp(n, sShaderDesc[i].mName))
 			return (T3MaterialShaderType)i;
 	}
 	return T3MaterialShaderType::eMaterialShader_None;
@@ -1122,7 +1120,7 @@ namespace T3 {
 				verts += 3;
 			}
  		}
-		
+
 		LibHandler()->EndStaticVertices(*spDefaultVertexStates[eVertexArray_FilledSphere]);
 		ind = BeginStaticIndices(*spDefaultVertexStates[eVertexArray_FilledSphere], 1296);
 		for(int i = 0; i < 234; i+=13){
@@ -1522,7 +1520,7 @@ void _InitializeDescs() {
 	sClassDesc[eEffectParameterClass_UInt3].mScalarSize = 3;
 	sClassDesc[eEffectParameterClass_UInt4].mScalarSize = 4;
 
-	
+
 	// value desc
 	sValueDesc[eMaterialValue_Float].mScalarSize = 1;
 	sValueDesc[eMaterialValue_Float].mEffectParameterClass = eEffectParameterClass_Float1;
@@ -1595,7 +1593,7 @@ void _InitializeDescs() {
 	sDomainDesc[eMaterialDomain_ExportMeshShader].mName = "ExportMeshShader";
 	sDomainDesc[eMaterialDomain_ExportMeshShader].mbUsePreShader = 0;
 	sDomainDesc[eMaterialDomain_ExportMeshShader].mbExternalShader = 1;
-	
+
 	//optional props
 	memset(sOptionalPropertyDesc[eMaterialOptionalProperty_ToonShades].mDefaultValueBuffer, 0, 32);
 	sOptionalPropertyDesc[eMaterialOptionalProperty_ToonShades].mDefaultValueBuffer[0] = 3;
